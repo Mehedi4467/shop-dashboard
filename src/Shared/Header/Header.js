@@ -19,7 +19,8 @@ const Header = () => {
         <div className='shadow-lg'>
             <div className='container mx-auto md:px-0 px-10 sm:px-10 py-3'>
                 <div className='grid grid-cols-2 justify-between items-center'>
-                    <div>
+                    <div className='flex items-center'>
+                        <i className="mr-4 text-xl cursor-pointer md:hidden fa-solid fa-bars"></i>
                         <img className='cursor-pointer' src={logo} width='50' height='50' alt="Dashboard logo" />
                     </div>
                     <div className='flex justify-end items-center image-body'>
