@@ -4,8 +4,10 @@ import CustomLink from './CustomLink/CustomLink';
 const Menu = () => {
     return (
         <div>
-            <div>
-                <CustomLink to='/'> <i className="fa-solid fa-house"></i> Home</CustomLink>
+            <div className='py-4'>
+                <div className='p-3 rounded-lg hover:bg-slate-100'>
+                    <CustomLink className="text-lg" to='/'> <i className="fa-solid fa-house"></i> Home</CustomLink>
+                </div>
                 <CustomLink to='/products'> <i className="fa-solid fa-bag-shopping"></i> Products</CustomLink>
                 <CustomLink to='/category'> <i className="fa-solid fa-align-left"></i> Category</CustomLink>
                 <CustomLink to='/customers'> <i className="fa-solid fa-user-group"></i> Customers</CustomLink>

@@ -18,8 +18,8 @@ function App() {
   return (
     <div>
       <Header></Header>
-      <div className="grid md:grid-cols-2">
-        <div className="md:block hidden">
+      <div className="grid md:grid-cols-6">
+        <div className="md:block hidden col-span-1">
           <Menu></Menu>
         </div>
         <div>

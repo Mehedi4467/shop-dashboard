@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from '../../Images/logo/logo.png';
 import userImg from '../../Images/user/mehedi.jpg';
 import './Header.css';
+import Notification from './Notification/Notification';
 const Header = () => {
     const [showUser, setShowUser] = useState(false);
     const [notificationShow, setNotificationShow] = useState(false);
+    const [notifications, setNotifications] = useState([]);
 
     const handelUser = () => {
         setShowUser(!showUser);
@@ -13,6 +15,19 @@ const Header = () => {
     const handelNotification = () => {
         setNotificationShow(!notificationShow);
         setShowUser(false);
+    };
+
+
+    useEffect(() => {
+        fetch('../../notification.json')
+            .then(res => res.json())
+            .then(data => setNotifications(data));
+
+    }, []);
+
+    const handelCleanNotification = (id) => {
+        const reaming = notifications.filter(notification => notification._id !== id);
+        setNotifications(reaming);
     }
 
     return (
@@ -26,83 +41,17 @@ const Header = () => {
                     <div className='flex justify-end items-center image-body'>
                         <div className='mx-10 p-bell'>
                             <i onClick={handelNotification} className="text-green-600 cursor-pointer text-2xl fa-solid fa-bell"></i>
-                            <div className='p-count flex items-center justify-center bg-green-500 p-1 rounded-full'><p className='text-xs text-white'>9</p></div>
+                            <div className='p-count flex items-center justify-center bg-green-500 p-1 rounded-full'><p className='text-xs text-white'>{notifications.length}</p></div>
 
 
                             <div className={`shadow-lg rounded notification scroll-smooth overflow-y-auto py-4 mb-4  px-2 ${notificationShow ? 'w-max' : 'hidden'}`}>
-                                <div className='shadow rounded-full p-2 flex items-center justify-between gap-4 mb-4 hover:bg-slate-100 cursor-pointer'>
-                                    <img className='rounded-full' src={userImg} width='40' alt="Notification Images" />
-                                    <div>
-                                        <p className='text-sm text-slate-500 mx-4'>Lorem ipsum, dolor consectetur......</p>
-                                        <div className='flex justify-between mt-2'>
-                                            <p className='text-xs ml-4 px-3 text-white rounded-full bg-orange-400'>Stock Out</p>
-                                            <p className='text-xs mr-4'>April 23 2022 - 12:40 pm</p>
+
+                                {
+                                    notifications.length > 0 ? notifications.map(notification => <Notification handelCleanNotification={handelCleanNotification} key={notification._id} notification={notification}></Notification>)
+                                        : <div className='shadow rounded-full p-2 mt-20 flex items-center justify-between gap-4 mb-4 hover:bg-slate-100'>
+                                            <p className='text-lg text-slate-500'>No Notifications Yet</p>
                                         </div>
-                                    </div>
-                                    <div className='delete shadow-lg rounded-full flex justify-center items-center'><i className="text-xs fa-solid fa-xmark"></i></div>
-                                </div>
-
-                                <div className='shadow rounded-full p-2 flex items-center justify-between gap-4 mb-4 hover:bg-slate-100 cursor-pointer'>
-                                    <img className='rounded-full' src={userImg} width='40' alt="Notification Images" />
-                                    <div>
-                                        <p className='text-sm text-slate-500 mx-4'>Lorem ipsum, dolor consectetur......</p>
-                                        <div className='flex justify-between mt-2'>
-                                            <p className='text-xs ml-4 px-3 text-white rounded-full bg-orange-400'>Stock Out</p>
-                                            <p className='text-xs mr-4'>April 23 2022 - 12:40 pm</p>
-                                        </div>
-                                    </div>
-                                    <div className='delete shadow-lg rounded-full flex justify-center items-center'><i className="text-xs fa-solid fa-xmark"></i></div>
-                                </div>
-
-                                <div className='shadow rounded-full p-2 flex items-center justify-between gap-4 mb-4 hover:bg-slate-100 cursor-pointer'>
-                                    <img className='rounded-full' src={userImg} width='40' alt="Notification Images" />
-                                    <div>
-                                        <p className='text-sm text-slate-500 mx-4'>Lorem ipsum, dolor consectetur......</p>
-                                        <div className='flex justify-between mt-2'>
-                                            <p className='text-xs ml-4 px-3 text-white rounded-full bg-orange-400'>Stock Out</p>
-                                            <p className='text-xs mr-4'>April 23 2022 - 12:40 pm</p>
-                                        </div>
-                                    </div>
-                                    <div className='delete shadow-lg rounded-full flex justify-center items-center'><i className="text-xs fa-solid fa-xmark"></i></div>
-                                </div>
-
-                                <div className='shadow rounded-full p-2 flex items-center justify-between gap-4 mb-4 hover:bg-slate-100 cursor-pointer'>
-                                    <img className='rounded-full' src={userImg} width='40' alt="Notification Images" />
-                                    <div>
-                                        <p className='text-sm text-slate-500 mx-4'>Lorem ipsum, dolor consectetur......</p>
-                                        <div className='flex justify-between mt-2'>
-                                            <p className='text-xs ml-4 px-3 text-white rounded-full bg-orange-400'>Stock Out</p>
-                                            <p className='text-xs mr-4'>April 23 2022 - 12:40 pm</p>
-                                        </div>
-                                    </div>
-                                    <div className='delete shadow-lg rounded-full flex justify-center items-center'><i className="text-xs fa-solid fa-xmark"></i></div>
-                                </div>
-
-                                <div className='shadow rounded-full p-2 flex items-center justify-between gap-4 mb-4 hover:bg-slate-100 cursor-pointer'>
-                                    <img className='rounded-full' src={userImg} width='40' alt="Notification Images" />
-                                    <div>
-                                        <p className='text-sm text-slate-500 mx-4'>Lorem ipsum, dolor consectetur......</p>
-                                        <div className='flex justify-between mt-2'>
-                                            <p className='text-xs ml-4 px-3 text-white rounded-full bg-orange-400'>Stock Out</p>
-                                            <p className='text-xs mr-4'>April 23 2022 - 12:40 pm</p>
-                                        </div>
-                                    </div>
-                                    <div className='delete shadow-lg rounded-full flex justify-center items-center'><i className="text-xs fa-solid fa-xmark"></i></div>
-                                </div>
-
-                                <div className='shadow rounded-full p-2 flex items-center justify-between gap-4 mb-4 hover:bg-slate-100 cursor-pointer'>
-                                    <img className='rounded-full' src={userImg} width='40' alt="Notification Images" />
-                                    <div>
-                                        <p className='text-sm text-slate-500 mx-4'>Lorem ipsum, dolor consectetur......</p>
-                                        <div className='flex justify-between mt-2'>
-                                            <p className='text-xs ml-4 px-3 text-white rounded-full bg-orange-400'>Stock Out</p>
-                                            <p className='text-xs mr-4'>April 23 2022 - 12:40 pm</p>
-                                        </div>
-                                    </div>
-                                    <div className='delete shadow-lg rounded-full flex justify-center items-center'><i className="text-xs fa-solid fa-xmark"></i></div>
-                                </div>
-
-
+                                }
 
                             </div>
 
