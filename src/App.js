@@ -18,11 +18,11 @@ function App() {
   return (
     <div>
       <Header></Header>
-      <div className="grid md:grid-cols-6">
+      <div className="grid md:grid-cols-5">
         <div className="md:block hidden col-span-1">
           <Menu></Menu>
         </div>
-        <div>
+        <div className="p-10 col-span-4 bg-[#F9FAFB]">
           <Routes>
             <Route path='/' element={<Dashboard></Dashboard>}></Route>
             <Route path='/products' element={<Products></Products>}></Route>

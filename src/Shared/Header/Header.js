@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import logo from '../../Images/logo/logo.png';
 import userImg from '../../Images/user/mehedi.jpg';
+import CustomLink from '../../Pages/Menu/CustomLink/CustomLink';
 import './Header.css';
 import Notification from './Notification/Notification';
 const Header = () => {
@@ -44,7 +45,7 @@ const Header = () => {
                             <div className='p-count flex items-center justify-center bg-green-500 p-1 rounded-full'><p className='text-xs text-white'>{notifications.length}</p></div>
 
 
-                            <div className={`shadow-lg rounded notification scroll-smooth overflow-y-auto py-4 mb-4  px-2 ${notificationShow ? 'w-max' : 'hidden'}`}>
+                            <div className={`shadow-lg rounded notification bg-white scroll-smooth overflow-y-auto py-4 mb-4  px-2 ${notificationShow ? 'w-max' : 'hidden'}`}>
 
                                 {
                                     notifications.length > 0 ? notifications.map(notification => <Notification handelCleanNotification={handelCleanNotification} key={notification._id} notification={notification}></Notification>)
@@ -59,12 +60,12 @@ const Header = () => {
                         <div>
                             <img onClick={handelUser} className='cursor-pointer rounded-full shadow-lg' src={userImg} width='40' height='50' alt="User images" />
                         </div>
-                        <div className={`shadow-lg rounded w-52 py-2 duration-100 ease-in-out profile  ${showUser ? 'dashboard-link' : 'hidden'}`}>
+                        <div className={`shadow-lg bg-white rounded w-52 py-2 duration-100 ease-in-out profile  ${showUser ? 'dashboard-link' : 'hidden'}`}>
 
-                            <div className='flex items-center gap-3 mb-3 px-3 py-2 rounded cursor-pointer hover:bg-slate-100'>
+                            <CustomLink to='/' className='flex items-center gap-3 mb-3 px-3 py-2 rounded cursor-pointer hover:bg-slate-100'>
                                 <i className="fa-solid fa-house"></i>
                                 <p>Dashboard</p>
-                            </div>
+                            </CustomLink>
                             <div className='flex items-center gap-3 mb-3 px-3 py-2 rounded cursor-pointer hover:bg-slate-100'>
                                 <i className="fa-solid fa-gear"></i>
                                 <p>Edit Profile</p>

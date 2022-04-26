@@ -1,12 +1,19 @@
 import React from 'react';
-import Menu from '../Menu/Menu';
+import DashboardStatus from './DashboardStatus';
+import Pricing from './Pricing';
 
 const Dashboard = () => {
     return (
         <div>
+            <h1 className='text-xl font-bold'>Dashboard Overview</h1>
 
-            <h1>this is dashboard</h1>
-        </div>
+            <div>
+                <Pricing></Pricing>
+            </div >
+            <div className='mt-8'>
+                <DashboardStatus></DashboardStatus>
+            </div>
+        </div >
     );
 };
 

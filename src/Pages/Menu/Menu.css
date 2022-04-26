@@ -1,0 +1,8 @@
+.mega-menu{
+    position: fixed;
+    width: 271px;
+    top: 73px;
+    left: 0;
+    z-index: 9999999999999999;
+    background-color: white;
+}
