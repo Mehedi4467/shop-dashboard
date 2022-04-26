@@ -32,7 +32,7 @@ const Header = () => {
     }
 
     return (
-        <div className='shadow-lg'>
+        <div className='shadow-lg zIndex-1'>
             <div className='container mx-auto md:px-0 px-10 sm:px-10 py-3'>
                 <div className='grid grid-cols-2 justify-between items-center'>
                     <div className='flex items-center'>

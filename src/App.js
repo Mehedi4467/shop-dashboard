@@ -17,7 +17,10 @@ import Header from "./Shared/Header/Header";
 function App() {
   return (
     <div>
-      <Header></Header>
+      <div className="sticky top-0 bg-white zIndex-1">
+        <Header></Header>
+      </div>
+
       <div className="grid md:grid-cols-5">
         <div className="md:block hidden col-span-1">
           <Menu></Menu>
