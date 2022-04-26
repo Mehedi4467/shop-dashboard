@@ -1,4 +1,5 @@
 import React from 'react';
+import Pagination from '../Pagination/Pagination';
 
 const OrderList = () => {
 
@@ -13,7 +14,7 @@ const OrderList = () => {
 
     return (
         <div>
-            <h1 className='my-2 text-xl font-bold'>Recent Order</h1>
+            <h1 className='text-center md:text-left my-2 text-xl font-bold'>Recent Order</h1>
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-[#F4F5F7] dark:bg-gray-700 dark:text-gray-400">
@@ -65,7 +66,11 @@ const OrderList = () => {
 
                     </tbody >
                 </table >
+
             </div >
+            <div className='flex justify-center md:justify-end'>
+                <Pagination></Pagination>
+            </div>
 
         </div >
     );

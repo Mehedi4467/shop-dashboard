@@ -8,7 +8,7 @@ import './Dashboard.css';
 const Dashboard = () => {
     return (
         <div>
-            <h1 className='text-xl font-bold'>Dashboard Overview</h1>
+            <h1 className='text-center md:text-left text-xl font-bold'>Dashboard Overview</h1>
 
             <div>
                 <Pricing></Pricing>

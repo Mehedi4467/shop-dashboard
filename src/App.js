@@ -21,7 +21,7 @@ function App() {
         <Header></Header>
       </div>
 
-      <div className="grid md:grid-cols-5">
+      <div className="grid grid-cols-1 md:grid-cols-5">
         <div className="md:block hidden col-span-1">
           <Menu></Menu>
         </div>

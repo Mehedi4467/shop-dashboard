@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Bar, BarChart, CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts';
+import { Bar, BarChart, CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 
 const Charts = () => {
     const [orders, setOrders] = useState([]);
@@ -13,28 +13,31 @@ const Charts = () => {
     return (
         <div className='grid grid-cols-1 md:grid-cols-2'>
             <div>
-                <h1 className='my-2 text-xl font-bold'>Conversions This Year</h1>
-
-                <BarChart width={450} height={250} data={orders}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="month" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Bar dataKey="sell" fill="#8884D8" />
-                </BarChart>
+                <h1 className='text-center md:text-left my-2 text-xl font-bold'>Conversions This Year</h1>
+                <ResponsiveContainer width='100%' height={250}>
+                    <BarChart data={orders}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="month" />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
+                        <Bar dataKey="sell" fill="#8884D8" />
+                    </BarChart>
+                </ResponsiveContainer>
             </div>
             <div className=''>
-                <h1 className='my-2 text-xl font-bold'>Conversions This Year</h1>
-                <LineChart width={450} height={250} data={orders}
-                    margin={{ top: 5, right: 30, bottom: 5 }}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="month" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Line type="monotone" dataKey="sell" stroke="#8884d8" />
-                </LineChart>
+                <h1 className='text-center md:text-left my-2 text-xl font-bold'>Conversions This Year</h1>
+                <ResponsiveContainer width="100%" height={250}>
+                    <LineChart data={orders}
+                        margin={{ top: 5, right: 30, bottom: 5 }}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="month" />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
+                        <Line type="monotone" dataKey="sell" stroke="#8884d8" />
+                    </LineChart>
+                </ResponsiveContainer>
             </div>
         </div>
     );
