@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Category from "./Pages/Category/Category";
 import Coupons from "./Pages/Coupons/Coupons";
@@ -15,15 +16,17 @@ import Header from "./Shared/Header/Header";
 
 
 function App() {
+  const [showHide, setShowHide] = useState(false);
+  console.log(showHide);
   return (
     <div>
       <div className="sticky top-0 bg-white zIndex-1">
-        <Header></Header>
+        <Header showHide={showHide} setShowHide={setShowHide}></Header>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-5">
-        <div className="md:block hidden col-span-1">
-          <Menu></Menu>
+        <div className={`md:block col-span-1 ${showHide ? 'block' : 'hidden'}`}>
+          <Menu ></Menu>
         </div>
         <div className="p-10 col-span-4 bg-[#F9FAFB]">
           <Routes>

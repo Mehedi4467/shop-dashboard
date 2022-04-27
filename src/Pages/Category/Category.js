@@ -25,7 +25,7 @@ const Category = () => {
                 <div className='relative bg-white p-4 w-full order-2 md:order-1 rounded-full'>
                     <input className='outline-0 p-2 h-12 rounded-full pl-10 text-orange-500 text-lg border-2  hover:shadow-lg w-full' type="text" name="search" placeholder='Search Category' />
                     <div className='absolute right-10 top-[35%] cursor-pointer'>
-                        <i class="text-green-500 fa-solid fa-magnifying-glass"></i>
+                        <i className="text-green-500 fa-solid fa-magnifying-glass"></i>
                     </div>
                 </div>
 
@@ -92,8 +92,8 @@ const Category = () => {
 
                                 <td className="px-6 py-4">
                                     <div className='flex justify-between'>
-                                        <i class=" cursor-pointer fa-solid fa-pen-to-square"></i>
-                                        <i class="cursor-pointer fa-solid fa-trash-can"></i>
+                                        <i className=" cursor-pointer fa-solid fa-pen-to-square"></i>
+                                        <i className="cursor-pointer fa-solid fa-trash-can"></i>
                                     </div>
                                 </td >
 
@@ -109,8 +109,8 @@ const Category = () => {
             </div>
 
             <div className='h-12 w-12 bg-white flex justify-center items-center cursor-pointer fixed bottom-20 md:hidden block right-5 shadow-lg rounded-full'>
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
-                <i class="text-blue-600  text-lg fa-solid fa-plus"></i>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                <i className="text-blue-600  text-lg fa-solid fa-plus"></i>
 
             </div>
         </div >

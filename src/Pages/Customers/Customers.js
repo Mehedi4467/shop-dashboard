@@ -20,7 +20,7 @@ const Customers = () => {
                 <div className='relative bg-white p-4 w-full order-2 md:order-1 rounded-full'>
                     <input className='outline-0 p-2 h-12 rounded-full pl-10 text-orange-500 text-lg border-2  hover:shadow-lg w-full' type="text" name="search" placeholder='Search Name/Email/Phone' />
                     <div className='absolute right-10 top-[35%] cursor-pointer'>
-                        <i class="text-green-500 fa-solid fa-magnifying-glass"></i>
+                        <i className="text-green-500 fa-solid fa-magnifying-glass"></i>
                     </div>
                 </div>
 
@@ -73,8 +73,8 @@ const Customers = () => {
                                 <td className="px-6 py-4">
                                     <div className='flex justify-between'>
 
-                                        <i class="cursor-pointer fa-solid fa-eye"></i>
-                                        <i class="cursor-pointer fa-solid fa-trash-can"></i>
+                                        <i className="cursor-pointer fa-solid fa-eye"></i>
+                                        <i className="cursor-pointer fa-solid fa-trash-can"></i>
                                     </div>
                                 </td >
 

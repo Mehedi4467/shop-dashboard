@@ -29,7 +29,7 @@ const Orders = () => {
                 <div className='relative  w-full order-2 md:order-1 rounded-full'>
                     <input className='outline-0 p-2 h-12 rounded-full pl-10 text-orange-500 text-lg border-2  hover:shadow-lg w-full' type="text" name="search" placeholder='Search Product Name' />
                     <div className='absolute right-8 top-[25%] cursor-pointer'>
-                        <i class="text-green-500 fa-solid fa-magnifying-glass"></i>
+                        <i className="text-green-500 fa-solid fa-magnifying-glass"></i>
                     </div>
                 </div>
 
@@ -106,7 +106,7 @@ const Orders = () => {
                                 </td >
                                 <td className="px-6 py-4">
                                     <div className='flex justify-between'>
-                                        <i class="cursor-pointer fa-solid fa-eye"></i>
+                                        <i className="cursor-pointer fa-solid fa-eye"></i>
 
                                     </div>
                                 </td >

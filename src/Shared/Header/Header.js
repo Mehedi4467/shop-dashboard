@@ -4,7 +4,7 @@ import userImg from '../../Images/user/mehedi.jpg';
 import CustomLink from '../../Pages/Menu/CustomLink/CustomLink';
 import './Header.css';
 import Notification from './Notification/Notification';
-const Header = () => {
+const Header = ({ showHide, setShowHide }) => {
     const [showUser, setShowUser] = useState(false);
     const [notificationShow, setNotificationShow] = useState(false);
     const [notifications, setNotifications] = useState([]);
@@ -36,7 +36,7 @@ const Header = () => {
             <div className='container mx-auto md:px-0 px-10 sm:px-10 py-3'>
                 <div className='grid grid-cols-2 justify-between items-center'>
                     <div className='flex items-center'>
-                        <i className="mr-4 text-xl cursor-pointer md:hidden fa-solid fa-bars"></i>
+                        <i onClick={() => setShowHide(!showHide)} className={`mr-4 text-xl cursor-pointer md:hidden ${showHide ? 'fa-solid fa-xmark' : 'fa-solid fa-bars'}`}></i>
                         <img className='cursor-pointer' src={logo} width='50' height='50' alt="Dashboard logo" />
                     </div>
                     <div className='flex justify-end items-center image-body'>
