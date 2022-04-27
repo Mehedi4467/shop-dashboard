@@ -12,7 +12,7 @@ const Menu = () => {
                 <CustomLink className="py-3 rounded-lg text-lg w-100 block hover:bg-slate-100" to='/customers'> <i className="ml-4 fa-solid fa-user-group"></i> Customers</CustomLink>
                 <CustomLink className="py-3 rounded-lg text-lg w-100 block hover:bg-slate-100" to='/orders'> <i className="ml-4 fa-solid fa-compass"></i> Orders</CustomLink>
                 <CustomLink className="py-3 rounded-lg text-lg w-100 block hover:bg-slate-100" to='/coupons'> <i className="ml-4 fa-solid fa-gift"></i> Coupons</CustomLink>
-                <CustomLink className="py-3 rounded-lg text-lg w-100 block hover:bg-slate-100" to='/staff'> <i className="ml-4 fa-solid fa-user"></i> Our Staff</CustomLink>
+                <CustomLink className="py-3 rounded-lg text-lg w-100 block hover:bg-slate-100" to='/staff'> <i className="ml-4 fa-solid fa-user"></i> Merchant</CustomLink>
                 <CustomLink className="py-3 rounded-lg text-lg w-100 block hover:bg-slate-100" to='/setting'> <i className="ml-4 fa-solid fa-gear"></i>  Setting</CustomLink>
 
                 <div className=',l-4 pb-16 mt-10'>
