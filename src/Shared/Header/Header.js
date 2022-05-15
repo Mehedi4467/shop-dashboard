@@ -3,12 +3,15 @@ import logo from '../../Images/logo/logo.png';
 import userImg from '../../Images/user/mehedi.jpg';
 import CustomLink from '../../Pages/Menu/CustomLink/CustomLink';
 import './Header.css';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import Notification from './Notification/Notification';
+import auth from '../../firebase.init';
+import { signOut } from 'firebase/auth';
 const Header = ({ showHide, setShowHide }) => {
     const [showUser, setShowUser] = useState(false);
     const [notificationShow, setNotificationShow] = useState(false);
     const [notifications, setNotifications] = useState([]);
-
+    const [user] = useAuthState(auth);
     const handelUser = () => {
         setShowUser(!showUser);
         setNotificationShow(false);
@@ -70,10 +73,10 @@ const Header = ({ showHide, setShowHide }) => {
                                 <i className="fa-solid fa-gear"></i>
                                 <p>Edit Profile</p>
                             </div>
-                            <div className='flex items-center gap-3 mb-3 px-3 py-2 rounded cursor-pointer hover:bg-slate-100'>
+                            {user && <div onClick={() => signOut(auth)} className='flex items-center gap-3 mb-3 px-3 py-2 rounded cursor-pointer hover:bg-slate-100'>
                                 <i className="text-zic-400 fa-solid fa-arrow-right-from-bracket"></i>
                                 <p>Log Out</p>
-                            </div>
+                            </div>}
 
                         </div>
                     </div>

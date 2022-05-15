@@ -1,5 +1,6 @@
 import React from 'react';
 import Pagination from '../../Shared/Pagination/Pagination';
+import CategoryModal from './CategoryModal';
 
 const Category = () => {
     const orderList = [
@@ -19,7 +20,7 @@ const Category = () => {
             <div className='md:flex gap-4 justify-center mt-5  items-center '>
                 <div className='flex justify-center order-1 md:order-2 gap-4 mb-8 md:mb-0'>
 
-                    <button className='bg-green-400 hover:bg-green-500 h-12 w-52 text-white font-bold rounded-full '>Add Category</button>
+                    <label for="category-modal" className='btn  border-none bg-green-400 hover:bg-green-500 h-12 w-52 text-sm md:text-lg text-white font-bold rounded-full '><i className="mr-2 fas fa-plus-circle"></i> Add Category</label>
                 </div>
 
                 <div className='relative bg-white p-4 w-full order-2 md:order-1 rounded-full'>
@@ -113,6 +114,10 @@ const Category = () => {
                 <i className="text-blue-600  text-lg fa-solid fa-plus"></i>
 
             </div>
+
+            <CategoryModal></CategoryModal>
+
+
         </div >
     );
 };
