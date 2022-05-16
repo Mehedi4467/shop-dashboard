@@ -20,7 +20,7 @@ const Category = () => {
             <div className='md:flex gap-4 justify-center mt-5  items-center '>
                 <div className='flex justify-center order-1 md:order-2 gap-4 mb-8 md:mb-0'>
 
-                    <label for="category-modal" className='btn  border-none bg-green-400 hover:bg-green-500 h-12 w-52 text-sm md:text-lg text-white font-bold rounded-full '><i className="mr-2 fas fa-plus-circle"></i> Add Category</label>
+                    <label htmlFor="category-modal" className='btn  border-none bg-green-400 hover:bg-green-500 h-12 w-52 text-sm md:text-lg text-white font-bold rounded-full '><i className="mr-2 fas fa-plus-circle"></i> Add Category</label>
                 </div>
 
                 <div className='relative bg-white p-4 w-full order-2 md:order-1 rounded-full'>

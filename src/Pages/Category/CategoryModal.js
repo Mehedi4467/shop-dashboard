@@ -1,20 +1,84 @@
 import React, { useState } from 'react';
+import { useQuery } from 'react-query';
+import Spinner from '../../Shared/Spinner/Spinner';
 
 const CategoryModal = () => {
     const [existing, setExisting] = useState(false);
+
+    const [subCategoryItem, setSubCategoryItem] = useState([]);
+
+
+
+
+    const { isLoading, error, data, refetch } = useQuery('categories', () =>
+        fetch('http://localhost:5000/category').then(res =>
+            res.json()
+        )
+    )
+
+    if (isLoading) {
+        return <Spinner></Spinner>
+    }
+
+    const handelSubCategory = (id) => {
+        const exsitingSub = data.categories.find(e => e._id === id);
+        setSubCategoryItem(exsitingSub?.category)
+    }
 
     const handelAddCategory = (event) => {
         event.preventDefault();
         const type = event.target.type.value;
         const category = event.target.category.value;
         const subCategory = event.target.subCategory.value;
+        const categorySlug = category.replace(/\s/g, '-');
 
-        const Category = { type, category, Category: [{ subCategory: [subCategory] }] };
 
-        console.log(Category)
+
+
+        const selectItem = data.categories.find(i => i._id === type)
+        const newCategory = [...selectItem.category];
+        console.log("newCategory", newCategory)
+        const category2 = newCategory.find(e => e.name === category)
+        console.log(category2)
+        if (!category2) {
+            newCategory.push({ name: category, slug: categorySlug, img: '', subCategory: [subCategory] });
+            console.log(newCategory);
+        }
+        else {
+            newCategory.subCategory.push(subCategory)
+        }
+        console.log("final array", newCategory)
+
+
+
+        // const Category = {
+
+        //     name: type,
+        //     category: [
+        //         {
+        //             name: category,
+        //             slug: categorySlug,
+        //             img: '',
+        //             subCategory: [
+        //                 subCategory,
+        //             ]
+        //         }]
+        // };
+
+        fetch(`http://localhost:5000/category/${type}`, {
+            method: "PUT",
+            headers: {
+                'content-type': 'application/json',
+            },
+            body: JSON.stringify({ newCategory })
+        })
+            .then(res => res.json())
+            .then(data => console.log(data));
+
     }
     return (
         <div>
+
             <input type="checkbox" id="category-modal" className="modal-toggle" />
             <div className="modal">
                 <div className="modal-box relative">
@@ -22,13 +86,12 @@ const CategoryModal = () => {
                     <h3 className="text-lg font-bold text-center text-blue-500">Add category</h3>
                     <form onSubmit={handelAddCategory} className='py-6'>
                         <div className="form-control w-full">
-                            <select defaultValue={'DEFAULT'} name="type" className="select select-warning w-full" required>
+                            <select onClick={(e) => handelSubCategory(e.target.value)} defaultValue={'DEFAULT'} name="type" className="select select-warning w-full" required>
                                 <option value="DEFAULT" disabled >Seclct Category Type</option>
-                                <option>Cheese</option>
-                                <option >Veggie</option>
-                                <option >Pepperoni</option>
-                                <option>Margherita</option>
-                                <option >Hawaiian</option>
+                                {
+                                    data.categories.map(category => <option value={category._id} key={category._id} >{category.name}</option>)
+                                }
+
                             </select>
                         </div>
 
@@ -39,11 +102,8 @@ const CategoryModal = () => {
                             </label>
                             {existing ? <select defaultValue={'DEFAULT'} name='category' className="select select-warning w-full" required>
                                 <option value="DEFAULT" disabled >Seclct Category</option>
-                                <option >Cheese</option>
-                                <option >Veggie</option>
-                                <option >Pepperoni</option>
-                                <option>Margherita</option>
-                                <option>Hawaiian</option>
+
+                                {subCategoryItem.map((category, index) => <option key={index} >{category?.name}</option>)}
                             </select> : <input type="text" name='category' placeholder="Category here" className="input input-bordered w-full" required />}
                         </div>
                         <div className="form-control w-full mb-4">
