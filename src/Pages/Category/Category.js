@@ -1,16 +1,21 @@
 import React from 'react';
+import { useQuery } from 'react-query';
 import Pagination from '../../Shared/Pagination/Pagination';
+import Spinner from '../../Shared/Spinner/Spinner';
 import CategoryModal from './CategoryModal';
 
 const Category = () => {
-    const orderList = [
-        { _id: 1, time: 'Mar 20, 2022', phone: '01584452434', address: 'Salanga,Siraganj', method: 'Nagad', amount: '120', status: 'Confirm' },
-        { _id: 2, time: 'Mar 21, 2022', phone: '01784452434', address: 'Puthiya, Pabana', method: 'Card', amount: '1200', status: 'Delivery' },
-        { _id: 3, time: 'Mar 22, 2022', phone: '01384452434', address: 'Manglo,Bandarban', method: 'Roket', amount: '1020', status: 'Pending' },
-        { _id: 4, time: 'Mar 23, 2022', phone: '01484452434', address: 'BashKhali,Bogura', method: 'Bank', amount: '100', status: 'Processing' },
-        { _id: 5, time: 'Mar 24, 2022', phone: '01984452434', address: 'Mirpur-10, Dhaka', method: 'Bkash', amount: '130', status: 'Confirm' },
-        { _id: 6, time: 'Mar 25, 2022', phone: '01884452434', address: 'Dhanmundi-32,Dhaka', method: 'Nagad', amount: '200', status: 'Delivery' },
-    ]
+
+    const { isLoading, error, data, refetch } = useQuery('categories', () =>
+        fetch('http://localhost:5000/category').then(res =>
+            res.json()
+        )
+    )
+
+    if (isLoading) {
+        return <Spinner></Spinner>
+    }
+
     return (
         <div className='container mx-auto'>
             <h1 className='text-center md:text-left mb-4 text-xl font-bold'>Category</h1>
@@ -40,23 +45,10 @@ const Category = () => {
                                 ID
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                Image
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                PARENT
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                CHILDREN
-                            </th>
-                            <th scope="col" className="px-6 py-3">
                                 TYPE
                             </th>
-                            <th scope="col" className="px-6 py-3">
-                                STATUS
-                            </th>
-
-                            <th scope="col" className="px-6 py-3">
-                                ACTIONS
+                            <th scope="col" className="px-6 py-3 text-center">
+                                SUB CATEGORY
                             </th>
 
 
@@ -64,40 +56,70 @@ const Category = () => {
                     </thead>
                     <tbody>
                         {
-                            orderList.map(order => <tr key={order._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            data.categories.map((category, index) => <tr key={category._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                 <th scope="row" className="px-6 py-4 font-medium  dark:text-white whitespace-nowrap">
-                                    9582
+                                    {index + 1}
                                 </th>
                                 <td className="px-6 py-4">
-                                    <div className='flex items-center justify-between'>
-                                        <img src="https://www.findurings.com/media/catalog/product/cache/2/image/9df78eab33525d08d6e5fb8d27136e95/1/_/1_541.jpg" width='40' alt="" />
+                                    {category.name}
+                                </td>
+                                <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+                                    <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                                        <thead className="text-xs text-gray-700 uppercase bg-[#F4F5F7] dark:bg-gray-700 dark:text-gray-400">
+                                            <tr>
 
-                                    </div>
-                                </td>
-                                <td className="px-6 py-4">
-                                    Drinks
-                                </td>
-                                <td className="px-6 py-4">
-                                    Tea,
-                                    Water,
-                                    Juice,
-                                    Coffee,
-                                    Energy Drinks,
-                                </td>
-                                <td className="px-6 py-4">
-                                    Grocery
-                                </td>
-                                <td className="px-6 py-4">
-                                    <p className='bg-orange-200 p-1 rounded-full text-center text-blue-500'>Published</p>
-                                </td >
+                                                <th scope="col" className="px-6 py-3">
+                                                    Image
+                                                </th>
+                                                <th scope="col" className="px-6 py-3">
+                                                    PARENT
+                                                </th>
 
-                                <td className="px-6 py-4">
-                                    <div className='flex justify-between'>
-                                        <i className=" cursor-pointer fa-solid fa-pen-to-square"></i>
-                                        <i className="cursor-pointer fa-solid fa-trash-can"></i>
-                                    </div>
-                                </td >
+                                                <th scope="col" className="px-6 py-3">
+                                                    CHILD
+                                                </th>
+                                                <th scope="col" className="px-6 py-3">
+                                                    STATUS
+                                                </th>
 
+                                                <th scope="col" className="px-6 py-3 text-center">
+                                                    ACTIONS
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        {category.category.map(e =>
+                                            <tbody>
+
+                                                <td className="px-6 py-4">
+                                                    <div className='flex items-center justify-between'>
+                                                        <img src="https://www.findurings.com/media/catalog/product/cache/2/image/9df78eab33525d08d6e5fb8d27136e95/1/_/1_541.jpg" width='40' alt="" />
+                                                    </div>
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    {e.name}
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    {e?.subCategory.map(sub => sub?.name + ",")}
+
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    <div class="form-control">
+                                                        <label class="label cursor-pointer">
+                                                            <input type="checkbox" class="toggle toggle-primary" />
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    <div className='flex justify-around'>
+                                                        <i className=" cursor-pointer fa-solid fa-pen-to-square"></i>
+                                                        <i className="cursor-pointer fa-solid fa-trash-can"></i>
+                                                    </div>
+                                                </td >
+                                            </tbody>
+                                        )}
+
+                                    </table>
+                                </div>
                             </tr >)
                         }
 
@@ -115,7 +137,7 @@ const Category = () => {
 
             </div>
 
-            <CategoryModal></CategoryModal>
+            <CategoryModal refetch={refetch} data={data} isLoading={isLoading} ></CategoryModal>
 
 
         </div >
