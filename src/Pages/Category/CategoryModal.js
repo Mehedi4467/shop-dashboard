@@ -31,23 +31,27 @@ const CategoryModal = () => {
         const category = event.target.category.value;
         const subCategory = event.target.subCategory.value;
         const categorySlug = category.replace(/\s/g, '-');
+        const subCategorySlug = subCategory.replace(/\s/g, '-');
 
 
 
 
         const selectItem = data.categories.find(i => i._id === type)
         const newCategory = [...selectItem.category];
-        console.log("newCategory", newCategory)
+
         const category2 = newCategory.find(e => e.name === category)
-        console.log(category2)
+
         if (!category2) {
             newCategory.push({ name: category, slug: categorySlug, img: '', subCategory: [subCategory] });
-            console.log(newCategory);
+
         }
         else {
-            newCategory.subCategory.push(subCategory)
+
+            const index = newCategory.findIndex(x => x.name === category);
+            newCategory[index].subCategory.push({ name: subCategory, slug: subCategorySlug })
+            console.log("newCategory", newCategory)
         }
-        console.log("final array", newCategory)
+
 
 
 
@@ -65,15 +69,15 @@ const CategoryModal = () => {
         //         }]
         // };
 
-        fetch(`http://localhost:5000/category/${type}`, {
-            method: "PUT",
-            headers: {
-                'content-type': 'application/json',
-            },
-            body: JSON.stringify({ newCategory })
-        })
-            .then(res => res.json())
-            .then(data => console.log(data));
+        //     fetch(`http://localhost:5000/category/${type}`, {
+        //         method: "PUT",
+        //         headers: {
+        //             'content-type': 'application/json',
+        //         },
+        //         body: JSON.stringify({ newCategory })
+        //     })
+        //         .then(res => res.json())
+        //         .then(data => console.log(data));
 
     }
     return (
