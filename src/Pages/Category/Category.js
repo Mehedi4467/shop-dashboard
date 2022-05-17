@@ -1,5 +1,6 @@
 import React from 'react';
 import { useQuery } from 'react-query';
+import { toast } from 'react-toastify';
 import Pagination from '../../Shared/Pagination/Pagination';
 import Spinner from '../../Shared/Spinner/Spinner';
 import CategoryModal from './CategoryModal';
@@ -14,6 +15,28 @@ const Category = () => {
 
     if (isLoading) {
         return <Spinner></Spinner>
+    }
+
+    const handelStatus = (id, index, value, name, slug) => {
+
+        const status = { index, value, category: name, slug }
+        fetch(`http://localhost:5000/categoryStatus/${id}`, {
+            method: "PUT",
+            headers: {
+                'content-type': 'application/json',
+            },
+            body: JSON.stringify({ status })
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.acknowledged) {
+                    toast("Successful added category");
+
+                    refetch();
+                } else {
+                    toast.error("Some Problem Occurs! Please Reload Browser");
+                }
+            });
     }
 
     return (
@@ -63,7 +86,7 @@ const Category = () => {
                                 <td className="px-6 py-4">
                                     {category.name}
                                 </td>
-                                <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+                                <td className="relative overflow-x-auto shadow-md sm:rounded-lg">
                                     <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                         <thead className="text-xs text-gray-700 uppercase bg-[#F4F5F7] dark:bg-gray-700 dark:text-gray-400">
                                             <tr>
@@ -87,25 +110,31 @@ const Category = () => {
                                                 </th>
                                             </tr>
                                         </thead>
-                                        {category.category.map(e =>
-                                            <tbody>
+                                        {category.category.map((e, indexCategory) =>
+                                            <tbody key={indexCategory}>
 
                                                 <td className="px-6 py-4">
                                                     <div className='flex items-center justify-between'>
-                                                        <img src="https://www.findurings.com/media/catalog/product/cache/2/image/9df78eab33525d08d6e5fb8d27136e95/1/_/1_541.jpg" width='40' alt="" />
+                                                        <img src={e.img} width='40' alt="" />
                                                     </div>
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     {e.name}
                                                 </td>
-                                                <td className="px-6 py-4">
-                                                    {e?.subCategory.map(sub => sub?.name + ",")}
+                                                <td className="px-6 py-4 w-20">
+                                                    {/* {e?.subCategory.map((sub, index) => <p key={index}>{index + 1}</p>)} */}
+                                                    {e?.subCategory.length}
 
                                                 </td>
                                                 <td className="px-6 py-4">
-                                                    <div class="form-control">
-                                                        <label class="label cursor-pointer">
-                                                            <input type="checkbox" class="toggle toggle-primary" />
+                                                    <div className="form-control">
+                                                        <label className="label cursor-pointer">
+                                                            <input onClick={(event) => {
+                                                                handelStatus(category._id, indexCategory, event.target.checked, e.name, e.slug)
+                                                            }
+                                                            } type="checkbox" className="toggle toggle-primary" checked={e.status} />
+
+
                                                         </label>
                                                     </div>
                                                 </td>
@@ -119,7 +148,7 @@ const Category = () => {
                                         )}
 
                                     </table>
-                                </div>
+                                </td>
                             </tr >)
                         }
 

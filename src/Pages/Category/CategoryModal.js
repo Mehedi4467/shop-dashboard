@@ -31,21 +31,21 @@ const CategoryModal = ({ refetch, isLoading, data }) => {
         if (category === "DEFAULT") {
             toast.error("Please Select Valid Category");
         } else {
-            const selectItem = data.categories.find(i => i._id === type)
-            const newCategory = [...selectItem.category];
+            const selectItem = data?.categories.find(i => i._id === type)
+            const newCategory = [...selectItem?.category];
 
             const category2 = newCategory.find(e => e.name === category)
             console.log(category2)
 
             if (!category2) {
-                newCategory.push({ name: category, slug: categorySlug, img: img, subCategory: [{ name: subCategory, slug: subCategorySlug }] });
-                console.log("newCategory", newCategory)
+                newCategory.push({ name: category, status: true, slug: categorySlug, img: img, subCategory: [{ name: subCategory, slug: subCategorySlug }] });
+
             }
             else {
 
                 const index = newCategory.findIndex(x => x.name === category);
                 newCategory[index].subCategory.push({ name: subCategory, slug: subCategorySlug })
-                console.log("newCategory", newCategory)
+
             }
 
 
@@ -99,7 +99,7 @@ const CategoryModal = ({ refetch, isLoading, data }) => {
                             {existing ? <select defaultValue={'DEFAULT'} name='category' className="select select-warning w-full" required>
                                 <option value="DEFAULT" disabled >Seclct Category</option>
 
-                                {subCategoryItem.map((category, index) => <option key={index} >{category?.name}</option>)}
+                                {subCategoryItem?.map((category, index) => <option key={index} >{category?.name}</option>)}
                             </select> : <input type="text" name='category' placeholder="Category here" className="input input-bordered w-full" required />}
                         </div>
                         <div className={`form-control w-full mb-4 ${existing && 'hidden'}`}>
