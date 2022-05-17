@@ -6,6 +6,7 @@ import {
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import auth from "../../firebase.init";
+import userToken from "../../Hooks/useToken";
 import logoBlack from "../../Images/logo/logo.png";
 import Spinner from "../../Shared/Spinner/Spinner";
 
@@ -16,27 +17,35 @@ const Registration = () => {
     useCreateUserWithEmailAndPassword(auth);
   const [updateProfile] = useUpdateProfile(auth);
   const [Check, setCheck] = useState(true);
+  const [phone, setPhone] = useState('');
+
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
   let location = useLocation();
+
   let from = location.state?.from?.pathname || "/";
   const navigate = useNavigate();
   const onSubmit = async (data) => {
     const displayName = data.name;
     const email = data.email;
+    const phone = data.phone;
     const password = data.password;
     await createUserWithEmailAndPassword(email, password);
     await updateProfile({ displayName });
+    await setPhone(phone);
+
   };
 
+  const [token] = userToken(user, phone);
+  console.log('this', user)
   useEffect(() => {
-    if (user) {
+    if (token) {
       navigate(from, { replace: true });
     }
-  }, [navigate, from, user]);
+  }, [navigate, from, token]);
   if (loading) {
     return <Spinner></Spinner>;
   }
@@ -117,7 +126,7 @@ const Registration = () => {
                   <span className="label-text">Phone Number</span>
                 </label>
                 <input
-                  type="text"
+                  type="phoneNumber"
                   placeholder="Phone Number"
                   className="input input-bordered input-warning w-full"
                   {...register("phone", {

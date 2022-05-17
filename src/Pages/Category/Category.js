@@ -30,7 +30,7 @@ const Category = () => {
             .then(res => res.json())
             .then(data => {
                 if (data.acknowledged) {
-                    toast("Successful added category");
+                    toast(`Category ${value}`);
 
                     refetch();
                 } else {
