@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import Pagination from '../../Shared/Pagination/Pagination';
 import Spinner from '../../Shared/Spinner/Spinner';
 import Merchant from './Merchant';
+import DeleteModalUser from './DeleteModalUser';
+import MakeAdmin from './MakeAdmin';
+
 
 const Staff = () => {
+    const [openModal, setOpenModal] = useState(null)
 
     const { isLoading, error, data, refetch } = useQuery('categories', () =>
         fetch('http://localhost:5000/adminUser', {
@@ -12,8 +16,10 @@ const Staff = () => {
             headers: {
                 authorization: `Bearer ${localStorage.getItem('accessToken')}`
             }
-        }).then(res =>
-            res.json()
+        }).then(res => {
+            console.log(res);
+            return res.json();
+        }
         )
     )
 
@@ -64,18 +70,25 @@ const Staff = () => {
                                 ACTIONS
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                MAKE ADMIN
+                                ROLE
                             </th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            data.map((user, index) => <Merchant key={user._id} index={index} user={user}></Merchant>)
+                            data.map((user, index) => <Merchant key={user._id} index={index} user={user} setOpenModal={setOpenModal}></Merchant>)
                         }
                     </tbody >
                 </table >
 
             </div >
+            {
+                openModal && <DeleteModalUser openModal={openModal}></DeleteModalUser>
+            }
+
+            {
+                openModal && <MakeAdmin openModal={openModal} setOpenModal={setOpenModal} refetch={refetch}></MakeAdmin>
+            }
             <div className='flex justify-center md:justify-end'>
                 <Pagination></Pagination>
             </div>

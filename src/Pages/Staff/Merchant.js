@@ -1,7 +1,7 @@
 import React from 'react';
 
-const Merchant = ({ user, index }) => {
-    const { name, email, phone } = user;
+const Merchant = ({ user, index, setOpenModal }) => {
+    const { name, email, phone, role } = user;
     return (
 
 
@@ -36,11 +36,14 @@ const Merchant = ({ user, index }) => {
                 <div className='flex justify-between'>
 
                     <i className="cursor-pointer fa-solid fa-eye"></i>
-                    <i className="cursor-pointer fa-solid fa-trash-can"></i>
+                    <label onClick={() => setOpenModal(user)} for="delete-modal-user"> <i className="cursor-pointer fa-solid fa-trash-can"></i></label>
+
                 </div>
             </td >
             <td className="px-6 py-4">
-                <button className="btn btn-xs">Admin</button>
+                {
+                    role ? <p>Admin</p> : <label onClick={() => setOpenModal(user)} for="makeAdmin-modal-user" className="btn btn-xs">Admin ?</label>
+                }
             </td >
 
         </tr >
