@@ -73,7 +73,10 @@ const Header = ({ showHide, setShowHide }) => {
                                 <i className="fa-solid fa-gear"></i>
                                 <p>Edit Profile</p>
                             </div>
-                            {user && <div onClick={() => signOut(auth)} className='flex items-center gap-3 mb-3 px-3 py-2 rounded cursor-pointer hover:bg-slate-100'>
+                            {user && <div onClick={() => {
+                                signOut(auth);
+                                localStorage.removeItem('accessToken');
+                            }} className='flex items-center gap-3 mb-3 px-3 py-2 rounded cursor-pointer hover:bg-slate-100'>
                                 <i className="text-zic-400 fa-solid fa-arrow-right-from-bracket"></i>
                                 <p>Log Out</p>
                             </div>}

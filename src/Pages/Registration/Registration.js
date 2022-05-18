@@ -17,7 +17,7 @@ const Registration = () => {
     useCreateUserWithEmailAndPassword(auth);
   const [updateProfile] = useUpdateProfile(auth);
   const [Check, setCheck] = useState(true);
-  const [phone, setPhone] = useState('');
+
 
   const {
     register,
@@ -31,16 +31,15 @@ const Registration = () => {
   const onSubmit = async (data) => {
     const displayName = data.name;
     const email = data.email;
-    const phone = data.phone;
     const password = data.password;
     await createUserWithEmailAndPassword(email, password);
     await updateProfile({ displayName });
-    await setPhone(phone);
+
 
   };
 
-  const [token] = userToken(user, phone);
-  console.log('this', user)
+  const [token] = userToken(user);
+
   useEffect(() => {
     if (token) {
       navigate(from, { replace: true });

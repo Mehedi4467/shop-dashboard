@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react"
 
-const useToken = (user, phone) => {
+const useToken = (user) => {
     const [token, setToken] = useState('');
     useEffect(() => {
-        console.log(user)
+
         const email = user?.user.email;
         const name = user?.user.displayName;
-        const currentUser = { email: email, phone: phone, name: name }
+        const status = user?.user.emailVerified;
+        const currentUser = { email: email, name: name, status: status }
         console.log(currentUser);
-        if (email && phone && name) {
+        if (email && name) {
             fetch(`http://localhost:5000/adminUser/${email}`, {
                 method: "PUT",
                 headers: {
@@ -19,11 +20,14 @@ const useToken = (user, phone) => {
                 .then(res => res.json())
                 .then(data => {
                     console.log(data);
+                    const accessToken = data.token;
+                    localStorage.setItem("accessToken", accessToken);
+                    setToken(accessToken)
                 })
 
 
         }
-    }, [user, phone])
+    }, [user])
 
     return [token];
 }

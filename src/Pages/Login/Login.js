@@ -10,6 +10,7 @@ import auth from "../../firebase.init";
 import Spinner from "../../Shared/Spinner/Spinner";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import useToken from "../../Hooks/useToken";
 
 const Login = () => {
 
@@ -19,6 +20,7 @@ const Login = () => {
 
     const [signInWithEmailAndPassword, user, loading, error] =
         useSignInWithEmailAndPassword(auth);
+    const [token] = useToken(user)
     const {
         register,
         formState: { errors },
@@ -30,11 +32,12 @@ const Login = () => {
         signInWithEmailAndPassword(email, password);
     };
 
+
     useEffect(() => {
-        if (user) {
+        if (token) {
             navigate(from, { replace: true });
         }
-    }, [navigate, from, user]);
+    }, [navigate, from, token]);
 
     if (loading) {
         return <Spinner></Spinner>;
