@@ -9,9 +9,6 @@ const CategoryModal = ({ refetch, isLoading, data }) => {
 
 
 
-    if (isLoading) {
-        return <Spinner></Spinner>
-    }
 
     const handelSubCategory = (id) => {
         const exsitingSub = data.categories.find(e => e._id === id);
@@ -72,6 +69,11 @@ const CategoryModal = ({ refetch, isLoading, data }) => {
     }
 
 
+    if (isLoading) {
+        return <Spinner></Spinner>
+    }
+
+
     return (
         <div>
 
@@ -85,7 +87,7 @@ const CategoryModal = ({ refetch, isLoading, data }) => {
                             <select onClick={(e) => handelSubCategory(e.target.value)} defaultValue={'DEFAULT'} name="type" className="select select-warning w-full" required>
 
                                 {
-                                    data.categories.map(category => <option value={category._id} key={category._id} >{category.name}</option>)
+                                    data?.categories?.map(category => <option value={category._id} key={category._id} >{category.name}</option>)
                                 }
 
                             </select>

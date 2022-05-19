@@ -79,7 +79,7 @@ const Category = () => {
                     </thead>
                     <tbody>
                         {
-                            data.categories.map((category, index) => <tr key={category._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            data?.categories?.map((category, index) => <tr key={category._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                 <th scope="row" className="px-6 py-4 font-medium  dark:text-white whitespace-nowrap">
                                     {index + 1}
                                 </th>
@@ -110,7 +110,7 @@ const Category = () => {
                                                 </th>
                                             </tr>
                                         </thead>
-                                        {category.category.map((e, indexCategory) =>
+                                        {category?.category?.map((e, indexCategory) =>
                                             <tbody key={indexCategory}>
 
                                                 <td className="px-6 py-4">

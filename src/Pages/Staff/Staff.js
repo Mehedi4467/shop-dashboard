@@ -10,7 +10,7 @@ import MakeAdmin from './MakeAdmin';
 const Staff = () => {
     const [openModal, setOpenModal] = useState(null)
 
-    const { isLoading, error, data, refetch } = useQuery('categories', () =>
+    const { isLoading, error, data, refetch } = useQuery('user', () =>
         fetch('http://localhost:5000/adminUser', {
             method: 'GET',
             headers: {
@@ -26,6 +26,7 @@ const Staff = () => {
 
     if (isLoading) {
         return <Spinner></Spinner>
+
     }
 
 
@@ -76,7 +77,7 @@ const Staff = () => {
                     </thead>
                     <tbody>
                         {
-                            data.map((user, index) => <Merchant key={user._id} index={index} user={user} setOpenModal={setOpenModal}></Merchant>)
+                            data?.map((user, index) => <Merchant key={user._id} index={index} user={user} setOpenModal={setOpenModal}></Merchant>)
                         }
                     </tbody >
                 </table >
