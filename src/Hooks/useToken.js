@@ -4,12 +4,10 @@ const useToken = (user) => {
     const [token, setToken] = useState('');
     useEffect(() => {
 
-        const email = user?.user.email;
-        const name = user?.user.displayName;
-        const status = user?.user.emailVerified;
-        const currentUser = { email: email, name: name, status: status }
-        console.log(currentUser);
-        if (email && name) {
+        const email = user?.user?.email;
+        const name = user?.user?.displayName;
+        const currentUser = { email: email, name: name }
+        if (email) {
             fetch(`http://localhost:5000/adminUser/${email}`, {
                 method: "PUT",
                 headers: {

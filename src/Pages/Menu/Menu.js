@@ -2,22 +2,28 @@ import { signOut } from 'firebase/auth';
 import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
+import useAdmin from '../../Hooks/useAdmin';
 import CustomLink from './CustomLink/CustomLink';
 import './Menu.css';
 
 
 const Menu = () => {
     const [user] = useAuthState(auth);
+    const [admin] = useAdmin(user);
     return (
-        <div className='mega-menu'>
-            <div className='py-4 px-2 shadow-lg rounded-lg'>
+        <div className='h-95 mega-menu'>
+            <div className='py-4 h-screen px-2 shadow-lg rounded-lg'>
                 <CustomLink className="py-3 rounded-lg text-lg w-100 block hover:bg-slate-100" to='/'> <i className="ml-4 fa-solid fa-house"></i> Home</CustomLink>
                 <CustomLink className="py-3 rounded-lg text-lg w-100 block hover:bg-slate-100" to='/products'> <i className="ml-4 fa-solid fa-bag-shopping"></i> Products</CustomLink>
-                <CustomLink className="py-3 rounded-lg text-lg w-100 block hover:bg-slate-100" to='/category'> <i className="ml-4 fa-solid fa-align-left"></i> Category</CustomLink>
-                <CustomLink className="py-3 rounded-lg text-lg w-100 block hover:bg-slate-100" to='/customers'> <i className="ml-4 fa-solid fa-user-group"></i> Customers</CustomLink>
+                {
+                    admin && <CustomLink className="py-3 rounded-lg text-lg w-100 block hover:bg-slate-100" to='/category'> <i className="ml-4 fa-solid fa-align-left"></i> Category</CustomLink>
+                }
+                {
+                    admin && <CustomLink className="py-3 rounded-lg text-lg w-100 block hover:bg-slate-100" to='/customers'> <i className="ml-4 fa-solid fa-user-group"></i> Customers</CustomLink>
+                }
                 <CustomLink className="py-3 rounded-lg text-lg w-100 block hover:bg-slate-100" to='/orders'> <i className="ml-4 fa-solid fa-compass"></i> Orders</CustomLink>
                 <CustomLink className="py-3 rounded-lg text-lg w-100 block hover:bg-slate-100" to='/coupons'> <i className="ml-4 fa-solid fa-gift"></i> Coupons</CustomLink>
-                <CustomLink className="py-3 rounded-lg text-lg w-100 block hover:bg-slate-100" to='/staff'> <i className="ml-4 fa-solid fa-user"></i> Merchant</CustomLink>
+                {admin && <CustomLink className="py-3 rounded-lg text-lg w-100 block hover:bg-slate-100" to='/staff'> <i className="ml-4 fa-solid fa-user"></i> Merchant</CustomLink>}
                 <CustomLink className="py-3 rounded-lg text-lg w-100 block hover:bg-slate-100" to='/setting'> <i className="ml-4 fa-solid fa-gear"></i>  Setting</CustomLink>
 
                 <div className=',l-4 pb-16 mt-10'>

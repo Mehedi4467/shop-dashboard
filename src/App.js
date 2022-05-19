@@ -29,7 +29,7 @@ function App() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-5">
-        <div className={`md:block col-span-1 ${showHide ? 'block' : 'hidden'}`}>
+        <div className={`md:block  col-span-1 ${showHide ? 'block' : 'hidden'}`}>
           <Menu ></Menu>
         </div>
         <div className="p-10 col-span-4 bg-[#F9FAFB]">

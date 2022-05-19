@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import {
+
   useCreateUserWithEmailAndPassword,
   useUpdateProfile,
 } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import auth from "../../firebase.init";
 import userToken from "../../Hooks/useToken";
 import logoBlack from "../../Images/logo/logo.png";
@@ -18,15 +19,14 @@ const Registration = () => {
   const [updateProfile] = useUpdateProfile(auth);
   const [Check, setCheck] = useState(true);
 
-
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
-  let location = useLocation();
 
-  let from = location.state?.from?.pathname || "/";
+  const [token] = userToken(user);
+
   const navigate = useNavigate();
   const onSubmit = async (data) => {
     const displayName = data.name;
@@ -35,19 +35,18 @@ const Registration = () => {
     await createUserWithEmailAndPassword(email, password);
     await updateProfile({ displayName });
 
-
   };
-
-  const [token] = userToken(user);
 
   useEffect(() => {
     if (token) {
-      navigate(from, { replace: true });
+      navigate('/');
     }
-  }, [navigate, from, token]);
+  }, [navigate, token]);
+
   if (loading) {
     return <Spinner></Spinner>;
   }
+
   return (
     <div className=" flex justify-center items-center">
       <div className="card w-full md:w-1/2  bg-base-100 shadow-xl">
