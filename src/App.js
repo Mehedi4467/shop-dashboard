@@ -17,6 +17,8 @@ import Footer from "./Shared/Footer/Footer";
 import Header from "./Shared/Header/Header";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import RequireAdmin from "./Hooks/RequireAdmin/RequireAdmin";
+
 
 
 
@@ -38,11 +40,11 @@ function App() {
             <Route path="/registration" element={<Registration></Registration>}></Route>
             <Route path='/' element={<RequireAuth><Dashboard></Dashboard></RequireAuth>}></Route>
             <Route path='/products' element={<RequireAuth><Products></Products></RequireAuth>}></Route>
-            <Route path='/category' element={<RequireAuth><Category></Category></RequireAuth>}></Route>
-            <Route path='/customers' element={<RequireAuth><Customers></Customers></RequireAuth>}></Route>
+            <Route path='/category' element={<RequireAuth><RequireAdmin><Category></Category></RequireAdmin></RequireAuth>}></Route>
+            <Route path='/customers' element={<RequireAuth><RequireAdmin><Customers></Customers></RequireAdmin></RequireAuth>}></Route>
             <Route path='/orders' element={<RequireAuth><Orders></Orders></RequireAuth>}></Route>
             <Route path='/coupons' element={<RequireAuth><Coupons></Coupons></RequireAuth>}></Route>
-            <Route path='/staff' element={<RequireAuth><Staff></Staff></RequireAuth>}></Route>
+            <Route path='/staff' element={<RequireAuth><RequireAdmin><Staff></Staff></RequireAdmin></RequireAuth>}></Route>
             <Route path='/setting' element={<RequireAuth><Setting></Setting></RequireAuth>}></Route>
             <Route path="*" element={<RequireAuth><NotFound></NotFound></RequireAuth>}></Route>
           </Routes>
