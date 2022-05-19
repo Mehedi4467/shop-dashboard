@@ -26,17 +26,17 @@ const MakeAdmin = ({ openModal, setOpenModal, refetch }) => {
     }
     return (
         <div>
-            <input type="checkbox" id="makeAdmin-modal-user" class="modal-toggle" />
-            <div class="modal modal-bottom sm:modal-middle">
-                <div class="modal-box">
-                    <h3 class="font-bold text-lg"> Do you want to be the admin of <span className='text-red-600'>{openModal.name}</span> ?</h3>
-                    <p class="py-4"><span className='text-red-600'>Discretion: </span> {`If you admin ${openModal.name} then he will get all access to your dashboard. And he/she also edit User, Product and Orders !`}</p>
+            <input type="checkbox" id="makeAdmin-modal-user" className="modal-toggle" />
+            <div className="modal modal-bottom sm:modal-middle">
+                <div className="modal-box">
+                    <h3 className="font-bold text-lg"> Do you want to be the admin of <span className='text-red-600'>{openModal.name}</span> ?</h3>
+                    <p className="py-4"><span className='text-red-600'>Discretion: </span> {`If you admin ${openModal.name} then he will get all access to your dashboard. And he/she also edit User, Product and Orders !`}</p>
                     <div className='flex justify-end'>
-                        <div class="modal-action mr-4">
-                            <label onClick={makeAdmin} class="btn bg-red-500">Make Admin</label>
+                        <div className="modal-action mr-4">
+                            <label onClick={makeAdmin} className="btn bg-red-500">Make Admin</label>
                         </div>
-                        <div class="modal-action">
-                            <label for="makeAdmin-modal-user" class="btn">Cencal</label>
+                        <div className="modal-action">
+                            <label for="makeAdmin-modal-user" className="btn">Cencal</label>
                         </div>
                     </div>
                 </div>

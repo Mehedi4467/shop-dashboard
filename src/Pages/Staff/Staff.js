@@ -5,10 +5,13 @@ import Spinner from '../../Shared/Spinner/Spinner';
 import Merchant from './Merchant';
 import DeleteModalUser from './DeleteModalUser';
 import MakeAdmin from './MakeAdmin';
+import UpdateUser from './UpdateUser';
+import { toast } from 'react-toastify';
 
 
 const Staff = () => {
-    const [openModal, setOpenModal] = useState(null)
+    const [openModal, setOpenModal] = useState(null);
+
 
     const { isLoading, error, data, refetch } = useQuery('user', () =>
         fetch('http://localhost:5000/adminUser', {
@@ -22,6 +25,30 @@ const Staff = () => {
         }
         )
     );
+
+
+    const UserUpdatepdateStatus = (id, status) => {
+        fetch(`http://localhost:5000/adminUser/admin/accept/${id}`, {
+            method: "PUT",
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify({ status }),
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.acknowledged) {
+                    toast("You have successfully changed the status!");
+                    refetch();
+                }
+                else {
+                    toast("Oops! Something is Wrong. Please Reload your Browser")
+                }
+            })
+    }
+
+
 
     if (isLoading) {
         return <Spinner></Spinner>
@@ -76,7 +103,7 @@ const Staff = () => {
                     </thead>
                     <tbody>
                         {
-                            data?.map((user, index) => <Merchant key={user._id} index={index} user={user} setOpenModal={setOpenModal}></Merchant>)
+                            data?.map((user, index) => <Merchant key={user._id} UserUpdatepdateStatus={UserUpdatepdateStatus} index={index} user={user} setOpenModal={setOpenModal}></Merchant>)
                         }
                     </tbody >
                 </table >
@@ -89,6 +116,10 @@ const Staff = () => {
             {
                 openModal && <MakeAdmin openModal={openModal} setOpenModal={setOpenModal} refetch={refetch}></MakeAdmin>
             }
+            {
+                openModal && <UpdateUser openModal={openModal} setOpenModal={setOpenModal} refetch={refetch}></UpdateUser>
+            }
+
             <div className='flex justify-center md:justify-end'>
                 <Pagination></Pagination>
             </div>
