@@ -21,8 +21,7 @@ const Staff = () => {
             return res.json();
         }
         )
-    )
-
+    );
 
     if (isLoading) {
         return <Spinner></Spinner>
@@ -84,7 +83,7 @@ const Staff = () => {
 
             </div >
             {
-                openModal && <DeleteModalUser openModal={openModal}></DeleteModalUser>
+                openModal && <DeleteModalUser openModal={openModal} setOpenModal={setOpenModal} refetch={refetch}></DeleteModalUser>
             }
 
             {

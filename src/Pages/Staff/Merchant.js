@@ -2,6 +2,7 @@ import React from 'react';
 
 const Merchant = ({ user, index, setOpenModal }) => {
     const { name, email, phone, role } = user;
+
     return (
 
 
