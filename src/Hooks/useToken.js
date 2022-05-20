@@ -7,15 +7,14 @@ const useToken = (user) => {
     useEffect(() => {
 
         const email = user?.user?.email;
-        const name = user?.user?.displayName;
         const emailVerified = user?.user?.emailVerified;
         const creationTime = user?.user?.metadata?.creationTime;
 
         const currentUser = {
-            email: email, name: name, emailVerified: emailVerified, status: "Pending", creationTime: creationTime
+            email: email, emailVerified: emailVerified, creationTime: creationTime
         }
         console.log(currentUser)
-        if (email && name) {
+        if (email) {
             fetch(`http://localhost:5000/adminUser/${email}`, {
                 method: "PUT",
                 headers: {
@@ -31,10 +30,8 @@ const useToken = (user) => {
                     setToken(accessToken);
 
                 })
-
-
         }
-    }, [user, user?.user?.displayName])
+    }, [user])
 
     return [token];
 }

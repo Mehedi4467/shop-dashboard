@@ -30,19 +30,48 @@ const Registration = () => {
 
   const [token] = userToken(user);
   console.log(user);
-
   const navigate = useNavigate();
+
+
+
   const onSubmit = async (data) => {
     const displayName = data.name;
     const email = data.email;
     const password = data.password;
     const phoneNumber = data.phone;
+
+
     await createUserWithEmailAndPassword(email, password, phoneNumber);
     await updateProfile({ displayName });
     await sendEmailVerification();
-    toast("You have been sent an email for verification! ")
 
+
+
+    const currentUser = {
+      email: email, name: displayName, phone: phoneNumber, status: "Pending"
+    }
+
+    fetch(`http://localhost:5000/adminUser/${email}`, {
+      method: "PUT",
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(currentUser),
+    })
+      .then(res => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.acknowledged) {
+
+        }
+      });
+
+
+
+    toast("You have been sent an email for verification! ")
   };
+
+
 
   useEffect(() => {
     if (token) {
@@ -52,7 +81,11 @@ const Registration = () => {
 
   if (loading || updating || sending) {
     return <Spinner></Spinner>;
-  }
+  };
+
+
+
+
 
   return (
     <div className=" flex justify-center items-center">
@@ -69,6 +102,9 @@ const Registration = () => {
           ) : (
             ""
           )}
+
+
+
           <form onSubmit={handleSubmit(onSubmit)}>
             <div>
               <div className="form-control w-full">
