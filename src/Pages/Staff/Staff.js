@@ -11,21 +11,21 @@ import { toast } from 'react-toastify';
 
 const Staff = () => {
     const [openModal, setOpenModal] = useState(null);
-
-
+    const [search, setSearch] = useState('');
+    console.log(search.toLocaleLowerCase())
     const { isLoading, error, data, refetch } = useQuery('user', () =>
-        fetch('http://localhost:5000/adminUser', {
+        fetch(`http://localhost:5000/adminUser?name=${search.toLocaleLowerCase()} `, {
             method: 'GET',
             headers: {
                 authorization: `Bearer ${localStorage.getItem('accessToken')}`
             }
         }).then(res => {
-            console.log(res);
+
             return res.json();
         }
         )
-    );
 
+    );
 
     const UserUpdatepdateStatus = (id, status) => {
         fetch(`http://localhost:5000/adminUser/admin/accept/${id}`, {
@@ -37,7 +37,7 @@ const Staff = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
+
                 if (data.acknowledged) {
                     toast("You have successfully changed the status!");
                     refetch();
@@ -48,13 +48,13 @@ const Staff = () => {
             })
     }
 
-
-
     if (isLoading) {
         return <Spinner></Spinner>
-
     }
 
+    if (search === '') {
+        refetch();
+    }
 
     return (
         <div className='container mx-auto'>
@@ -64,10 +64,13 @@ const Staff = () => {
 
             <div className='mt-5 '>
                 <div className='relative bg-white p-4 w-full order-2 md:order-1 rounded-full'>
-                    <input className='outline-0 p-2 h-12 rounded-full pl-10 text-orange-500 text-lg border-2  hover:shadow-lg w-full' type="text" name="search" placeholder='Search Name/Email/Phone' />
-                    <div className='absolute right-10 top-[35%] cursor-pointer'>
-                        <i className="text-green-500 fa-solid fa-magnifying-glass"></i>
-                    </div>
+                    <form>
+                        <input onChange={(e) => {
+                            setSearch(e.target.value)
+                            refetch();
+                        }} type="search" className='outline-0 p-2 h-12 rounded-full px-10 text-orange-500 text-lg border-2  hover:shadow-lg w-full' name="search" placeholder='Search Shop Name' />
+
+                    </form>
                 </div>
 
             </div>

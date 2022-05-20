@@ -21,21 +21,35 @@ const UpdateUser = ({ openModal, setOpenModal, refetch }) => {
                             <div className="form-control w-full">
                                 <label className="label">
                                     <span className="label-text text-primary">Business Name</span> </label>
-                                <input type="text" name='name' value={openModal.name} placeholder="Business Name" className="input input-bordered input-primary  w-full" readOnly disabled />
+                                <button type="text" className="input input-bordered input-primary text-justify w-full" disabled > {openModal.name}</button>
                                 <label className="label">
                                 </label>
                             </div>
                             <div className="form-control w-full">
                                 <label className="label">
                                     <span className="label-text text-primary">Business Email</span> </label>
-                                <input type="text" name='name' value={openModal.email} placeholder="Business Name" className="input input-bordered input-primary  w-full" readOnly disabled />
+                                <button type="text" className="input text-justify input-bordered input-primary  w-full" disabled >{openModal.email} </button>
                                 <label className="label">
                                 </label>
                             </div>
                             <div className="form-control w-full">
                                 <label className="label">
                                     <span className="label-text text-primary">Business Phone Number</span> </label>
-                                <input type="text" name='name' value={openModal.phone} placeholder="Business Name" className="input input-bordered input-primary  w-full" readOnly disabled />
+                                <button type="text" className="input text-justify input-bordered input-primary  w-full" disabled >{openModal.phone} </button>
+                                <label className="label">
+                                </label>
+                            </div>
+                            <div className="form-control w-full">
+                                <label className="label">
+                                    <span className="label-text text-primary">Profile Status</span> </label>
+                                <button type="text" className="input text-justify input-bordered input-primary  w-full" disabled >{openModal.status} </button>
+                                <label className="label">
+                                </label>
+                            </div>
+                            <div className="form-control w-full">
+                                <label className="label">
+                                    <span className="label-text text-primary">Business Profile Create</span> </label>
+                                <button type="text" className="input text-justify input-bordered input-primary  w-full" disabled >{openModal.creationTime}</button>
                                 <label className="label">
                                 </label>
                             </div>
@@ -45,8 +59,8 @@ const UpdateUser = ({ openModal, setOpenModal, refetch }) => {
                     </div>
 
                 </div>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 };
 
