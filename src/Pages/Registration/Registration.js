@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import {
 
   useCreateUserWithEmailAndPassword,
+  useSendEmailVerification,
   useUpdateProfile,
 } from "react-firebase-hooks/auth";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import auth from "../../firebase.init";
 import userToken from "../../Hooks/useToken";
 import logoBlack from "../../Images/logo/logo.png";
@@ -16,7 +18,8 @@ const Registration = () => {
 
   const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
-  const [updateProfile] = useUpdateProfile(auth);
+  const [updateProfile, updating] = useUpdateProfile(auth);
+  const [sendEmailVerification, sending, Verifyerror] = useSendEmailVerification(auth);
   const [Check, setCheck] = useState(true);
 
   const {
@@ -26,14 +29,18 @@ const Registration = () => {
   } = useForm();
 
   const [token] = userToken(user);
+  console.log(user);
 
   const navigate = useNavigate();
   const onSubmit = async (data) => {
     const displayName = data.name;
     const email = data.email;
     const password = data.password;
-    await createUserWithEmailAndPassword(email, password);
+    const phoneNumber = data.phone;
+    await createUserWithEmailAndPassword(email, password, phoneNumber);
     await updateProfile({ displayName });
+    await sendEmailVerification();
+    toast("You have been sent an email for verification! ")
 
   };
 
@@ -43,7 +50,7 @@ const Registration = () => {
     }
   }, [navigate, token]);
 
-  if (loading) {
+  if (loading || updating || sending) {
     return <Spinner></Spinner>;
   }
 

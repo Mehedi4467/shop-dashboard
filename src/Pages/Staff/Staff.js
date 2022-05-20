@@ -103,7 +103,7 @@ const Staff = () => {
                     </thead>
                     <tbody>
                         {
-                            data?.map((user, index) => <Merchant key={user._id} UserUpdatepdateStatus={UserUpdatepdateStatus} index={index} user={user} setOpenModal={setOpenModal}></Merchant>)
+                            data?.map((user, index) => <Merchant key={user._id} UserUpdatepdateStatus={UserUpdatepdateStatus} index={index} user={user} setOpenModal={setOpenModal}></Merchant>).reverse()
                         }
                     </tbody >
                 </table >

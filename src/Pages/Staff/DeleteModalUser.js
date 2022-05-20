@@ -27,7 +27,7 @@ const deleteModalUser = ({ openModal, refetch, setOpenModal }) => {
             <input type="checkbox" id="delete-modal-user" className="modal-toggle" />
             <div className="modal modal-bottom sm:modal-middle">
                 <div className="modal-box">
-                    <h3 className="font-bold text-lg"> Are you sure you want to delete <span className='text-red-600'>{openModal.name}</span> ?</h3>
+                    <h3 className="font-bold text-lg"> Are you sure you want to delete <span className='text-red-600 capitalize'>{openModal?.role || openModal.name}</span> ?</h3>
                     <p className="py-4"><span className='text-red-600'>Discretion: </span>  {`If you delete ${openModal.name}, he will lose all access and will be canceled from Shop in Shop member.`}</p>
                     <div className='flex justify-end'>
                         <div className="modal-action mr-4">
