@@ -1,6 +1,6 @@
 
 import './Pagination.css';
-const Pagination = ({ pageCount, setPage, currentPage, setCurrentPage }) => {
+const Pagination = ({ pageCount, currentPage, setCurrentPage }) => {
 
     // const [currentPage, setCurrentPage] = useState(1);
 
@@ -42,12 +42,7 @@ const Pagination = ({ pageCount, setPage, currentPage, setCurrentPage }) => {
                         className={`w-10 h-10  transition-colors duration-150 rounded-full focus:shadow-outline hover:bg-indigo-100 ${currentPage === item ? 'bg-indigo-600 border border-r-0 border-indigo-600 text-white' : 'text-indigo-600'}`}>{item}</button>
                 ))}
 
-
-
-
                 {/* next button */}
-
-
 
                 <button
                     onClick={goToNextPage}
