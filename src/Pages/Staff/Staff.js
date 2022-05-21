@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery } from 'react-query';
-import Pagination from '../../Shared/Pagination/Pagination';
 import Spinner from '../../Shared/Spinner/Spinner';
 import Merchant from './Merchant';
 import DeleteModalUser from './DeleteModalUser';
 import MakeAdmin from './MakeAdmin';
 import UpdateUser from './UpdateUser';
 import { toast } from 'react-toastify';
+import Pagination from '../../Shared/Pagination/Pagination';
 
 
 const Staff = () => {
     const [openModal, setOpenModal] = useState(null);
     const [search, setSearch] = useState('');
     const [pageCount, setPageCount] = useState(0);
-    const [page, setPage] = useState(0)
+    // const [page, setPage] = useState(0)
+    const [currentPage, setCurrentPage] = useState(1);
 
-
-    const { isLoading, error, data, refetch } = useQuery(['user', page], () =>
-        fetch(`http://localhost:5000/adminUser?name=${search.toLocaleLowerCase()}&page=${page}`, {
+    const { isLoading, error, data, refetch } = useQuery(['user', currentPage], () =>
+        fetch(`http://localhost:5000/adminUser?name=${search.toLocaleLowerCase()}&page=${currentPage - 1}`, {
             method: 'GET',
             headers: {
                 authorization: `Bearer ${localStorage.getItem('accessToken')}`
@@ -34,7 +34,7 @@ const Staff = () => {
             .then(res => res.json())
             .then(data => {
                 const count = data.count;
-                const pages = Math.ceil(count / 2);
+                const pages = Math.ceil(count / 10);
                 setPageCount(pages);
 
 
@@ -135,7 +135,9 @@ const Staff = () => {
             }
 
             <div className='flex justify-center md:justify-end'>
-                <Pagination pageCount={pageCount} page={page} setPage={setPage} refetch={refetch}></Pagination>
+                {
+                    pageCount > 10 && <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} pageCount={pageCount} ></Pagination>
+                }
             </div>
         </div >
     );
