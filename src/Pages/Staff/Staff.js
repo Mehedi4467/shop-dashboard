@@ -16,7 +16,7 @@ const Staff = () => {
     // const [page, setPage] = useState(0)
     const [currentPage, setCurrentPage] = useState(1);
 
-    const { isLoading, error, data, refetch } = useQuery(['user', currentPage], () =>
+    const { isLoading, error, data, refetch } = useQuery(['adminUser', currentPage], () =>
         fetch(`http://localhost:5000/adminUser?name=${search.toLocaleLowerCase()}&page=${currentPage - 1}`, {
             method: 'GET',
             headers: {
@@ -67,6 +67,10 @@ const Staff = () => {
         return <Spinner></Spinner>
     }
 
+    if (error) {
+        return <h2>Something Is Wrong. Please Reload Again</h2>
+    }
+
     return (
         <div className='container mx-auto'>
             <h1 className='text-center md:text-left mb-4 text-xl font-bold'>Merchants</h1>
@@ -77,8 +81,9 @@ const Staff = () => {
                 <div className='relative bg-white p-4 w-full order-2 md:order-1 rounded-full'>
                     <form>
                         <input onChange={(e) => {
-                            setSearch(e.target.value)
                             refetch();
+                            setSearch(e.target.value)
+
                         }} type="search" className='outline-0 p-2 h-12 rounded-full px-10 text-orange-500 text-lg border-2  hover:shadow-lg w-full' name="search" placeholder='Search Shop Name' />
 
                     </form>

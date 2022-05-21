@@ -7,6 +7,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import Notification from './Notification/Notification';
 import auth from '../../firebase.init';
 import { signOut } from 'firebase/auth';
+import { Link } from 'react-router-dom';
 const Header = ({ showHide, setShowHide }) => {
     const [showUser, setShowUser] = useState(false);
     const [notificationShow, setNotificationShow] = useState(false);
@@ -69,10 +70,13 @@ const Header = ({ showHide, setShowHide }) => {
                                 <i className="fa-solid fa-house"></i>
                                 <p>Dashboard</p>
                             </CustomLink>
-                            <div className='flex items-center gap-3 mb-3 px-3 py-2 rounded cursor-pointer hover:bg-slate-100'>
-                                <i className="fa-solid fa-gear"></i>
-                                <p>Edit Profile</p>
-                            </div>
+                            {
+                                user && <div className='flex items-center gap-3 mb-3 px-3 py-2 rounded cursor-pointer hover:bg-slate-100'>
+                                    <i className="fa-solid fa-gear"></i>
+                                    <Link to='/profile'> <p>Edit Profile</p> </Link>
+
+                                </div>
+                            }
                             {user && <div onClick={() => {
                                 signOut(auth);
                                 localStorage.removeItem('accessToken');

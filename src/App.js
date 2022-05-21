@@ -18,6 +18,7 @@ import Header from "./Shared/Header/Header";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import RequireAdmin from "./Hooks/RequireAdmin/RequireAdmin";
+import Profile from "./Pages/Profile/Profile";
 
 
 
@@ -39,6 +40,7 @@ function App() {
             <Route path="/login" element={<Login />}></Route>
             <Route path="/registration" element={<Registration></Registration>}></Route>
             <Route path='/' element={<RequireAuth><Dashboard></Dashboard></RequireAuth>}></Route>
+            <Route path='/profile' element={<RequireAuth><Profile></Profile></RequireAuth>}></Route>
             <Route path='/products' element={<RequireAuth><Products></Products></RequireAuth>}></Route>
             <Route path='/category' element={<RequireAuth><RequireAdmin><Category></Category></RequireAdmin></RequireAuth>}></Route>
             <Route path='/customers' element={<RequireAuth><RequireAdmin><Customers></Customers></RequireAdmin></RequireAuth>}></Route>
