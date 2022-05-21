@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery } from 'react-query';
 import Pagination from '../../Shared/Pagination/Pagination';
 import Spinner from '../../Shared/Spinner/Spinner';
@@ -12,9 +12,12 @@ import { toast } from 'react-toastify';
 const Staff = () => {
     const [openModal, setOpenModal] = useState(null);
     const [search, setSearch] = useState('');
-    console.log(search.toLocaleLowerCase())
-    const { isLoading, error, data, refetch } = useQuery('user', () =>
-        fetch(`http://localhost:5000/adminUser?name=${search.toLocaleLowerCase()} `, {
+    const [pageCount, setPageCount] = useState(0);
+    const [page, setPage] = useState(0)
+
+
+    const { isLoading, error, data, refetch } = useQuery(['user', page], () =>
+        fetch(`http://localhost:5000/adminUser?name=${search.toLocaleLowerCase()}&page=${page}`, {
             method: 'GET',
             headers: {
                 authorization: `Bearer ${localStorage.getItem('accessToken')}`
@@ -24,8 +27,20 @@ const Staff = () => {
             return res.json();
         }
         )
-
     );
+
+    useEffect(() => {
+        fetch(`http://localhost:5000/userCount`)
+            .then(res => res.json())
+            .then(data => {
+                const count = data.count;
+                const pages = Math.ceil(count / 2);
+                setPageCount(pages);
+
+
+            })
+
+    }, []);
 
     const UserUpdatepdateStatus = (id, status) => {
         fetch(`http://localhost:5000/adminUser/admin/accept/${id}`, {
@@ -50,10 +65,6 @@ const Staff = () => {
 
     if (isLoading) {
         return <Spinner></Spinner>
-    }
-
-    if (search === '') {
-        refetch();
     }
 
     return (
@@ -124,7 +135,7 @@ const Staff = () => {
             }
 
             <div className='flex justify-center md:justify-end'>
-                <Pagination></Pagination>
+                <Pagination pageCount={pageCount} page={page} setPage={setPage} refetch={refetch}></Pagination>
             </div>
         </div >
     );
