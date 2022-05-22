@@ -15,9 +15,9 @@ const Profile = () => {
     const imgStore_key = '2f6c6879a39132782b251889cb5d783f';
 
 
-    const [data, isLoading, refetch, error] = useAdminUserData(user.email)
+    const [data, isLoading, refetch, error] = useAdminUserData(user?.email)
 
-
+    console.log(data)
 
     if (isLoading || isAdminLoad) {
         return <Spinner></Spinner>
@@ -107,7 +107,7 @@ const Profile = () => {
                 <div className="card-body">
                     <div className='flex justify-center'>
                         {
-                            data.image ? <img src={data?.image} width='70' alt="Business Logo" /> : <img src={logo} width='70' alt="Business Logo" />
+                            data?.image ? <img src={data?.image} width='70' alt="Business Logo" /> : <img src={logo} width='70' alt="Business Logo" />
                         }
                     </div>
 
@@ -136,21 +136,21 @@ const Profile = () => {
                             <label className="label">
                                 <span className="label-text text-primary">Business Name</span>
                             </label>
-                            <input defaultValue={data.name} type="text" className="input  input-primary input-bordered w-full max-w-xs" disabled />
+                            <input defaultValue={data?.name} type="text" className="input  input-primary input-bordered w-full max-w-xs" disabled />
 
                         </div>
                         <div className="form-control w-full max-w-xs">
                             <label className="label">
                                 <span className="label-text text-primary">Business Email</span>
                             </label>
-                            <input defaultValue={data.email} type="text" className="input  input-primary input-bordered w-full max-w-xs" disabled />
+                            <input defaultValue={data?.email} type="text" className="input  input-primary input-bordered w-full max-w-xs" disabled />
 
                         </div>
                         <div className="form-control w-full max-w-xs">
                             <label className="label">
                                 <span className="label-text text-primary">Business Phone</span>
                             </label>
-                            <input defaultValue={data.phone} type="text" className="input  input-primary input-bordered w-full max-w-xs"
+                            <input defaultValue={data?.phone} type="text" className="input  input-primary input-bordered w-full max-w-xs"
                                 {...register("phone")}
                             />
 
@@ -161,14 +161,14 @@ const Profile = () => {
                             <label className="label">
                                 <span className="label-text text-primary">Business Email Verified</span>
                             </label>
-                            <input defaultValue={data.emailVerified} type="text" className="input  input-primary input-bordered w-full max-w-xs" disabled />
+                            <input defaultValue={data?.emailVerified} type="text" className="input  input-primary input-bordered w-full max-w-xs" disabled />
 
                         </div>
                         <div className="form-control w-full max-w-xs">
                             <label className="label">
                                 <span className="label-text text-primary">Business Profile Status</span>
                             </label>
-                            <input defaultValue={data.status} type="text" className="input  input-primary input-bordered w-full max-w-xs" disabled />
+                            <input defaultValue={data?.status} type="text" className="input  input-primary input-bordered w-full max-w-xs" disabled />
 
                         </div>
 

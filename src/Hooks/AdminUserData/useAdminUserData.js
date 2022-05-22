@@ -1,29 +1,11 @@
-// import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 
 const useAdminUserData = (email) => {
-    // const [data, setData] = useState([]);
+    const [data, setData] = useState([]);
+    const [adminLoading, setAdminLoading] = useState(false);
 
-    // useEffect(() => {
-    //     if (email) {
-    //         fetch(`http://localhost:5000/adminUser/user/${email}`, {
-    //             method: 'GET',
-    //             headers: {
-    //                 authorization: `Bearer ${localStorage.getItem('accessToken')}`
-    //             }
-    //         }).then(res => res.json())
-    //             .then(datas => {
-    //                 console.log(datas);
-    //                 setData(datas);
-    //             })
-    //             .catch(error => {
-    //                 console.log(error)
-    //             })
-    //     }
-    // }, [email])
-
-
-    const { isLoading, error, data, refetch } = useQuery(['adminUserData'], () => {
+    useEffect(() => {
         if (email) {
             fetch(`http://localhost:5000/adminUser/user/${email}`, {
                 method: 'GET',
@@ -31,12 +13,31 @@ const useAdminUserData = (email) => {
                     authorization: `Bearer ${localStorage.getItem('accessToken')}`
                 }
             }).then(res => res.json())
+                .then(datas => {
+                    console.log(datas);
+                    setData(datas);
+                })
+                .catch(error => {
+                    console.log(error)
+                })
         }
-    }
-    );
+    }, [email])
 
 
-    return [data, isLoading, refetch, error];
+    // const { isLoading, error, data, refetch } = useQuery(['adminUserData'], () => {
+    //     if (email) {
+    //         fetch(`http://localhost:5000/adminUser/user/${email}`, {
+    //             method: 'GET',
+    //             headers: {
+    //                 authorization: `Bearer ${localStorage.getItem('accessToken')}`
+    //             }
+    //         }).then(res => res.json())
+    //     }
+    // }
+    // );
+
+
+    return [data];
 
 
 }

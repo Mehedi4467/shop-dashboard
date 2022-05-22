@@ -15,8 +15,8 @@ const Menu = () => {
     return (
         <div className='h-95 mega-menu'>
             {
-                data && data.role !== 'admin' && <div className='border-2 m-2 p-4  rounded-full'>
-                    <h2 className='text-primary text-xl font-bold text-center '>{data.name || "Welcome ShopInShop"} </h2>
+                data && data?.role !== 'admin' && <div className='border-2 m-2 p-4  rounded-full'>
+                    <h2 className='text-primary text-xl font-bold text-center '>{data?.name || "Welcome ShopInShop"} </h2>
                 </div>
             }
             <div className='py-4 h-screen px-2 shadow-lg rounded-lg'>
