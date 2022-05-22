@@ -141,7 +141,7 @@ const Staff = () => {
             }
 
             {
-                totalItem < 10 && <div className='flex justify-center md:justify-end'>
+                totalItem > 10 && <div className='flex justify-center md:justify-end'>
 
                     <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} pageCount={pageCount} ></Pagination>
 
