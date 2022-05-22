@@ -67,7 +67,33 @@ const Profile = () => {
                         })
                 }
                 else {
-                    toast("Something is wrong. Please Reload your Browser!")
+
+
+                    const profile = {
+                        phone: phone,
+                        img: false
+                    }
+                    //send to database 
+                    fetch(`http://localhost:5000/adminUser/Update_profile/${data._id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'content-type': 'application/json'
+                        },
+                        body: JSON.stringify(profile)
+                    })
+                        .then(res => res.json())
+                        .then(updateImage => {
+
+                            if (updateImage.acknowledged) {
+                                toast("Profile Update Successfully!");
+                                refetch();
+                                setIsAdminLoad(false);
+                            }
+                            else {
+                                toast("Something is wrong. Please Reload your Browser!")
+                            }
+                        })
+                    toast("Business Logo do not Upload")
                 }
             })
     };
@@ -89,14 +115,14 @@ const Profile = () => {
                     <form onSubmit={handleSubmit(onSubmit)} >
 
                         <div className='mb-4'>
-                            <label class="label">
-                                <span class="label-text text-primary">Business Logo</span>
+                            <label className="label">
+                                <span className="label-text text-primary">Business Logo</span>
                             </label>
                             <div>
-                                <label class="flex items-center ">
-                                    <span class="sr-only">Choose File</span>
+                                <label className="flex items-center ">
+                                    <span className="sr-only">Choose File</span>
                                     <input type="file"
-                                        class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                                        className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                                         {...register("image")}
 
                                     />
@@ -106,43 +132,43 @@ const Profile = () => {
 
 
 
-                        <div class="form-control w-full max-w-xs">
-                            <label class="label">
-                                <span class="label-text text-primary">Business Name</span>
+                        <div className="form-control w-full max-w-xs">
+                            <label className="label">
+                                <span className="label-text text-primary">Business Name</span>
                             </label>
-                            <input defaultValue={data.name} type="text" class="input  input-primary input-bordered w-full max-w-xs" disabled />
+                            <input defaultValue={data.name} type="text" className="input  input-primary input-bordered w-full max-w-xs" disabled />
 
                         </div>
-                        <div class="form-control w-full max-w-xs">
-                            <label class="label">
-                                <span class="label-text text-primary">Business Email</span>
+                        <div className="form-control w-full max-w-xs">
+                            <label className="label">
+                                <span className="label-text text-primary">Business Email</span>
                             </label>
-                            <input defaultValue={data.email} type="text" class="input  input-primary input-bordered w-full max-w-xs" disabled />
+                            <input defaultValue={data.email} type="text" className="input  input-primary input-bordered w-full max-w-xs" disabled />
 
                         </div>
-                        <div class="form-control w-full max-w-xs">
-                            <label class="label">
-                                <span class="label-text text-primary">Business Phone</span>
+                        <div className="form-control w-full max-w-xs">
+                            <label className="label">
+                                <span className="label-text text-primary">Business Phone</span>
                             </label>
-                            <input defaultValue={data.phone} type="text" class="input  input-primary input-bordered w-full max-w-xs"
+                            <input defaultValue={data.phone} type="text" className="input  input-primary input-bordered w-full max-w-xs"
                                 {...register("phone")}
                             />
 
 
 
                         </div>
-                        <div class="form-control w-full max-w-xs">
-                            <label class="label">
-                                <span class="label-text text-primary">Business Email Verified</span>
+                        <div className="form-control w-full max-w-xs">
+                            <label className="label">
+                                <span className="label-text text-primary">Business Email Verified</span>
                             </label>
-                            <input defaultValue={data.emailVerified} type="text" class="input  input-primary input-bordered w-full max-w-xs" disabled />
+                            <input defaultValue={data.emailVerified} type="text" className="input  input-primary input-bordered w-full max-w-xs" disabled />
 
                         </div>
-                        <div class="form-control w-full max-w-xs">
-                            <label class="label">
-                                <span class="label-text text-primary">Business Profile Status</span>
+                        <div className="form-control w-full max-w-xs">
+                            <label className="label">
+                                <span className="label-text text-primary">Business Profile Status</span>
                             </label>
-                            <input defaultValue={data.status} type="text" class="input  input-primary input-bordered w-full max-w-xs" disabled />
+                            <input defaultValue={data.status} type="text" className="input  input-primary input-bordered w-full max-w-xs" disabled />
 
                         </div>
 

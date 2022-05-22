@@ -29,7 +29,7 @@ const Registration = () => {
   } = useForm();
 
   const [token] = userToken(user);
-  console.log(user);
+
   const navigate = useNavigate();
 
 
@@ -60,7 +60,7 @@ const Registration = () => {
     })
       .then(res => res.json())
       .then((data) => {
-        console.log(data);
+
         if (data.acknowledged) {
 
         }

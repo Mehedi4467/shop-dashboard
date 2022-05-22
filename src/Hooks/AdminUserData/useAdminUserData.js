@@ -1,20 +1,44 @@
+// import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 
 const useAdminUserData = (email) => {
-    const { isLoading, error, data, refetch } = useQuery('adminUser', () =>
-        fetch(`http://localhost:5000/adminUser/user/${email}`, {
-            method: 'GET',
-            headers: {
-                authorization: `Bearer ${localStorage.getItem('accessToken')}`
-            }
-        }).then(res => {
+    // const [data, setData] = useState([]);
 
-            return res.json();
+    // useEffect(() => {
+    //     if (email) {
+    //         fetch(`http://localhost:5000/adminUser/user/${email}`, {
+    //             method: 'GET',
+    //             headers: {
+    //                 authorization: `Bearer ${localStorage.getItem('accessToken')}`
+    //             }
+    //         }).then(res => res.json())
+    //             .then(datas => {
+    //                 console.log(datas);
+    //                 setData(datas);
+    //             })
+    //             .catch(error => {
+    //                 console.log(error)
+    //             })
+    //     }
+    // }, [email])
+
+
+    const { isLoading, error, data, refetch } = useQuery(['adminUserData'], () => {
+        if (email) {
+            fetch(`http://localhost:5000/adminUser/user/${email}`, {
+                method: 'GET',
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('accessToken')}`
+                }
+            }).then(res => res.json())
         }
-        )
+    }
     );
 
-    return [data, isLoading, refetch, error]
+
+    return [data, isLoading, refetch, error];
+
+
 }
 
 export default useAdminUserData;

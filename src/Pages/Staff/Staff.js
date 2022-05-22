@@ -13,7 +13,7 @@ const Staff = () => {
     const [openModal, setOpenModal] = useState(null);
     const [search, setSearch] = useState('');
     const [pageCount, setPageCount] = useState(0);
-    // const [page, setPage] = useState(0)
+    const [totalItem, setTotalItem] = useState(0)
     const [currentPage, setCurrentPage] = useState(1);
 
     const { isLoading, error, data, refetch } = useQuery(['adminUser', currentPage], () =>
@@ -36,6 +36,7 @@ const Staff = () => {
                 const count = data.count;
                 const pages = Math.ceil(count / 10);
                 setPageCount(pages);
+                setTotalItem(count);
 
 
             })
@@ -139,11 +140,13 @@ const Staff = () => {
                 openModal && <UpdateUser openModal={openModal} setOpenModal={setOpenModal} refetch={refetch}></UpdateUser>
             }
 
-            <div className='flex justify-center md:justify-end'>
-                {
-                    pageCount > 10 && <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} pageCount={pageCount} ></Pagination>
-                }
-            </div>
+            {
+                totalItem < 10 && <div className='flex justify-center md:justify-end'>
+
+                    <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} pageCount={pageCount} ></Pagination>
+
+                </div>
+            }
         </div >
     );
 };

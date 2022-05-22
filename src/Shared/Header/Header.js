@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import logo from '../../Images/logo/logo.png';
-import userImg from '../../Images/user/mehedi.jpg';
 import CustomLink from '../../Pages/Menu/CustomLink/CustomLink';
 import './Header.css';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -8,11 +7,15 @@ import Notification from './Notification/Notification';
 import auth from '../../firebase.init';
 import { signOut } from 'firebase/auth';
 import { Link } from 'react-router-dom';
+import useAdminUserData from '../../Hooks/AdminUserData/useAdminUserData';
+import Spinner from '../Spinner/Spinner';
 const Header = ({ showHide, setShowHide }) => {
     const [showUser, setShowUser] = useState(false);
     const [notificationShow, setNotificationShow] = useState(false);
     const [notifications, setNotifications] = useState([]);
-    const [user] = useAuthState(auth);
+    const [user, loading] = useAuthState(auth);
+    const [data, isLoading] = useAdminUserData(user?.email);
+
     const handelUser = () => {
         setShowUser(!showUser);
         setNotificationShow(false);
@@ -33,6 +36,10 @@ const Header = ({ showHide, setShowHide }) => {
     const handelCleanNotification = (id) => {
         const reaming = notifications.filter(notification => notification._id !== id);
         setNotifications(reaming);
+    }
+
+    if (isLoading || loading) {
+        return <Spinner></Spinner>
     }
 
     return (
@@ -62,7 +69,10 @@ const Header = ({ showHide, setShowHide }) => {
 
                         </div>
                         <div>
-                            <img onClick={handelUser} className='cursor-pointer rounded-full shadow-lg' src={userImg} width='40' height='50' alt="User images" />
+                            {
+                                data?.image ? <img onClick={handelUser} className='cursor-pointer rounded-full shadow-lg' src={data?.image} width='40' height='50' alt="User images" /> :
+                                    <img onClick={handelUser} className='cursor-pointer rounded-full shadow-lg' src={logo} width='40' height='50' alt="User images" />
+                            }
                         </div>
                         <div className={`shadow-lg bg-white rounded w-52 py-2 duration-100 ease-in-out profile  ${showUser ? 'dashboard-link' : 'hidden'}`}>
 

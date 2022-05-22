@@ -2,6 +2,7 @@ import { signOut } from 'firebase/auth';
 import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
+import useAdminUserData from '../../Hooks/AdminUserData/useAdminUserData';
 import useAdmin from '../../Hooks/useAdmin';
 import CustomLink from './CustomLink/CustomLink';
 import './Menu.css';
@@ -10,8 +11,14 @@ import './Menu.css';
 const Menu = () => {
     const [user] = useAuthState(auth);
     const [admin] = useAdmin(user);
+    const [data] = useAdminUserData(user?.email);
     return (
         <div className='h-95 mega-menu'>
+            {
+                data && data.role !== 'admin' && <div className='border-2 m-2 p-4  rounded-full'>
+                    <h2 className='text-primary text-xl font-bold text-center '>{data.name || "Welcome ShopInShop"} </h2>
+                </div>
+            }
             <div className='py-4 h-screen px-2 shadow-lg rounded-lg'>
                 <CustomLink className="py-3 rounded-lg text-lg w-100 block hover:bg-slate-100" to='/'> <i className="ml-4 fa-solid fa-house"></i> Home</CustomLink>
                 <CustomLink className="py-3 rounded-lg text-lg w-100 block hover:bg-slate-100" to='/products'> <i className="ml-4 fa-solid fa-bag-shopping"></i> Products</CustomLink>

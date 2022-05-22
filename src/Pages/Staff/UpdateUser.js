@@ -1,6 +1,6 @@
 
 const UpdateUser = ({ openModal, setOpenModal, refetch }) => {
-    console.log(openModal)
+
 
     return (
         <div>

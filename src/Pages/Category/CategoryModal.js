@@ -32,7 +32,7 @@ const CategoryModal = ({ refetch, isLoading, data }) => {
             const newCategory = [...selectItem?.category];
 
             const category2 = newCategory.find(e => e.name === category)
-            console.log(category2)
+
 
             if (!category2) {
                 newCategory.push({ name: category, status: true, slug: categorySlug, img: img, subCategory: [{ name: subCategory, slug: subCategorySlug }] });

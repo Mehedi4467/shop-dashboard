@@ -1,7 +1,8 @@
 import React from 'react';
+import logo from '../../Images/logo/logo.png';
 
 const Merchant = ({ user, index, setOpenModal, UserUpdatepdateStatus }) => {
-    const { name, email, phone, role, status } = user;
+    const { name, email, phone, role, status, image } = user;
 
     return (
 
@@ -12,8 +13,11 @@ const Merchant = ({ user, index, setOpenModal, UserUpdatepdateStatus }) => {
             </th>
             <td className="px-6 py-4">
                 <div className='flex items-center justify-between'>
-                    <img src="https://www.findurings.com/media/catalog/product/cache/2/image/9df78eab33525d08d6e5fb8d27136e95/1/_/1_541.jpg" width='40' alt="" />
-                    <p className='w-full'>{name}</p>
+                    {
+                        image ? <img src={image} width='40' alt="Business logo" /> :
+                            <img src={logo} width='40' alt="Business logo" />
+                    }
+                    <p className='w-full ml-2'>{name}</p>
                 </div>
             </td>
             <td className="px-6 py-4">
@@ -44,7 +48,7 @@ const Merchant = ({ user, index, setOpenModal, UserUpdatepdateStatus }) => {
             </td >
             <td className="px-6 py-4">
                 {
-                    role ? <p>Admin</p> : <label onClick={() => setOpenModal(user)} htmlFor="makeAdmin-modal-user" className="btn btn-xs">Admin ?</label>
+                    role ? <p>Admin</p> : <label onClick={() => setOpenModal(user)} htmlFor="makeAdmin-modal-user" className="btn text-xs btn-xs capitalize">Admin?</label>
                 }
             </td >
 
