@@ -10,16 +10,16 @@ import { useState } from 'react';
 
 const Profile = () => {
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
-    const [isAdminLoad, setIsAdminLoad] = useState(false);
+
     const [user] = useAuthState(auth);
     const imgStore_key = '2f6c6879a39132782b251889cb5d783f';
 
 
-    const [data, isLoading, refetch, error] = useAdminUserData(user?.email)
+    const [data, adminLoading] = useAdminUserData(user?.email)
 
-    console.log(data)
 
-    if (isLoading || isAdminLoad) {
+
+    if (adminLoading) {
         return <Spinner></Spinner>
     }
 
@@ -30,7 +30,7 @@ const Profile = () => {
         const phone = inputData.phone;
         const formData = new FormData();
         formData.append('image', image);
-        setIsAdminLoad(true);
+
         const url = `https://api.imgbb.com/1/upload?key=${imgStore_key}`;
         fetch(url, {
             method: 'POST',
@@ -58,8 +58,7 @@ const Profile = () => {
 
                             if (updateImage.acknowledged) {
                                 toast("Profile Update Successfully!");
-                                refetch();
-                                setIsAdminLoad(false);
+
                             }
                             else {
                                 toast("Something is wrong. Please Reload your Browser!")
@@ -86,8 +85,7 @@ const Profile = () => {
 
                             if (updateImage.acknowledged) {
                                 toast("Profile Update Successfully!");
-                                refetch();
-                                setIsAdminLoad(false);
+
                             }
                             else {
                                 toast("Something is wrong. Please Reload your Browser!")
@@ -99,7 +97,7 @@ const Profile = () => {
     };
 
 
-
+    console.log(data.phone)
 
     return (
         <div>
@@ -148,9 +146,9 @@ const Profile = () => {
                         </div>
                         <div className="form-control w-full max-w-xs">
                             <label className="label">
-                                <span className="label-text text-primary">Business Phone</span>
+                                <p className="label-text text-primary">Business Phone <span className='text-orange-600'> ({data?.phone})</span></p>
                             </label>
-                            <input defaultValue={data?.phone} type="text" className="input  input-primary input-bordered w-full max-w-xs"
+                            <input type="text" className="input  input-primary input-bordered w-full max-w-xs"
                                 {...register("phone")}
                             />
 

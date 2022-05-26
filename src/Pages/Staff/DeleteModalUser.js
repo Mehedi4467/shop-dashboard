@@ -1,7 +1,8 @@
+
 import React from 'react';
 import { toast } from 'react-toastify';
 
-const deleteModalUser = ({ openModal, refetch, setOpenModal }) => {
+const deleteModalUser = ({ user, openModal, refetch, setOpenModal }) => {
 
 
     const handelDeleteUser = id => {

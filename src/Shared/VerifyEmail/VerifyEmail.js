@@ -1,34 +1,14 @@
-import React from 'react';
+
+
 import { useAuthState, useSendEmailVerification } from 'react-firebase-hooks/auth';
-import { useQuery } from 'react-query';
-import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import auth from '../../firebase.init';
 import Spinner from '../Spinner/Spinner';
-
+import Refresh from './Refresh';
+// import getFirebase from "./firebase";
 const VerifyEmail = () => {
-    const [sendEmailVerification, sending, error] = useSendEmailVerification(auth);
+    const [sendEmailVerification, sending] = useSendEmailVerification(auth);
     const [user, loading] = useAuthState(auth);
-    const navigate = useNavigate();
-    const { isLoading, Queryerror, data, refetch } = useQuery(['emailVerified', user?.emailVerified], () =>
-        fetch(`http://localhost:5000/adminUser/admin/verify/${user?.email}`, {
-            method: 'PUT',
-            headers: {
-                authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-                'content-type': 'application/json',
-            },
-            body: JSON.stringify({ emailVerified: user?.emailVerified })
-        }).then(res => {
-
-            return res.json();
-        }
-        )
-    );
-
-    if (data?.emailVerified) {
-        navigate('/');
-        refetch();
-    }
 
 
 
@@ -48,6 +28,8 @@ const VerifyEmail = () => {
                         toast("Send Email For Verification Again")
                     }}
                     className='btn btn-primary'>Send verification Email Again</button>
+
+                <Refresh></Refresh>
             </div>
         </div>
     );

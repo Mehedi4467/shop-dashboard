@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import Pagination from '../../Shared/Pagination/Pagination';
 
 
+
 const Staff = () => {
     const [openModal, setOpenModal] = useState(null);
     const [search, setSearch] = useState('');
@@ -16,7 +17,7 @@ const Staff = () => {
     const [totalItem, setTotalItem] = useState(0)
     const [currentPage, setCurrentPage] = useState(1);
 
-    const { isLoading, error, data, refetch } = useQuery(['adminUser', currentPage], () =>
+    const { isLoading, error, data, refetch } = useQuery(['adminUsers', currentPage], () =>
         fetch(`http://localhost:5000/adminUser?name=${search.toLocaleLowerCase()}&page=${currentPage - 1}`, {
             method: 'GET',
             headers: {
@@ -28,6 +29,7 @@ const Staff = () => {
         }
         )
     );
+
 
     useEffect(() => {
         fetch(`http://localhost:5000/userCount`)
@@ -123,7 +125,7 @@ const Staff = () => {
                     </thead>
                     <tbody>
                         {
-                            data?.map((user, index) => <Merchant key={user._id} UserUpdatepdateStatus={UserUpdatepdateStatus} index={index} user={user} setOpenModal={setOpenModal}></Merchant>).reverse()
+                            data && data?.map((user, index) => <Merchant key={user._id} UserUpdatepdateStatus={UserUpdatepdateStatus} index={index} user={user} setOpenModal={setOpenModal}></Merchant>).reverse()
                         }
                     </tbody >
                 </table >

@@ -2,7 +2,7 @@ import React from 'react';
 import logo from '../../Images/logo/logo.png';
 
 const Merchant = ({ user, index, setOpenModal, UserUpdatepdateStatus }) => {
-    const { name, email, phone, role, status, image } = user;
+    const { name, email, phone, role, status, image, emailVerified } = user;
 
     return (
 
@@ -28,14 +28,16 @@ const Merchant = ({ user, index, setOpenModal, UserUpdatepdateStatus }) => {
             </td>
 
             <td className="px-6 py-4">
-                <select onChange={(e) => UserUpdatepdateStatus(user._id, e.target.value)} className='outline-0 cursor-pointer border-2 hover:shadow-lg text-slate-400 p-1 rounded-full px-4' id="cars">
-                    {status && <option defaultValue={status} selected disabled>{status}</option>}
-                    <option defaultValue="Accept">Accept</option>
-                    <option defaultValue="Pending">Pending</option>
-                    <option defaultValue="Reject">Reject</option>
-                    <option defaultValue="Block">Block</option>
+                {
+                    emailVerified ? <select onChange={(e) => UserUpdatepdateStatus(user._id, e.target.value)} className='outline-0 cursor-pointer border-2 hover:shadow-lg text-slate-400 p-1 rounded-full px-4' id="cars">
+                        {status && <option defaultValue={status} selected disabled>{status}</option>}
+                        <option defaultValue="Accept">Accept</option>
+                        <option defaultValue="Pending">Pending</option>
+                        <option defaultValue="Reject">Reject</option>
+                        <option defaultValue="Block">Block</option>
 
-                </select>
+                    </select> : <p className='text-orange-600'>Email not verify</p>
+                }
             </td>
 
             <td className="px-6 py-4">
@@ -48,7 +50,7 @@ const Merchant = ({ user, index, setOpenModal, UserUpdatepdateStatus }) => {
             </td >
             <td className="px-6 py-4">
                 {
-                    role ? <p>Admin</p> : <label onClick={() => setOpenModal(user)} htmlFor="makeAdmin-modal-user" className="btn text-xs btn-xs capitalize">Admin?</label>
+                    role ? <p>Admin</p> : emailVerified === false ? <i title='Email not verify' class="text-orange-600 fa-solid fa-triangle-exclamation"></i> : <label onClick={() => setOpenModal(user)} htmlFor="makeAdmin-modal-user" className="btn text-xs btn-xs capitalize">Admin?</label>
                 }
             </td >
 
