@@ -13,9 +13,9 @@ const Profile = () => {
 
     const [user] = useAuthState(auth);
     const imgStore_key = '2f6c6879a39132782b251889cb5d783f';
-    const [data, adminLoading] = useAdminUserData(user?.email)
+    const [data, adminLoadingData] = useAdminUserData(user?.email)
 
-    if (adminLoading) {
+    if (adminLoadingData) {
         return <Spinner></Spinner>
     }
 

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { useQuery } from "react-query";
+// import { useQuery } from "react-query";
 
 const useAdminUserData = (email) => {
     const [data, setData] = useState([]);
-    const [adminLoading, setAdminLoading] = useState(false);
+    const [adminLoadingData, setAdminLoading] = useState(false);
 
     useEffect(() => {
         if (email) {
@@ -39,7 +39,7 @@ const useAdminUserData = (email) => {
     // );
 
 
-    return [data, adminLoading];
+    return [data, adminLoadingData];
 
 
 }
