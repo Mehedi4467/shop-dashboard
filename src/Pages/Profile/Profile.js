@@ -5,7 +5,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import Spinner from '../../Shared/Spinner/Spinner';
 import { toast } from 'react-toastify';
 import useAdminUserData from '../../Hooks/AdminUserData/useAdminUserData';
-import { useState } from 'react';
+
 
 
 const Profile = () => {
@@ -13,11 +13,7 @@ const Profile = () => {
 
     const [user] = useAuthState(auth);
     const imgStore_key = '2f6c6879a39132782b251889cb5d783f';
-
-
     const [data, adminLoading] = useAdminUserData(user?.email)
-
-
 
     if (adminLoading) {
         return <Spinner></Spinner>

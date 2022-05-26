@@ -1,5 +1,7 @@
-
+import React from 'react';
+import logo from '../../Images/logo/logo.png';
 const UpdateUser = ({ openModal, setOpenModal, refetch }) => {
+
 
 
     return (
@@ -13,9 +15,13 @@ const UpdateUser = ({ openModal, setOpenModal, refetch }) => {
                         <form>
 
                             <div className="avatar flex justify-center">
-                                <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                    <img src="https://api.lorem.space/image/face?hash=3174" alt='business logo' />
-                                </div>
+                                {
+                                    openModal?.image ? <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                        <img src={openModal?.image} alt='business logo' />
+                                    </div> : <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                        <img src={logo} alt='business logo' />
+                                    </div>
+                                }
                             </div>
 
                             <div className="form-control w-full">
@@ -46,6 +52,8 @@ const UpdateUser = ({ openModal, setOpenModal, refetch }) => {
                                 <label className="label">
                                 </label>
                             </div>
+
+
                             <div className="form-control w-full">
                                 <label className="label">
                                     <span className="label-text text-primary">Business Profile Create</span> </label>
@@ -53,6 +61,7 @@ const UpdateUser = ({ openModal, setOpenModal, refetch }) => {
                                 <label className="label">
                                 </label>
                             </div>
+
 
 
                         </form>
