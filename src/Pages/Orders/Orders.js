@@ -1,36 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import auth from '../../firebase.init';
+import useOrders from '../../Hooks/UseOrders/useOrders';
 import Pagination from '../../Shared/Pagination/Pagination';
+import Spinner from '../../Shared/Spinner/Spinner';
+import OrderModal from './OrderModal';
 
 const Orders = () => {
-    const orderList = [
-        { _id: 1, time: 'Mar 20, 2022', phone: '01584452434', address: 'Salanga,Siraganj', method: 'Nagad', amount: '120', status: 'Confirm' },
-        { _id: 2, time: 'Mar 21, 2022', phone: '01784452434', address: 'Puthiya, Pabana', method: 'Card', amount: '1200', status: 'Delivery' },
-        { _id: 3, time: 'Mar 22, 2022', phone: '01384452434', address: 'Manglo,Bandarban', method: 'Roket', amount: '1020', status: 'Pending' },
-        { _id: 4, time: 'Mar 23, 2022', phone: '01484452434', address: 'BashKhali,Bogura', method: 'Bank', amount: '100', status: 'Processing' },
-        { _id: 5, time: 'Mar 24, 2022', phone: '01984452434', address: 'Mirpur-10, Dhaka', method: 'Bkash', amount: '130', status: 'Confirm' },
-        { _id: 6, time: 'Mar 25, 2022', phone: '01884452434', address: 'Dhanmundi-32,Dhaka', method: 'Nagad', amount: '200', status: 'Delivery' },
-    ]
+    const [user, loading] = useAuthState(auth);
+    const [orders] = useOrders(user?.email);
+    const [openOrderModal, setOpenOrderModal] = useState(null);
+    if (loading) {
+        return <Spinner></Spinner>
+    }
+
+    console.log(orders)
+
     return (
         <div className='container mx-auto'>
             <h1 className='text-center md:text-left mb-4 text-xl font-bold'>Orders</h1>
 
             <div className='md:grid grid-cols-2 gap-4  mt-5 items-center '>
-                <div className='flex justify-between order-1 md:order-2 gap-4 mb-8 md:mb-0'>
-                    <select className='outline-0 cursor-pointer border-2 hover:shadow-lg text-slate-400 h-12 w-52 rounded-full px-4' id="cars">
+
+
+                <div className='relative  w-full  rounded-full'>
+                    <input className='outline-0 p-2 h-12 rounded-full pl-10 text-orange-500 text-lg border-2  hover:shadow-lg w-full' type="text" name="search" placeholder='Search Product Name' />
+                    <div className='absolute right-8 top-[25%] cursor-pointer'>
+                        <i className="text-green-500 fa-solid fa-magnifying-glass"></i>
+                    </div>
+                </div>
+
+                <div className='flex justify-center md:justify-between  gap-4 mt-8 md:mt-0'>
+                    <select className='outline-0 cursor-pointer border-2 hover:shadow-lg text-slate-400 h-12 w-60  rounded-full px-4' id="cars">
                         <option value="">Status</option>
                         <option value="volvo">Delivered</option>
                         <option value="saab">Pending</option>
                         <option value="opel">Processing</option>
                         <option value="audi">Cancel</option>
                     </select>
-                    <button className='bg-green-400 hover:bg-green-500 h-12 w-52 text-white font-bold rounded-full '>Download All Orders</button>
-                </div>
-
-                <div className='relative  w-full order-2 md:order-1 rounded-full'>
-                    <input className='outline-0 p-2 h-12 rounded-full pl-10 text-orange-500 text-lg border-2  hover:shadow-lg w-full' type="text" name="search" placeholder='Search Product Name' />
-                    <div className='absolute right-8 top-[25%] cursor-pointer'>
-                        <i className="text-green-500 fa-solid fa-magnifying-glass"></i>
-                    </div>
+                    {/* <button className='bg-green-400 hover:bg-green-500 h-12 w-52 text-white font-bold rounded-full '>Download All Orders</button> */}
                 </div>
 
             </div>
@@ -57,11 +65,6 @@ const Orders = () => {
                             <th scope="col" className="px-6 py-3">
                                 AMOUNT
                             </th>
-
-                            <th scope="col" className="px-6 py-3">
-                                STATUS
-                            </th>
-
                             <th scope="col" className="px-6 py-3">
                                 ACTIONS
                             </th>
@@ -72,28 +75,26 @@ const Orders = () => {
                     </thead>
                     <tbody>
                         {
-                            orderList.map(order => <tr key={order._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            orders?.map((order, index) => <tr key={order._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                 <th scope="row" className="px-6 py-4 font-medium  dark:text-white whitespace-nowrap">
-                                    1
+                                    {index + 1}
                                 </th>
                                 <td className="px-6 py-4">
-                                    Mar 28, 2022
+                                    {order.time}
+                                </td>
+                                <td title={order.address} className="px-6 py-4">
+                                    {order.address.slice(0, 20) + '...'}
                                 </td>
                                 <td className="px-6 py-4">
-                                    Nagrig, Egypt
+                                    {order.customerPhone}
                                 </td>
                                 <td className="px-6 py-4">
-                                    01957930034
+                                    {order.paymentMethod}
                                 </td>
                                 <td className="px-6 py-4">
-                                    Card
+                                    &#x09F3; {order.totalAmount}
                                 </td>
-                                <td className="px-6 py-4">
-                                    &#x09F3; 2000
-                                </td>
-                                <td className="px-6 py-4">
-                                    <p className='bg-orange-200 p-1 rounded-full text-center text-blue-500'>Processing</p>
-                                </td >
+
                                 <td className="px-6 py-4">
                                     <select className='outline-0 cursor-pointer border-2 hover:shadow-lg text-slate-400 p-1 rounded-full px-4' id="cars">
                                         <option value="">Status</option>
@@ -104,19 +105,23 @@ const Orders = () => {
                                     </select>
 
                                 </td >
+
                                 <td className="px-6 py-4">
                                     <div className='flex justify-between'>
-                                        <i className="cursor-pointer fa-solid fa-eye"></i>
-
+                                        <label for="order-modal"><i onClick={() => setOpenOrderModal(order)} className="cursor-pointer fa-solid fa-eye"></i></label>
+                                        <button><i className="text-orange-500 fas fa-file-alt"></i></button>
                                     </div>
                                 </td >
+
 
                             </tr >)
                         }
 
                     </tbody >
                 </table >
-
+                {
+                    openOrderModal && <OrderModal openOrderModal={openOrderModal}></OrderModal>
+                }
             </div >
             <div className='flex justify-center md:justify-end'>
                 <Pagination></Pagination>

@@ -30,7 +30,6 @@ function App() {
       <div className="sticky top-0 bg-white zIndex-1">
         <Header showHide={showHide} setShowHide={setShowHide}></Header>
       </div>
-
       <div className="grid grid-cols-1 md:grid-cols-5">
         <div className={`md:block  col-span-1 ${showHide ? 'block' : 'hidden'}`}>
           <Menu ></Menu>

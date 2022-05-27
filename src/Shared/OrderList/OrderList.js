@@ -1,10 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import auth from '../../firebase.init';
 import Pagination from '../Pagination/Pagination';
+import Spinner from '../Spinner/Spinner';
 
 const OrderList = () => {
 
+    const [orders, setOrders] = useState([]);
+    const [user, loading, error] = useAuthState(auth);
+    useEffect(() => {
+        fetch(`http://localhost:5000/order/${user?.email}`, {
+            method: "GET",
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('accessToken')}`
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                setOrders(data)
+            })
+    }, [user])
+
+
+
+    if (loading) {
+        return <Spinner></Spinner>
+    }
     const orderList = [
-        { _id: 1, time: 'Mar 20, 2022', phone: '01584452434', address: 'Salanga,Siraganj', method: 'Nagad', amount: '120', status: 'Confirm' },
+        { _id: 1, time: 'Mar 25555, 2022', phone: '01584452434', address: 'Salanga,Siraganj', method: 'Nagad', amount: '120', status: 'Confirm' },
         { _id: 2, time: 'Mar 21, 2022', phone: '01784452434', address: 'Puthiya, Pabana', method: 'Card', amount: '1200', status: 'Delivery' },
         { _id: 3, time: 'Mar 22, 2022', phone: '01384452434', address: 'Manglo,Bandarban', method: 'Roket', amount: '1020', status: 'Pending' },
         { _id: 4, time: 'Mar 23, 2022', phone: '01484452434', address: 'BashKhali,Bogura', method: 'Bank', amount: '100', status: 'Processing' },
