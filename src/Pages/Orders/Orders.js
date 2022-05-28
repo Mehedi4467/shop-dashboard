@@ -6,6 +6,9 @@ import useOrders from '../../Hooks/UseOrders/useOrders';
 import Pagination from '../../Shared/Pagination/Pagination';
 import Spinner from '../../Shared/Spinner/Spinner';
 import OrderModal from './OrderModal';
+import OrderPdf from './OrderPdf';
+
+
 
 const Orders = () => {
 
@@ -13,6 +16,7 @@ const Orders = () => {
     const [user, loading] = useAuthState(auth);
     const [orders, pageCount, totalItem, dataLodiang, setSearch, setStatus] = useOrders(user?.email, currentPage);
     const [openOrderModal, setOpenOrderModal] = useState(null);
+
 
 
     const orderStatusUpdate = (id, value) => {
@@ -146,7 +150,7 @@ const Orders = () => {
                                 <td className="px-6 py-4">
                                     <div className='flex justify-between'>
                                         <label htmlFor="order-modal"><i onClick={() => setOpenOrderModal(order)} className="cursor-pointer fa-solid fa-eye"></i></label>
-                                        <button><i className="text-orange-500 fas fa-file-alt"></i></button>
+                                        <label htmlFor="pdf-modal"><i onClick={() => setOpenOrderModal(order)} className="text-orange-500 fas fa-file-alt cursor-pointer"></i></label>
                                     </div>
                                 </td >
 
@@ -166,6 +170,10 @@ const Orders = () => {
                 </div>
             }
 
+
+            {
+                openOrderModal && <OrderPdf openOrderModal={openOrderModal}></OrderPdf>
+            }
 
 
         </div >
