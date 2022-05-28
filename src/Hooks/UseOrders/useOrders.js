@@ -6,6 +6,7 @@ const useOrders = (email, currentPage) => {
     const [totalItem, setTotalItem] = useState(0)
     const [search, setSearch] = useState('');
     const [status, setStatus] = useState('');
+    const [dataLodiang, setDataLoading] = useState(true);
 
     useEffect(() => {
 
@@ -24,10 +25,11 @@ const useOrders = (email, currentPage) => {
                     const pages = Math.ceil(parseInt(count) / 10);
                     setPageCount(pages);
                     setTotalItem(count);
+                    setDataLoading(false)
 
                 })
         }
     }, [email, currentPage, search, status]);
-    return [orders, pageCount, totalItem, setSearch, setStatus];
+    return [orders, pageCount, totalItem, dataLodiang, setSearch, setStatus];
 }
 export default useOrders;

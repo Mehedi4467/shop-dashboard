@@ -11,7 +11,7 @@ const Orders = () => {
 
     const [currentPage, setCurrentPage] = useState(1);
     const [user, loading] = useAuthState(auth);
-    const [orders, pageCount, totalItem, setSearch, setStatus] = useOrders(user?.email, currentPage);
+    const [orders, pageCount, totalItem, dataLodiang, setSearch, setStatus] = useOrders(user?.email, currentPage);
     const [openOrderModal, setOpenOrderModal] = useState(null);
 
 
@@ -46,7 +46,7 @@ const Orders = () => {
     }
 
 
-    if (loading) {
+    if (loading || dataLodiang) {
         return <Spinner></Spinner>
     }
 
