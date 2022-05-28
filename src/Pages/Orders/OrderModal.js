@@ -2,6 +2,8 @@ import React from 'react';
 
 const OrderModal = ({ openOrderModal }) => {
     const { address, customerEmail, customerName, customerPhone, marchentEmail, shopName, pId, paymentMethod, productImage, productName, quantity, status, time, totalAmount } = openOrderModal;
+
+
     return (
         <div>
 

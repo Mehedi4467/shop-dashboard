@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { toast } from 'react-toastify';
 import auth from '../../firebase.init';
 import useOrders from '../../Hooks/UseOrders/useOrders';
 import Pagination from '../../Shared/Pagination/Pagination';
@@ -7,9 +8,37 @@ import Spinner from '../../Shared/Spinner/Spinner';
 import OrderModal from './OrderModal';
 
 const Orders = () => {
+
+    const [currentPage, setCurrentPage] = useState(1);
     const [user, loading] = useAuthState(auth);
-    const [orders] = useOrders(user?.email);
+    const [orders, pageCount, totalItem, setSearch] = useOrders(user?.email, currentPage);
     const [openOrderModal, setOpenOrderModal] = useState(null);
+
+
+    const orderStatusUpdate = (id, value) => {
+
+
+        const status = { value }
+        fetch(`http://localhost:5000/order/status/${id}`, {
+            method: "PUT",
+            headers: {
+                'content-type': 'application/json',
+                authorization: `Bearer ${localStorage.getItem('accessToken')}`
+            },
+            body: JSON.stringify(status)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.acknowledged && data.modifiedCount > 0) {
+                    toast('Your Order Status update Successfully ');
+
+                }
+            })
+    }
+
+
+
+
     if (loading) {
         return <Spinner></Spinner>
     }
@@ -21,24 +50,26 @@ const Orders = () => {
             <h1 className='text-center md:text-left mb-4 text-xl font-bold'>Orders</h1>
 
             <div className='md:grid grid-cols-2 gap-4  mt-5 items-center '>
-
-
                 <div className='relative  w-full  rounded-full'>
-                    <input className='outline-0 p-2 h-12 rounded-full pl-10 text-orange-500 text-lg border-2  hover:shadow-lg w-full' type="text" name="search" placeholder='Search Product Name' />
+                    <input onChange={(e) => setSearch(e.target.value)} className='outline-0 p-2 h-12 rounded-full pl-10 text-orange-500 text-lg border-2  hover:shadow-lg w-full' type="text" name="search" placeholder='Search Product Name' />
                     <div className='absolute right-8 top-[25%] cursor-pointer'>
                         <i className="text-green-500 fa-solid fa-magnifying-glass"></i>
                     </div>
                 </div>
 
                 <div className='flex justify-center md:justify-between  gap-4 mt-8 md:mt-0'>
-                    <select className='outline-0 cursor-pointer border-2 hover:shadow-lg text-slate-400 h-12 w-60  rounded-full px-4' id="cars">
-                        <option value="">Status</option>
-                        <option value="volvo">Delivered</option>
-                        <option value="saab">Pending</option>
-                        <option value="opel">Processing</option>
-                        <option value="audi">Cancel</option>
-                    </select>
-                    {/* <button className='bg-green-400 hover:bg-green-500 h-12 w-52 text-white font-bold rounded-full '>Download All Orders</button> */}
+                    <form>
+                        <select className='outline-0 cursor-pointer border-2 hover:shadow-lg text-slate-400 h-12 w-60  rounded-full px-4' id="cars">
+                            <option value="" disabled>Status Search</option>
+                            <option value="volvo">Delivered</option>
+                            <option value="saab">Pending</option>
+                            <option value="opel">Processing</option>
+                            <option value="audi">Cancel</option>
+                        </select>
+                        <button><i class="ml-2 text-orange-500 fas fa-times-circle"></i></button>
+
+                    </form>
+
                 </div>
 
             </div>
@@ -96,13 +127,18 @@ const Orders = () => {
                                 </td>
 
                                 <td className="px-6 py-4">
-                                    <select className='outline-0 cursor-pointer border-2 hover:shadow-lg text-slate-400 p-1 rounded-full px-4' id="cars">
-                                        <option value="">Status</option>
-                                        <option value="volvo">Delivered</option>
-                                        <option value="saab">Pending</option>
-                                        <option value="opel">Processing</option>
-                                        <option value="audi">Cancel</option>
+                                    <select onChange={(e) => orderStatusUpdate(order._id, e.target.value)} className='outline-0 cursor-pointer border-2 hover:shadow-lg text-slate-400 p-1 rounded-full px-4' id="cars">
+                                        <option className='text-orange-600' defaultValue={order.status} selected disabled>{order.status}</option>
+                                        <option>Pending</option>
+                                        <option>Processing</option>
+                                        <option>Delivered</option>
+                                        <option>Completed</option>
+                                        <option>Cancel</option>
                                     </select>
+
+
+
+
 
                                 </td >
 
@@ -123,9 +159,12 @@ const Orders = () => {
                     openOrderModal && <OrderModal openOrderModal={openOrderModal}></OrderModal>
                 }
             </div >
-            <div className='flex justify-center md:justify-end'>
-                <Pagination></Pagination>
-            </div>
+            {
+                totalItem > 10 && <div className='flex justify-center md:justify-end'>
+                    <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} pageCount={pageCount}></Pagination>
+                </div>
+            }
+
 
 
         </div >
