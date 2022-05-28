@@ -5,12 +5,13 @@ const useOrders = (email, currentPage) => {
     const [pageCount, setPageCount] = useState(0);
     const [totalItem, setTotalItem] = useState(0)
     const [search, setSearch] = useState('');
+    const [status, setStatus] = useState('');
 
     useEffect(() => {
 
         if (email) {
 
-            fetch(`http://localhost:5000/order/${email}?name=${search.toLocaleLowerCase()}&page=${currentPage - 1}`, {
+            fetch(`http://localhost:5000/order/${email}?name=${search.toLocaleLowerCase()}&page=${currentPage - 1}&status=${status}`, {
                 method: "GET",
                 headers: {
                     authorization: `Bearer ${localStorage.getItem('accessToken')}`
@@ -26,7 +27,7 @@ const useOrders = (email, currentPage) => {
 
                 })
         }
-    }, [email, currentPage, search]);
-    return [orders, pageCount, totalItem, setSearch];
+    }, [email, currentPage, search, status]);
+    return [orders, pageCount, totalItem, setSearch, setStatus];
 }
 export default useOrders;

@@ -7,14 +7,13 @@ const OrderModal = ({ openOrderModal }) => {
     return (
         <div>
 
-
-            <input type="checkbox" id="order-modal" class="modal-toggle" />
-            <label for="order-modal" class="modal cursor-pointer">
-                <label class="modal-box relative" for="">
-                    <div class="card full my-10 bg-base-100 shadow-xl">
+            <input type="checkbox" id="order-modal" className="modal-toggle" />
+            <label for="order-modal" className="modal cursor-pointer">
+                <label className="modal-box relative" for="">
+                    <div className="card full my-10 bg-base-100 shadow-xl">
                         <figure><img src={productImage} width="300px" alt="Shoes" /></figure>
-                        <div class="card-body">
-                            <h2 class="card-title mx-auto text-orange-500">{productName}</h2>
+                        <div className="card-body">
+                            <h2 className="card-title mx-auto text-orange-500">{productName}</h2>
                             <p className='text-center mb-4'><b>Shop Name : </b>{shopName} </p>
                             <p><b>Customer Name : </b>{customerName} </p>
                             <p><b>Customer Email : </b>{customerEmail} </p>

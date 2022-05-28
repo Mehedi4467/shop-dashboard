@@ -14,15 +14,15 @@ const NotAccept = () => {
     }
     return (
         <div className='flex justify-center my-16'>
-            <div class="card w-96 bg-primary text-primary-content">
-                <div class="card-body">
-                    <h2 class="card-title">Your Account is <span className='text-yellow-400'>{data.status}</span></h2>
+            <div className="card w-96 bg-primary text-primary-content">
+                <div className="card-body">
+                    <h2 className="card-title">Your Account is <span className='text-yellow-400'>{data.status}</span></h2>
                     {
                         data?.status === 'Pending' ? <p>We are reviewing your account. Please give us a little time. Thanks</p> : <p>If you think everything is OK.Please Contact us.</p>
                     }
-                    <div class="card-actions justify-end">
+                    <div className="card-actions justify-end">
                         {
-                            data?.status === 'Pending' || <button class="btn">Contact us</button>
+                            data?.status === 'Pending' || <button className="btn">Contact us</button>
                         }
 
                     </div>

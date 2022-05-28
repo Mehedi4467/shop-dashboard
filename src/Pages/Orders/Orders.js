@@ -11,13 +11,11 @@ const Orders = () => {
 
     const [currentPage, setCurrentPage] = useState(1);
     const [user, loading] = useAuthState(auth);
-    const [orders, pageCount, totalItem, setSearch] = useOrders(user?.email, currentPage);
+    const [orders, pageCount, totalItem, setSearch, setStatus] = useOrders(user?.email, currentPage);
     const [openOrderModal, setOpenOrderModal] = useState(null);
 
 
     const orderStatusUpdate = (id, value) => {
-
-
         const status = { value }
         fetch(`http://localhost:5000/order/status/${id}`, {
             method: "PUT",
@@ -34,16 +32,23 @@ const Orders = () => {
 
                 }
             })
+    };
+
+
+    const handelResetStatus = (event) => {
+        setStatus('');
+        event.preventDefault();
+        event.target.reset();
     }
 
-
+    const handelStatusSearch = (value) => {
+        setStatus(value);
+    }
 
 
     if (loading) {
         return <Spinner></Spinner>
     }
-
-    console.log(orders)
 
     return (
         <div className='container mx-auto'>
@@ -58,15 +63,15 @@ const Orders = () => {
                 </div>
 
                 <div className='flex justify-center md:justify-between  gap-4 mt-8 md:mt-0'>
-                    <form>
-                        <select className='outline-0 cursor-pointer border-2 hover:shadow-lg text-slate-400 h-12 w-60  rounded-full px-4' id="cars">
-                            <option value="" disabled>Status Search</option>
-                            <option value="volvo">Delivered</option>
-                            <option value="saab">Pending</option>
-                            <option value="opel">Processing</option>
-                            <option value="audi">Cancel</option>
+                    <form onSubmit={handelResetStatus}>
+                        <select onChange={(e) => handelStatusSearch(e.target.value)} className='outline-0 cursor-pointer border-2 hover:shadow-lg text-slate-400 h-12 w-60  rounded-full px-4' id="cars">
+                            <option value="">Status Search</option>
+                            <option>Delivered</option>
+                            <option>Pending</option>
+                            <option>Processing</option>
+                            <option>Cancel</option>
                         </select>
-                        <button><i class="ml-2 text-orange-500 fas fa-times-circle"></i></button>
+                        <button><i className="ml-2 text-orange-500 fas fa-times-circle"></i></button>
 
                     </form>
 
@@ -136,15 +141,11 @@ const Orders = () => {
                                         <option>Cancel</option>
                                     </select>
 
-
-
-
-
                                 </td >
 
                                 <td className="px-6 py-4">
                                     <div className='flex justify-between'>
-                                        <label for="order-modal"><i onClick={() => setOpenOrderModal(order)} className="cursor-pointer fa-solid fa-eye"></i></label>
+                                        <label htmlFor="order-modal"><i onClick={() => setOpenOrderModal(order)} className="cursor-pointer fa-solid fa-eye"></i></label>
                                         <button><i className="text-orange-500 fas fa-file-alt"></i></button>
                                     </div>
                                 </td >

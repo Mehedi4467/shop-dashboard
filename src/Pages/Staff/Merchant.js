@@ -50,7 +50,7 @@ const Merchant = ({ user, index, setOpenModal, UserUpdatepdateStatus }) => {
             </td >
             <td className="px-6 py-4">
                 {
-                    role ? <p>Admin</p> : emailVerified === false ? <i title='Email not verify' class="text-orange-600 fa-solid fa-triangle-exclamation"></i> : <label onClick={() => setOpenModal(user)} htmlFor="makeAdmin-modal-user" className="btn text-xs btn-xs capitalize">Admin?</label>
+                    role ? <p>Admin</p> : emailVerified === false ? <i title='Email not verify' className="text-orange-600 fa-solid fa-triangle-exclamation"></i> : <label onClick={() => setOpenModal(user)} htmlFor="makeAdmin-modal-user" className="btn text-xs btn-xs capitalize">Admin?</label>
                 }
             </td >
 
