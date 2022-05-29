@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Pagination from '../../Shared/Pagination/Pagination';
 
 const Products = () => {
@@ -19,8 +20,8 @@ const Products = () => {
 
             <div className='md:grid grid-cols-2 gap-4  mt-5 items-center '>
                 <div className='flex justify-between order-1 md:order-2 gap-4 mb-8 md:mb-0'>
-                    <button className='bg-green-400 hover:bg-green-500 h-12 w-52 text-white font-bold rounded-full '>Download</button>
-                    <button className='bg-green-400 hover:bg-green-500 h-12 w-52 text-white font-bold rounded-full '>Add Product</button>
+                    <Link to="/addProduct"> <button className='bg-green-400 hover:bg-green-500 h-12 w-52 text-white font-bold rounded-full '>Add Product</button></Link>
+
                 </div>
 
                 <div className='relative bg-white p-4 w-full order-2 md:order-1 rounded-full'>

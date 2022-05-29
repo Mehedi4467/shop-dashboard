@@ -19,6 +19,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import RequireAdmin from "./Hooks/RequireAdmin/RequireAdmin";
 import Profile from "./Pages/Profile/Profile";
+import AddProduct from "./Pages/Products/AddProduct";
 
 
 
@@ -46,6 +47,7 @@ function App() {
             <Route path='/orders' element={<RequireAuth><Orders></Orders></RequireAuth>}></Route>
             <Route path='/coupons' element={<RequireAuth><Coupons></Coupons></RequireAuth>}></Route>
             <Route path='/staff' element={<RequireAuth><RequireAdmin><Staff></Staff></RequireAdmin></RequireAuth>}></Route>
+            <Route path='/addProduct' element={<RequireAuth><AddProduct></AddProduct></RequireAuth>}></Route>
             <Route path='/setting' element={<RequireAuth><Setting></Setting></RequireAuth>}></Route>
             <Route path="*" element={<RequireAuth><NotFound></NotFound></RequireAuth>}></Route>
           </Routes>
