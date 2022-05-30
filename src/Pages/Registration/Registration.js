@@ -19,7 +19,7 @@ const Registration = () => {
   const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
   const [updateProfile, updating] = useUpdateProfile(auth);
-  const [sendEmailVerification, sending, Verifyerror] = useSendEmailVerification(auth);
+  const [sendEmailVerification, sending] = useSendEmailVerification(auth);
   const [Check, setCheck] = useState(true);
 
   const {

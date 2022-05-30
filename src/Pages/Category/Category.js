@@ -11,7 +11,7 @@ const Category = () => {
         fetch('http://localhost:5000/category').then(res =>
             res.json()
         )
-    )
+    );
 
     if (isLoading) {
         return <Spinner></Spinner>

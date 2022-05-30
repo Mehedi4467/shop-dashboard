@@ -9,7 +9,7 @@ import useAdminUserData from '../../Hooks/AdminUserData/useAdminUserData';
 
 
 const Profile = () => {
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const { register, handleSubmit } = useForm();
 
     const [user] = useAuthState(auth);
     const imgStore_key = '2f6c6879a39132782b251889cb5d783f';
@@ -26,7 +26,6 @@ const Profile = () => {
         const phone = inputData.phone;
         const formData = new FormData();
         formData.append('image', image);
-
         const url = `https://api.imgbb.com/1/upload?key=${imgStore_key}`;
         fetch(url, {
             method: 'POST',

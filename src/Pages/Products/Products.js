@@ -1,22 +1,47 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link } from 'react-router-dom';
+import auth from '../../firebase.init';
 import Pagination from '../../Shared/Pagination/Pagination';
+import Spinner from '../../Shared/Spinner/Spinner';
+import ProductDeleteModal from './ProductDeleteModal';
 
 const Products = () => {
-    const orderList = [
-        { _id: 1, time: 'Mar 20, 2022', phone: '01584452434', address: 'Salanga,Siraganj', method: 'Nagad', amount: '120', status: 'Confirm' },
-        { _id: 2, time: 'Mar 21, 2022', phone: '01784452434', address: 'Puthiya, Pabana', method: 'Card', amount: '1200', status: 'Delivery' },
-        { _id: 3, time: 'Mar 22, 2022', phone: '01384452434', address: 'Manglo,Bandarban', method: 'Roket', amount: '1020', status: 'Pending' },
-        { _id: 4, time: 'Mar 23, 2022', phone: '01484452434', address: 'BashKhali,Bogura', method: 'Bank', amount: '100', status: 'Processing' },
-        { _id: 5, time: 'Mar 24, 2022', phone: '01984452434', address: 'Mirpur-10, Dhaka', method: 'Bkash', amount: '130', status: 'Confirm' },
-        { _id: 6, time: 'Mar 25, 2022', phone: '01884452434', address: 'Dhanmundi-32,Dhaka', method: 'Nagad', amount: '200', status: 'Delivery' },
-    ]
+    const [user, loading] = useAuthState(auth);
+    const [productModal, setProductModal] = useState(null);
+
+    const [products, setProducts] = useState([]);
+    useEffect(() => {
+        fetch(`http://localhost:5000/product/${user?.email}`, {
+            method: "GET",
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('accessToken')}`
+            },
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                setProducts(data);
+            })
+
+    }, [user]);
+
+    console.log(products)
+
+
+    if (loading) {
+        return <Spinner></Spinner>
+    }
+
+
 
     return (
         <div className='container mx-auto'>
             <h1 className='text-center md:text-left mb-4 text-xl font-bold'>Products</h1>
 
-
+            {/* {
+                products.map(image => <img src={`http://localhost:5000/${image.primaryImage}`} alt="dfggd" />)
+            } */}
 
             <div className='md:grid grid-cols-2 gap-4  mt-5 items-center '>
                 <div className='flex justify-between order-1 md:order-2 gap-4 mb-8 md:mb-0'>
@@ -67,24 +92,24 @@ const Products = () => {
                     </thead>
                     <tbody>
                         {
-                            orderList.map(order => <tr key={order._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            products?.map(product => <tr key={product._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                 <th scope="row" className="px-6 py-4 font-medium  dark:text-white whitespace-nowrap">
-                                    9AF3DF
+                                    {product.sku}
                                 </th>
                                 <td className="px-6 py-4">
                                     <div className='flex items-center justify-between'>
-                                        <img src="https://www.findurings.com/media/catalog/product/cache/2/image/9df78eab33525d08d6e5fb8d27136e95/1/_/1_541.jpg" width='40' alt="" />
-                                        <p>1 Carat Sterling Silver..</p>
+                                        <img src={`http://localhost:5000/${product.primaryImage}`} width='40' alt="" />
+                                        <p>{product.productName}</p>
                                     </div>
                                 </td>
                                 <td className="px-6 py-4">
                                     Jewelry
                                 </td>
                                 <td className="px-6 py-4">
-                                    &#x09F3; 2000
+                                    &#x09F3; {product.price}
                                 </td>
                                 <td className="px-6 py-4">
-                                    100
+                                    {product.quantity}
                                 </td>
                                 <td className="px-6 py-4">
                                     <p className='bg-orange-200 p-1 rounded-full text-center text-blue-500'>Published</p>
@@ -95,7 +120,9 @@ const Products = () => {
                                 <td className="px-6 py-4">
                                     <div className='flex justify-between'>
                                         <i className=" cursor-pointer fa-solid fa-pen-to-square"></i>
-                                        <i className="cursor-pointer fa-solid fa-trash-can"></i>
+
+                                        <label for="product-delete-modal">   <i onClick={() => setProductModal(product)} className="cursor-pointer fa-solid fa-trash-can"></i></label>
+
                                     </div>
                                 </td >
 
@@ -115,6 +142,10 @@ const Products = () => {
                 <i className="text-blue-600  text-lg fa-solid fa-plus"></i>
 
             </div>
+            {
+                productModal && <ProductDeleteModal products={products} setProducts={setProducts} setProductModal={setProductModal} productModal={productModal}></ProductDeleteModal>
+            }
+
         </div >
     );
 };

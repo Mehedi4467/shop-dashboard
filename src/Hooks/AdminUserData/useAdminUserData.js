@@ -26,19 +26,6 @@ const useAdminUserData = (email) => {
     }, [email])
 
 
-    // const { isLoading, error, data, refetch } = useQuery(['adminUserData'], () => {
-    //     if (email) {
-    //         fetch(`http://localhost:5000/adminUser/user/${email}`, {
-    //             method: 'GET',
-    //             headers: {
-    //                 authorization: `Bearer ${localStorage.getItem('accessToken')}`
-    //             }
-    //         }).then(res => res.json())
-    //     }
-    // }
-    // );
-
-
     return [data, adminLoadingData];
 
 

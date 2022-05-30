@@ -111,7 +111,7 @@ const OrderPdf = ({ openOrderModal }) => {
 
                             <div className='pb-6'>
                                 <img src={logo} width='90' alt="marehent logo" />
-                                <p>A merchant belonging to Shop in Shop</p>
+                                <p>A merchant belongs to Shop in Shop</p>
                             </div>
 
                         </div>
