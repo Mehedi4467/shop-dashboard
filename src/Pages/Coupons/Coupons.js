@@ -1,15 +1,44 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import auth from '../../firebase.init';
 import Pagination from '../../Shared/Pagination/Pagination';
+import Spinner from '../../Shared/Spinner/Spinner';
+import AddCouponsModal from './AddCouponsModal';
+import CouponDeleteModal from './CouponDeleteModal';
 
 const Coupons = () => {
-    const orderList = [
-        { _id: 1, time: 'Mar 20, 2022', phone: '01584452434', address: 'Salanga,Siraganj', method: 'Nagad', amount: '120', status: 'Confirm' },
-        { _id: 2, time: 'Mar 21, 2022', phone: '01784452434', address: 'Puthiya, Pabana', method: 'Card', amount: '1200', status: 'Delivery' },
-        { _id: 3, time: 'Mar 22, 2022', phone: '01384452434', address: 'Manglo,Bandarban', method: 'Roket', amount: '1020', status: 'Pending' },
-        { _id: 4, time: 'Mar 23, 2022', phone: '01484452434', address: 'BashKhali,Bogura', method: 'Bank', amount: '100', status: 'Processing' },
-        { _id: 5, time: 'Mar 24, 2022', phone: '01984452434', address: 'Mirpur-10, Dhaka', method: 'Bkash', amount: '130', status: 'Confirm' },
-        { _id: 6, time: 'Mar 25, 2022', phone: '01884452434', address: 'Dhanmundi-32,Dhaka', method: 'Nagad', amount: '200', status: 'Delivery' },
-    ]
+    const [couponModal, setCouponModal] = useState(null);
+    const [user, loading] = useAuthState(auth);
+    const [coupons, setCoupons] = useState([]);
+
+    const [couponLoad, setCoupon] = useState(true);
+    const [pageCount, setPageCount] = useState(0);
+    const [totalItem, setTotalItem] = useState(0)
+    const [search, setSearch] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+
+    useEffect(() => {
+        fetch(`http://localhost:5000/coupons/${user?.email}?couponName=${search}&page=${currentPage - 1}`, {
+            method: "GET",
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('accessToken')}`
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                setCoupons(data);
+                const count = data.length;
+                const pages = Math.ceil(parseInt(count) / 10);
+                setPageCount(pages);
+                setTotalItem(count);
+                setCoupon(false);
+                console.log(data);
+            })
+    }, [user, search, currentPage, couponModal]);
+
+    if (loading || couponLoad) {
+        return <Spinner></Spinner>
+    }
     return (
         <div className='container mx-auto'>
             <h1 className='text-center md:text-left mb-4 text-xl font-bold'>Coupons</h1>
@@ -17,12 +46,12 @@ const Coupons = () => {
 
 
             <div className='md:grid grid-cols-2 gap-4  mt-5 items-center '>
-                <div className='flex justify-center order-1 md:order-2 gap-4 mb-8 md:mb-0'>
-                    <button className='bg-green-400 hover:bg-green-500 h-12 w-52 text-white font-bold rounded-full '>Add Coupon</button>
+                <div className='hidden md:flex justify-center order-1 md:order-2 gap-4 mb-8 md:mb-0'>
+                    <label onClick={() => setCouponModal(true)} htmlFor="coupons-modal" className='btn bg-green-400 hover:bg-green-500 h-12 w-52 text-white font-bold rounded-full '> Add Coupon</label>
                 </div>
 
                 <div className='relative bg-white p-4 w-full order-2 md:order-1 rounded-full'>
-                    <input className='outline-0 p-2 h-12 rounded-full pl-10 text-orange-500 text-lg border-2  hover:shadow-lg w-full' type="text" name="search" placeholder='Search Product Name' />
+                    <input onChange={(e) => setSearch(e.target.value)} className='outline-0 p-2 h-12 rounded-full pl-10 text-orange-500 text-lg border-2  hover:shadow-lg w-full' type="text" name="search" placeholder='Search Campaigns Name' />
                     <div className='absolute right-10 top-[35%] cursor-pointer'>
                         <i className="text-green-500 fa-solid fa-magnifying-glass"></i>
                     </div>
@@ -54,7 +83,7 @@ const Coupons = () => {
                             </th>
 
                             <th scope="col" className="px-6 py-3">
-                                PRODUCT TYPE
+                                MUTE/UNMUTE
                             </th>
 
                             <th scope="col" className="px-6 py-3">
@@ -67,27 +96,34 @@ const Coupons = () => {
                     </thead>
                     <tbody>
                         {
-                            orderList.map(order => <tr key={order._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            coupons?.map((coupon, index) => <tr key={coupon._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                 <th scope="row" className="px-6 py-4 font-medium  dark:text-white whitespace-nowrap">
-                                    33BA
+                                    {index + 1}
                                 </th>
                                 <td className="px-6 py-4">
-                                    Aug 15, 2021
+
+                                    {coupon.startDates}
                                 </td>
                                 <td className="px-6 py-4">
-                                    Aug 31, 2021
+
+                                    {coupon.endDates}
                                 </td>
                                 <td className="px-6 py-4">
-                                    August Gift Voucher
+                                    {coupon.name}
                                 </td>
                                 <td className="px-6 py-4">
-                                    AUGUST21
+                                    {coupon.code}
                                 </td>
                                 <td className="px-6 py-4">
-                                    20%
+                                    {coupon.percentage}%
                                 </td>
-                                <td className="px-6 py-4">
-                                    Grocery
+                                <td className="px-6 py-4 text-center">
+                                    <div className="form-control">
+                                        <label className="label cursor-pointer">
+
+                                            <input type="checkbox" className="toggle toggle-primary" />
+                                        </label>
+                                    </div>
                                 </td>
                                 <td className="px-6 py-4">
                                     <p className='bg-orange-200 p-1 rounded-full text-center text-blue-500'>Expired</p>
@@ -96,7 +132,8 @@ const Coupons = () => {
                                 <td className="px-6 py-4">
                                     <div className='flex justify-between'>
                                         <i className=" cursor-pointer fa-solid fa-pen-to-square"></i>
-                                        <i className="cursor-pointer fa-solid fa-trash-can"></i>
+                                        <label for="coupon-delete"><i onClick={() => setCouponModal(coupon)} className="cursor-pointer fa-solid fa-trash-can"></i></label>
+
                                     </div>
                                 </td >
 
@@ -107,15 +144,27 @@ const Coupons = () => {
                 </table >
 
             </div >
-            <div className='flex justify-center md:justify-end'>
-                <Pagination></Pagination>
-            </div>
+            {
+                couponModal && <CouponDeleteModal couponModal={couponModal} setCouponModal={setCouponModal}></CouponDeleteModal>
+            }
 
-            <div className='h-12 w-12 bg-white flex justify-center items-center cursor-pointer fixed bottom-20 md:hidden block right-5 shadow-lg rounded-full'>
+            {
+                totalItem > 10 && <div className='flex justify-center md:justify-end'>
+                    <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} pageCount={pageCount}></Pagination>
+                </div>
+            }
+
+
+            <label onClick={() => setCouponModal(true)} htmlFor="coupons-modal" className='h-12 w-12 bg-white flex justify-center items-center cursor-pointer fixed bottom-20 md:hidden  right-5 shadow-lg rounded-full'>
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
                 <i className="text-blue-600  text-lg fa-solid fa-plus"></i>
 
-            </div>
+            </label>
+            {
+                couponModal && <AddCouponsModal setCouponModal={setCouponModal}></AddCouponsModal>
+            }
+
+
         </div >
     );
 };
