@@ -5,6 +5,7 @@ import Pagination from '../../Shared/Pagination/Pagination';
 import Spinner from '../../Shared/Spinner/Spinner';
 import AddCouponsModal from './AddCouponsModal';
 import CouponDeleteModal from './CouponDeleteModal';
+import CouponUpdateModal from './CouponUpdateModal';
 
 const Coupons = () => {
     const [couponModal, setCouponModal] = useState(null);
@@ -131,8 +132,8 @@ const Coupons = () => {
 
                                 <td className="px-6 py-4">
                                     <div className='flex justify-between'>
-                                        <i className=" cursor-pointer fa-solid fa-pen-to-square"></i>
-                                        <label for="coupon-delete"><i onClick={() => setCouponModal(coupon)} className="cursor-pointer fa-solid fa-trash-can"></i></label>
+                                        <label htmlFor="coupon-update">  <i onClick={() => setCouponModal(coupon)} className=" cursor-pointer fa-solid fa-pen-to-square"></i></label>
+                                        <label htmlFor="coupon-delete"><i onClick={() => setCouponModal(coupon)} className="cursor-pointer fa-solid fa-trash-can"></i></label>
 
                                     </div>
                                 </td >
@@ -146,6 +147,10 @@ const Coupons = () => {
             </div >
             {
                 couponModal && <CouponDeleteModal couponModal={couponModal} setCouponModal={setCouponModal}></CouponDeleteModal>
+            }
+
+            {
+                couponModal && <CouponUpdateModal couponModal={couponModal} setCouponModal={setCouponModal}></CouponUpdateModal>
             }
 
             {
