@@ -5,14 +5,25 @@ import auth from '../../firebase.init';
 import Pagination from '../../Shared/Pagination/Pagination';
 import Spinner from '../../Shared/Spinner/Spinner';
 import ProductDeleteModal from './ProductDeleteModal';
+import ProductEditModal from './ProductEditModal';
+import ProductViewModal from './ProductViewModal';
 
 const Products = () => {
     const [user, loading] = useAuthState(auth);
     const [productModal, setProductModal] = useState(null);
+    const [productLoad, setProductLoad] = useState(true);
+    const [pageCount, setPageCount] = useState(0);
+    const [totalItem, setTotalItem] = useState(0)
+    const [search, setSearch] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+
+
+
+
 
     const [products, setProducts] = useState([]);
     useEffect(() => {
-        fetch(`http://localhost:5000/product/${user?.email}`, {
+        fetch(`http://localhost:5000/product/${user?.email}?name=${search}&page=${currentPage - 1}`, {
             method: "GET",
             headers: {
                 authorization: `Bearer ${localStorage.getItem('accessToken')}`
@@ -20,16 +31,21 @@ const Products = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
                 setProducts(data);
+
+                const count = data.length;
+                const pages = Math.ceil(parseInt(count) / 10);
+                setPageCount(pages);
+                setTotalItem(count);
+                setProductLoad(false);
+
             })
 
-    }, [user]);
-
-    console.log(products)
+    }, [user, currentPage, search, productModal]);
 
 
-    if (loading) {
+
+    if (loading || productLoad) {
         return <Spinner></Spinner>
     }
 
@@ -39,18 +55,13 @@ const Products = () => {
         <div className='container mx-auto'>
             <h1 className='text-center md:text-left mb-4 text-xl font-bold'>Products</h1>
 
-            {/* {
-                products.map(image => <img src={`http://localhost:5000/${image.primaryImage}`} alt="dfggd" />)
-            } */}
-
             <div className='md:grid grid-cols-2 gap-4  mt-5 items-center '>
-                <div className='flex justify-between order-1 md:order-2 gap-4 mb-8 md:mb-0'>
+                <div className='md:flex justify-between hidden  order-1 md:order-2 gap-4 mb-8 md:mb-0'>
                     <Link to="/addProduct"> <button className='bg-green-400 hover:bg-green-500 h-12 w-52 text-white font-bold rounded-full '>Add Product</button></Link>
-
                 </div>
 
                 <div className='relative bg-white p-4 w-full order-2 md:order-1 rounded-full'>
-                    <input className='outline-0 p-2 h-12 rounded-full pl-10 text-orange-500 text-lg border-2  hover:shadow-lg w-full' type="text" name="search" placeholder='Search Product Name' />
+                    <input onChange={(e) => setSearch(e.target.value)} className='outline-0 p-2 h-12 rounded-full pl-10 text-orange-500 text-lg border-2  hover:shadow-lg w-full' type="text" name="search" placeholder='Search Product Name' />
                     <div className='absolute right-10 top-[35%] cursor-pointer'>
                         <i className="text-green-500 fa-solid fa-magnifying-glass"></i>
                     </div>
@@ -102,8 +113,8 @@ const Products = () => {
                                         <p>{product.productName}</p>
                                     </div>
                                 </td>
-                                <td className="px-6 py-4">
-                                    Jewelry
+                                <td className="px-6 py-4 capitalize">
+                                    {product.category}
                                 </td>
                                 <td className="px-6 py-4">
                                     &#x09F3; {product.price}
@@ -112,16 +123,17 @@ const Products = () => {
                                     {product.quantity}
                                 </td>
                                 <td className="px-6 py-4">
-                                    <p className='bg-orange-200 p-1 rounded-full text-center text-blue-500'>Published</p>
+                                    <p className='bg-orange-200 p-1 rounded-full text-center text-blue-500 capitalize'>{product.status}</p>
                                 </td >
                                 <td className="px-6 py-4">
-                                    <i className="cursor-pointer fa-solid fa-eye"></i>
+                                    <label for="product-view-modal"> <i onClick={() => setProductModal(product)} className="cursor-pointer fa-solid fa-eye"></i></label>
+
                                 </td >
                                 <td className="px-6 py-4">
                                     <div className='flex justify-between'>
-                                        <i className=" cursor-pointer fa-solid fa-pen-to-square"></i>
+                                        <label htmlFor="product-edit-modal"> <i onClick={() => setProductModal(product)} className=" cursor-pointer fa-solid fa-pen-to-square"></i></label>
 
-                                        <label for="product-delete-modal">   <i onClick={() => setProductModal(product)} className="cursor-pointer fa-solid fa-trash-can"></i></label>
+                                        <label htmlFor="product-delete-modal">   <i onClick={() => setProductModal(product)} className="cursor-pointer fa-solid fa-trash-can"></i></label>
 
                                     </div>
                                 </td >
@@ -133,17 +145,29 @@ const Products = () => {
                 </table >
 
             </div >
-            <div className='flex justify-center md:justify-end'>
-                <Pagination></Pagination>
-            </div>
+            {
+                totalItem > 10 && <div className='flex justify-center md:justify-end'>
+                    <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} pageCount={pageCount}></Pagination>
+                </div>
+            }
 
-            <div className='h-12 w-12 bg-white flex justify-center items-center cursor-pointer fixed bottom-20 md:hidden block right-5 shadow-lg rounded-full'>
+            <Link to="/addProduct"><div className='h-12 w-12 bg-white flex justify-center items-center cursor-pointer fixed bottom-20 md:hidden  right-5 shadow-lg rounded-full'>
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+
+
                 <i className="text-blue-600  text-lg fa-solid fa-plus"></i>
 
-            </div>
+            </div></Link>
+
+
             {
                 productModal && <ProductDeleteModal products={products} setProducts={setProducts} setProductModal={setProductModal} productModal={productModal}></ProductDeleteModal>
+            }
+            {
+                productModal && <ProductViewModal productModal={productModal}></ProductViewModal>
+            }
+            {
+                productModal && <ProductEditModal productModal={productModal} setProductModal={setProductModal}></ProductEditModal>
             }
 
         </div >
