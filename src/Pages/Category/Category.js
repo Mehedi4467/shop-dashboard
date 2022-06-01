@@ -31,7 +31,6 @@ const Category = () => {
             .then(data => {
                 if (data.acknowledged) {
                     toast(`Category ${value}`);
-
                     refetch();
                 } else {
                     toast.error("Some Problem Occurs! Please Reload Browser");

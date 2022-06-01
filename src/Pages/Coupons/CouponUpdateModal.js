@@ -10,8 +10,8 @@ const CouponUpdateModal = ({ couponModal, setCouponModal }) => {
     const { _id, name, code, percentage, startDates, endDates } = couponModal;
 
 
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
+    const [startDate, setStartDate] = useState(new Date(startDates));
+    const [endDate, setEndDate] = useState(new Date(endDates));
 
 
 
@@ -28,6 +28,7 @@ const CouponUpdateModal = ({ couponModal, setCouponModal }) => {
         const update = {
             couponName, couponCode, couponPercentage, satrtDateUpdate, endDateUpdate
         }
+
 
         fetch(`http://localhost:5000/coupon/update/${_id}`, {
             method: "PUT",
@@ -85,7 +86,7 @@ const CouponUpdateModal = ({ couponModal, setCouponModal }) => {
 
                                 }}
                                 mode="single"
-                                selected={startDates}
+                                selected={startDate}
                                 onSelect={setStartDate}
                             />
                             <input type="text" value={format(startDate, 'PP')} placeholder="Coupon Percentage" className="input input-warning w-full" disabled />
@@ -104,7 +105,7 @@ const CouponUpdateModal = ({ couponModal, setCouponModal }) => {
 
                                 }}
                                 mode="single"
-                                selected={endDates}
+                                selected={endDate}
                                 onSelect={setEndDate}
                             />
                             <input type="text" value={format(endDate, 'PP')} placeholder="Coupon Percentage" className="input input-warning w-full" disabled />

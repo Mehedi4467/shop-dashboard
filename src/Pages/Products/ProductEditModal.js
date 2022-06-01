@@ -33,11 +33,12 @@ const ProductEditModal = ({ productModal, setProductModal }) => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
                 if (data.acknowledged && data.modifiedCount > 0) {
                     toast("Product Update Successfully.");
                     setProductModal(null);
-
+                }
+                else if (data.modifiedCount === 0) {
+                    toast("No Product Update");
                 }
             })
 
@@ -116,7 +117,7 @@ const ProductEditModal = ({ productModal, setProductModal }) => {
                                 <button className="btn bg-orange-500">Update</button>
                             </div>
                             <div className="modal-action">
-                                <label htmlFor="product-edit-modal" className="btn">Cencel</label>
+                                <button type='reset' onClick={() => setProductModal(null)} className="btn">Cencel</button>
                             </div>
                         </div>
                     </form>

@@ -6,6 +6,7 @@ import Spinner from '../../Shared/Spinner/Spinner';
 import AddCouponsModal from './AddCouponsModal';
 import CouponDeleteModal from './CouponDeleteModal';
 import CouponUpdateModal from './CouponUpdateModal';
+import { toast } from 'react-toastify';
 
 const Coupons = () => {
     const [couponModal, setCouponModal] = useState(null);
@@ -17,6 +18,27 @@ const Coupons = () => {
     const [totalItem, setTotalItem] = useState(0)
     const [search, setSearch] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
+
+
+    const handelStatus = (id, value) => {
+        fetch(`http://localhost:5000/coupon/status/${id}`, {
+            method: "PUT",
+            headers: {
+                'content-type': 'application/json',
+                authorization: `Bearer ${localStorage.getItem('accessToken')}`
+            },
+            body: JSON.stringify({ value })
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.acknowledged) {
+                    toast(`Coupon status ${value}`);
+
+                }
+            })
+    }
+
+
 
     useEffect(() => {
         fetch(`http://localhost:5000/coupons/${user?.email}?couponName=${search}&page=${currentPage - 1}`, {
@@ -122,12 +144,17 @@ const Coupons = () => {
                                     <div className="form-control">
                                         <label className="label cursor-pointer">
 
-                                            <input type="checkbox" className="toggle toggle-primary" />
+                                            <input onClick={(e) => handelStatus(coupon._id, e.target.checked)} type="checkbox" className="toggle toggle-primary" defaultChecked={coupon.status} />
                                         </label>
                                     </div>
                                 </td>
                                 <td className="px-6 py-4">
-                                    <p className='bg-orange-200 p-1 rounded-full text-center text-blue-500'>Expired</p>
+                                    <p className='bg-orange-200 p-1 rounded-full text-center text-blue-500'>
+                                        {
+                                            new Date() > new Date(coupon.endDates) ? 'Expired' : new Date() < new Date(coupon.startDates) ? 'Pending' : 'Running'
+                                        }
+
+                                    </p>
                                 </td >
 
                                 <td className="px-6 py-4">
