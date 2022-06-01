@@ -1,10 +1,12 @@
 
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { toast } from 'react-toastify';
 import auth from '../../firebase.init';
 import Spinner from '../../Shared/Spinner/Spinner';
 import AddSliderModal from './AddSliderModal';
 import SliderDeleteModal from './SliderDeleteModal';
+import SliderUpdate from './SliderUpdate';
 
 const Setting = () => {
     const [sliderModal, setSliderMoodal] = useState(null);
@@ -25,6 +27,23 @@ const Setting = () => {
                 setSliders(data)
             })
     }, [user, search, sliderModal])
+
+    const handelSliderStatus = (id, value) => {
+        fetch(`http://localhost:5000/slider/status/${id}`, {
+            method: "PUT",
+            headers: {
+                'content-type': 'application/json',
+                authorization: `Bearer ${localStorage.getItem('accessToken')}`
+            },
+            body: JSON.stringify({ value })
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.acknowledged && data.modifiedCount > 0) {
+                    toast(`Slider Status ${value}`);
+                }
+            })
+    }
 
 
     if (loading) {
@@ -56,6 +75,7 @@ const Setting = () => {
                             <th>Title</th>
                             <th>Description</th>
                             <th>Link</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -70,8 +90,15 @@ const Setting = () => {
                                     <a className='btn' href={slider.link} rel="noopener noreferrer" target='_blank'>Link</a>
                                 </td>
                                 <td>
+                                    <div class="form-control">
+                                        <label class="label cursor-pointer">
+                                            <input onClick={(e) => handelSliderStatus(slider._id, e.target.checked)} type="checkbox" className="toggle toggle-primary" defaultChecked={slider.status} />
+                                        </label>
+                                    </div>
+                                </td>
+                                <td>
                                     <div className='flex justify-between'>
-                                        <label htmlFor="slider-edit-modal"> <i className=" cursor-pointer fa-solid fa-pen-to-square"></i></label>
+                                        <label htmlFor="slider-update"> <i onClick={() => setSliderMoodal(slider)} className=" cursor-pointer fa-solid fa-pen-to-square"></i></label>
 
                                         <label htmlFor="slider-delete-modal"> <i onClick={() => setSliderMoodal(slider)} className="cursor-pointer fa-solid fa-trash-can"></i></label>
 
@@ -83,6 +110,9 @@ const Setting = () => {
                     </tbody>
                 </table>
             </div>
+            {
+                sliderModal && <SliderUpdate sliderModal={sliderModal} setSliderMoodal={setSliderMoodal}></SliderUpdate>
+            }
 
             {
                 sliderModal && <SliderDeleteModal sliderModal={sliderModal} setSliderMoodal={setSliderMoodal}></SliderDeleteModal>
