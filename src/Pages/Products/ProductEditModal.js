@@ -98,12 +98,12 @@ const ProductEditModal = ({ productModal, setProductModal }) => {
                             <input type="text" placeholder={outDhaka} name='outDhaka' className="input input-bordered w-full" />
                         </div>
 
-                        <div class="form-control w-full ">
-                            <label class="label">
-                                <span class="label-text">Order Type</span>
+                        <div className="form-control w-full ">
+                            <label className="label">
+                                <span className="label-text">Order Type</span>
                             </label>
 
-                            <select class="select select-bordered" name='orderType'>
+                            <select className="select select-bordered" name='orderType'>
                                 <option value='' disabled selected>{orderType}</option>
                                 <option>COD</option>
                                 <option>Pre-Order</option>

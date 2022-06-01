@@ -23,7 +23,7 @@ const Setting = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
+
                 setSliders(data)
             })
     }, [user, search, sliderModal])
@@ -90,8 +90,8 @@ const Setting = () => {
                                     <a className='btn' href={slider.link} rel="noopener noreferrer" target='_blank'>Link</a>
                                 </td>
                                 <td>
-                                    <div class="form-control">
-                                        <label class="label cursor-pointer">
+                                    <div className="form-control">
+                                        <label className="label cursor-pointer">
                                             <input onClick={(e) => handelSliderStatus(slider._id, e.target.checked)} type="checkbox" className="toggle toggle-primary" defaultChecked={slider.status} />
                                         </label>
                                     </div>

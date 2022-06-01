@@ -51,12 +51,18 @@ const AddProduct = () => {
     const onImageChange = (event) => {
         if (event.target.files && event.target.files[0]) {
             if (event.target.files[0].size < 300000) {
-                setImage(URL.createObjectURL(event.target.files[0]));
-                setPrimaryImageSize("")
+                if (event.target.files[0].type === "image/jpeg" || event.target.files[0].type === "image/jpg" || event.target.files[0].type === "image/png") {
+                    setImage(URL.createObjectURL(event.target.files[0]));
+                    setPrimaryImageSize("");
+                    console.log(event.target.files[0].type)
+                }
+                else {
+                    setPrimaryImageSize("Only Accepted jpeg, png, jpg");
+                }
             }
             else {
 
-                setPrimaryImageSize("Image Size Too Large. Please upload image max size 300KB");
+                setPrimaryImageSize("Image Size Too Large. Please upload image max size 300KB and type jpeg, png, jpg");
             }
         }
 
@@ -71,11 +77,17 @@ const AddProduct = () => {
             const imageObjectLength = imageObject.length;
             let ImageSize = 0;
             for (let i = 0; i < imageObjectLength; i++) {
-                ImageSize += event.target.files[i]?.size;
+
+                if (event.target.files[0].type === "image/jpeg" || event.target.files[0].type === "image/jpg" || event.target.files[0].type === "image/png") {
+                    ImageSize += event.target.files[i]?.size;
+                }
+                else {
+                    return setsecondImageSize("Only Accepted jpeg, png, jpg");
+                }
             }
 
             if (imageObjectLength > 4 || ImageSize > 300000) {
-                setsecondImageSize("Image Size Too Large. Please upload image max size 300KB and less then 5 Images");
+                setsecondImageSize("Image Size Too Large. Please upload image max size 300KB and less then 5 Images and type jpeg, png, jpg");
             }
             else {
                 setSecondImage(imageObject);

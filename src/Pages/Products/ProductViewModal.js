@@ -4,10 +4,10 @@ const ProductViewModal = ({ productModal }) => {
     const { productName, sku, subCategory, category, orderType, price, quantity, deliveryInDhaka, outDhaka, color, size, marchentShop, marchentEmail, marchantPhone, primaryImage, status, date, time } = productModal;
     return (
         <div>
-            <input type="checkbox" id="product-view-modal" class="modal-toggle" />
-            <div class="modal">
-                <div class="modal-box relative">
-                    <label for="product-view-modal" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+            <input type="checkbox" id="product-view-modal" className="modal-toggle" />
+            <div className="modal">
+                <div className="modal-box relative">
+                    <label for="product-view-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
 
                     <div className='flex justify-center'>
                         <img src={`http://localhost:5000/${primaryImage}`} width='150' alt="product images" />

@@ -70,9 +70,10 @@ const Orders = () => {
                     <form onSubmit={handelResetStatus}>
                         <select onChange={(e) => handelStatusSearch(e.target.value)} className='outline-0 cursor-pointer border-2 hover:shadow-lg text-slate-400 h-12 w-60  rounded-full px-4' id="cars">
                             <option value="">Status Search</option>
-                            <option>Delivered</option>
                             <option>Pending</option>
                             <option>Processing</option>
+                            <option>Delivered</option>
+                            <option>Completed</option>
                             <option>Cancel</option>
                         </select>
                         <button><i className="ml-2 text-orange-500 fas fa-times-circle"></i></button>

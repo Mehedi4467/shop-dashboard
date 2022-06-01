@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import auth from '../../firebase.init';
+import useAdmin from '../../Hooks/useAdmin';
 import Pagination from '../../Shared/Pagination/Pagination';
 import Spinner from '../../Shared/Spinner/Spinner';
 import ProductDeleteModal from './ProductDeleteModal';
@@ -16,7 +18,7 @@ const Products = () => {
     const [totalItem, setTotalItem] = useState(0)
     const [search, setSearch] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
-
+    const [isAdmin] = useAdmin(user);
 
 
 
@@ -43,7 +45,24 @@ const Products = () => {
 
     }, [user, currentPage, search, productModal]);
 
+    const productUpdateStatus = (id, value) => {
+        fetch(`http://localhost:5000/product/status/update/${id}`, {
+            method: "PUT",
+            headers: {
+                'content-type': 'application/json',
+                authorization: `Bearer ${localStorage.getItem('accessToken')}`
+            },
+            body: JSON.stringify({ value })
+        })
+            .then(res => res.json())
+            .then(data => {
 
+                if (data.acknowledged) {
+                    toast("Product Status Update Successfully");
+
+                }
+            })
+    }
 
     if (loading || productLoad) {
         return <Spinner></Spinner>
@@ -123,7 +142,17 @@ const Products = () => {
                                     {product.quantity}
                                 </td>
                                 <td className="px-6 py-4">
-                                    <p className='bg-orange-200 p-1 rounded-full text-center text-blue-500 capitalize'>{product.status}</p>
+                                    {
+                                        isAdmin ? <select onChange={(e) => productUpdateStatus(product._id, e.target.value)} className='outline-0 cursor-pointer border-2 hover:shadow-lg text-slate-400 p-1 rounded-full px-4' id="cars">
+                                            <option className='text-orange-600' defaultValue={product.status} selected disabled>{product.status}</option>
+                                            <option>Pending</option>
+                                            <option>Accept</option>
+                                            <option>Mute</option>
+                                            <option>Block</option>
+
+                                        </select> : <p className='bg-orange-200 p-1 rounded-full text-center text-blue-500 capitalize'>{product.status}</p>
+                                    }
+
                                 </td >
                                 <td className="px-6 py-4">
                                     <label for="product-view-modal"> <i onClick={() => setProductModal(product)} className="cursor-pointer fa-solid fa-eye"></i></label>

@@ -11,8 +11,15 @@ const AddSliderModal = ({ sliderModal, setSliderMoodal }) => {
     const onImageChange = (event) => {
         if (event.target.files && event.target.files[0]) {
             if (event.target.files[0].size < 300000) {
-                setSliderImages(URL.createObjectURL(event.target.files[0]));
-                setImageError("")
+                if (event.target.files[0].type === "image/jpeg" || event.target.files[0].type === "image/jpg" || event.target.files[0].type === "image/png") {
+                    setSliderImages(URL.createObjectURL(event.target.files[0]));
+                    setImageError("");
+                    console.log(event.target.files[0])
+                }
+                else {
+                    setImageError("Only Accepted jpeg, png, jpg");
+                }
+
             }
             else {
 
@@ -79,7 +86,7 @@ const AddSliderModal = ({ sliderModal, setSliderMoodal }) => {
                                 <div className='my-6'>
                                     <label className="block">
                                         <span className="sr-only">Choose File</span>
-                                        <input type="file" onChange={onImageChange} name='img' className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
+                                        <input type="file" onChange={onImageChange} name='img' className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" required />
                                     </label>
                                 </div>
 
