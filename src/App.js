@@ -20,6 +20,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import RequireAdmin from "./Hooks/RequireAdmin/RequireAdmin";
 import Profile from "./Pages/Profile/Profile";
 import AddProduct from "./Pages/Products/AddProduct";
+import Account from "./Pages/Account/Account";
 
 
 
@@ -48,7 +49,8 @@ function App() {
             <Route path='/coupons' element={<RequireAuth><Coupons></Coupons></RequireAuth>}></Route>
             <Route path='/staff' element={<RequireAuth><RequireAdmin><Staff></Staff></RequireAdmin></RequireAuth>}></Route>
             <Route path='/addProduct' element={<RequireAuth><AddProduct></AddProduct></RequireAuth>}></Route>
-            <Route path='/setting' element={<RequireAuth><Setting></Setting></RequireAuth>}></Route>
+            <Route path='/account' element={<RequireAuth><Account></Account></RequireAuth>}></Route>
+            <Route path='/setting' element={<RequireAuth><RequireAdmin><Setting></Setting></RequireAdmin></RequireAuth>}></Route>
             <Route path="*" element={<RequireAuth><NotFound></NotFound></RequireAuth>}></Route>
           </Routes>
         </div>
