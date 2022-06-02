@@ -14,7 +14,7 @@ const AddSliderModal = ({ sliderModal, setSliderMoodal }) => {
                 if (event.target.files[0].type === "image/jpeg" || event.target.files[0].type === "image/jpg" || event.target.files[0].type === "image/png") {
                     setSliderImages(URL.createObjectURL(event.target.files[0]));
                     setImageError("");
-                    console.log(event.target.files[0])
+
                 }
                 else {
                     setImageError("Only Accepted jpeg, png, jpg");
@@ -124,7 +124,10 @@ const AddSliderModal = ({ sliderModal, setSliderMoodal }) => {
 
                         <div className='flex justify-end'>
                             <div className="modal-action mr-4">
-                                <button stype='submit' className="btn bg-orange-500">Upload Slider</button>
+                                {
+                                    imageError ? <button className="btn text-warning cursor-not-allowed" disabled>Solve Error</button> : <button stype='submit' className="btn bg-orange-500">Upload Slider</button>
+                                }
+
                             </div>
                             <div className="modal-action">
                                 <label htmlFor="slider-add-modal" className="btn">Cencle</label>

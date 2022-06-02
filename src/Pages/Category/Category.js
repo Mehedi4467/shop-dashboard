@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import { toast } from 'react-toastify';
 import Pagination from '../../Shared/Pagination/Pagination';
 import Spinner from '../../Shared/Spinner/Spinner';
+import InternetError from '../NotFound/InternetError';
+import CategoryDeleteModal from './CategoryDeleteModal';
 import CategoryModal from './CategoryModal';
 
 const Category = () => {
-
+    const [categoryModal, setCategoryModal] = useState(null);
+    const [subCategory, setSubCategory] = useState([]);
     const { isLoading, error, data, refetch } = useQuery('categories', () =>
         fetch('http://localhost:5000/category').then(res =>
             res.json()
@@ -16,6 +19,10 @@ const Category = () => {
     if (isLoading) {
         return <Spinner></Spinner>
     }
+    if (error) {
+        return <InternetError></InternetError>
+    }
+
 
     const handelStatus = (id, index, value, name, slug) => {
 
@@ -140,7 +147,12 @@ const Category = () => {
                                                 <td className="px-6 py-4">
                                                     <div className='flex justify-around'>
                                                         <i className=" cursor-pointer fa-solid fa-pen-to-square"></i>
-                                                        <i className="cursor-pointer fa-solid fa-trash-can"></i>
+                                                        <label onClick={() => {
+                                                            setCategoryModal(category)
+                                                            setSubCategory(e)
+                                                        }
+                                                        } htmlFor="category-delete-modal"> <i className="cursor-pointer fa-solid fa-trash-can"></i></label>
+
                                                     </div>
                                                 </td >
                                             </tbody>
@@ -155,11 +167,16 @@ const Category = () => {
                 </table >
 
             </div >
+
+            {
+                categoryModal && <CategoryDeleteModal refetch={refetch} setCategoryModal={setCategoryModal} subCategory={subCategory} categoryModal={categoryModal}></CategoryDeleteModal>
+            }
+
             <div className='flex justify-center md:justify-end'>
                 <Pagination></Pagination>
             </div>
 
-            <div className='h-12 w-12 bg-white flex justify-center items-center cursor-pointer fixed bottom-20 md:hidden block right-5 shadow-lg rounded-full'>
+            <div className='h-12 w-12 bg-white flex justify-center items-center cursor-pointer fixed bottom-20 md:hidden  right-5 shadow-lg rounded-full'>
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
                 <i className="text-blue-600  text-lg fa-solid fa-plus"></i>
 
