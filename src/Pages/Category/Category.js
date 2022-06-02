@@ -1,20 +1,29 @@
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import { toast } from 'react-toastify';
-import Pagination from '../../Shared/Pagination/Pagination';
 import Spinner from '../../Shared/Spinner/Spinner';
 import InternetError from '../NotFound/InternetError';
 import CategoryDeleteModal from './CategoryDeleteModal';
+import CategoryEditModal from './CategoryEditModal';
 import CategoryModal from './CategoryModal';
+
 
 const Category = () => {
     const [categoryModal, setCategoryModal] = useState(null);
     const [subCategory, setSubCategory] = useState([]);
-    const { isLoading, error, data, refetch } = useQuery('categories', () =>
-        fetch('http://localhost:5000/category').then(res =>
+    const [search, setSearch] = useState('');
+    const { isLoading, error, data, refetch } = useQuery(['categories'], () =>
+        fetch(`http://localhost:5000/category?name=${search.toLocaleLowerCase()}`, {
+            method: "GET",
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('accessToken')}`
+            }
+        }).then(res =>
             res.json()
         )
     );
+
+
 
     if (isLoading) {
         return <Spinner></Spinner>
@@ -31,6 +40,7 @@ const Category = () => {
             method: "PUT",
             headers: {
                 'content-type': 'application/json',
+                authorization: `Bearer ${localStorage.getItem('accessToken')}`
             },
             body: JSON.stringify({ status })
         })
@@ -52,15 +62,20 @@ const Category = () => {
 
 
             <div className='md:flex gap-4 justify-center mt-5  items-center '>
-                <div className='flex justify-center order-1 md:order-2 gap-4 mb-8 md:mb-0'>
+                <div className='md:flex hidden justify-center order-1 md:order-2 gap-4 mb-8 md:mb-0'>
 
                     <label htmlFor="category-modal" className='btn  border-none bg-green-400 hover:bg-green-500 h-12 w-52 text-sm md:text-lg text-white font-bold rounded-full '><i className="mr-2 fas fa-plus-circle"></i> Add Category</label>
                 </div>
 
-                <div className='relative bg-white p-4 w-full order-2 md:order-1 rounded-full'>
-                    <input className='outline-0 p-2 h-12 rounded-full pl-10 text-orange-500 text-lg border-2  hover:shadow-lg w-full' type="text" name="search" placeholder='Search Category' />
+                <div className='relative  bg-white p-4 w-full order-2 md:order-1 rounded-full'>
+                    <input onChange={(e) => {
+                        refetch();
+                        setSearch(e.target.value)
+                    }
+                    } className='outline-0 p-2 h-12 rounded-full pl-10 text-orange-500 text-lg border-2  hover:shadow-lg w-full' type="text" name="search" placeholder='Search Category' />
                     <div className='absolute right-10 top-[35%] cursor-pointer'>
-                        <i className="text-green-500 fa-solid fa-magnifying-glass"></i>
+                        {/* <i onClick={refetch()} className="text-green-500 fa-solid fa-magnifying-glass"></i> */}
+
                     </div>
                 </div>
 
@@ -146,9 +161,14 @@ const Category = () => {
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     <div className='flex justify-around'>
-                                                        <i className=" cursor-pointer fa-solid fa-pen-to-square"></i>
+
                                                         <label onClick={() => {
-                                                            setCategoryModal(category)
+                                                            setSubCategory(e);
+                                                            setCategoryModal(category);
+                                                        }} htmlFor="update-modal-category"> <i className=" cursor-pointer fa-solid fa-pen-to-square"></i></label>
+
+                                                        <label onClick={() => {
+                                                            setCategoryModal(category);
                                                             setSubCategory(e)
                                                         }
                                                         } htmlFor="category-delete-modal"> <i className="cursor-pointer fa-solid fa-trash-can"></i></label>
@@ -172,15 +192,23 @@ const Category = () => {
                 categoryModal && <CategoryDeleteModal refetch={refetch} setCategoryModal={setCategoryModal} subCategory={subCategory} categoryModal={categoryModal}></CategoryDeleteModal>
             }
 
-            <div className='flex justify-center md:justify-end'>
-                <Pagination></Pagination>
-            </div>
+            {
+                categoryModal && <CategoryEditModal refetch={refetch} setCategoryModal={setCategoryModal} subCategory={subCategory}></CategoryEditModal>
+            }
 
-            <div className='h-12 w-12 bg-white flex justify-center items-center cursor-pointer fixed bottom-20 md:hidden  right-5 shadow-lg rounded-full'>
+            {/* <div className='flex justify-center md:justify-end'>
+                <Pagination></Pagination>
+            </div> */}
+
+
+            <label htmlFor="category-modal">    <div className='h-12 w-12 bg-white flex justify-center items-center cursor-pointer fixed bottom-20 md:hidden  right-5 shadow-lg rounded-full'>
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
                 <i className="text-blue-600  text-lg fa-solid fa-plus"></i>
 
-            </div>
+            </div></label>
+
+
+
 
             <CategoryModal refetch={refetch} data={data} isLoading={isLoading} ></CategoryModal>
 

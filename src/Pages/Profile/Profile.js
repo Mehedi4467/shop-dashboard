@@ -19,8 +19,6 @@ const Profile = () => {
         return <Spinner></Spinner>
     }
 
-
-
     const onSubmit = async (inputData) => {
         const image = inputData.image[0];
         const phone = inputData.phone;

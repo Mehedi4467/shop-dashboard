@@ -4,7 +4,7 @@ import Spinner from '../../Shared/Spinner/Spinner';
 
 const CategoryModal = ({ refetch, isLoading, data }) => {
     const [existing, setExisting] = useState(false);
-
+    const imgStore_key = '2f6c6879a39132782b251889cb5d783f';
     const [subCategoryItem, setSubCategoryItem] = useState([]);
 
 
@@ -20,7 +20,7 @@ const CategoryModal = ({ refetch, isLoading, data }) => {
         const type = event.target.type.value;
         const category = event.target.category.value;
         const subCategory = event.target.subCategory.value;
-        const img = event?.target?.img?.value;
+        const img = event?.target?.img?.files[0] || subCategoryItem.img;
         const categorySlug = category.replace(/\s/g, '-');
         const subCategorySlug = subCategory.replace(/\s/g, '-');
 
@@ -28,41 +28,103 @@ const CategoryModal = ({ refetch, isLoading, data }) => {
         if (category === "DEFAULT") {
             toast.error("Please Select Valid Category");
         } else {
-            const selectItem = data?.categories.find(i => i._id === type)
-            const newCategory = [...selectItem?.category];
-
-            const category2 = newCategory.find(e => e.name === category)
 
 
-            if (!category2) {
-                newCategory.push({ name: category, status: true, slug: categorySlug, img: img, subCategory: [{ name: subCategory, slug: subCategorySlug }] });
+            if (img && !existing) {
+                const formData = new FormData();
+                formData.append('image', img);
+                const url = `https://api.imgbb.com/1/upload?key=${imgStore_key}`;
+                fetch(url, {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(res => res.json())
+                    .then(result => {
+                        if (result.success) {
+                            const image = result.data.url;
+                            const selectItem = data?.categories.find(i => i._id === type)
+                            const newCategory = [...selectItem?.category];
+
+                            const category2 = newCategory.find(e => e.name === category)
+                            console.log(newCategory)
+                            if (!category2) {
+                                newCategory.push({ name: category, status: true, slug: categorySlug, img: image, subCategory: [{ name: subCategory, slug: subCategorySlug }] });
+
+                            }
+
+                            else {
+
+                                const index = newCategory.findIndex(x => x.name === category);
+                                newCategory[index].subCategory.push({ name: subCategory, slug: subCategorySlug })
+
+                            }
+                            console.log(newCategory)
+                            fetch(`http://localhost:5000/category/${type}`, {
+                                method: "PUT",
+                                headers: {
+                                    'content-type': 'application/json',
+                                    authorization: `Bearer ${localStorage.getItem('accessToken')}`
+                                },
+                                body: JSON.stringify({ newCategory })
+                            })
+                                .then(res => res.json())
+                                .then(data => {
+                                    if (data.acknowledged) {
+                                        toast("Successful added category");
+                                        event.target.reset();
+                                        refetch();
+                                    } else {
+                                        toast.error("Some Problem Occurs! Please Reload Browser");
+                                    }
+                                });
+
+                        }
+                        console.log(result)
+                    })
+
 
             }
+
+
             else {
 
-                const index = newCategory.findIndex(x => x.name === category);
-                newCategory[index].subCategory.push({ name: subCategory, slug: subCategorySlug })
+                const selectItem = data?.categories.find(i => i._id === type)
+                const newCategory = [...selectItem?.category];
 
+                const category2 = newCategory.find(e => e.name === category)
+
+                if (!category2) {
+                    newCategory.push({ name: category, status: true, slug: categorySlug, img: img, subCategory: [{ name: subCategory, slug: subCategorySlug }] });
+
+                }
+                else {
+
+                    const index = newCategory.findIndex(x => x.name === category);
+                    newCategory[index].subCategory.push({ name: subCategory, slug: subCategorySlug })
+
+                }
+
+                console.log(newCategory)
+                fetch(`http://localhost:5000/category/${type}`, {
+                    method: "PUT",
+                    headers: {
+                        'content-type': 'application/json',
+                        authorization: `Bearer ${localStorage.getItem('accessToken')}`
+                    },
+                    body: JSON.stringify({ newCategory })
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.acknowledged) {
+                            toast("Successful added category");
+                            event.target.reset();
+                            refetch();
+                        } else {
+                            toast.error("Some Problem Occurs! Please Reload Browser");
+                        }
+                    });
             }
 
-
-            fetch(`http://localhost:5000/category/${type}`, {
-                method: "PUT",
-                headers: {
-                    'content-type': 'application/json',
-                },
-                body: JSON.stringify({ newCategory })
-            })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.acknowledged) {
-                        toast("Successful added category");
-                        event.target.reset();
-                        refetch();
-                    } else {
-                        toast.error("Some Problem Occurs! Please Reload Browser");
-                    }
-                });
 
 
         }
@@ -94,9 +156,9 @@ const CategoryModal = ({ refetch, isLoading, data }) => {
                         </div>
 
 
-                        <div className="form-control w-full">
+                        <div className="form-control w-full mb-4">
                             <label className="label">
-                                <span className="label-text">Category</span> <div className='flex items-center'> <input onClick={() => setExisting(!existing)} type="checkbox" className="checkbox checkbox-xs" /><p className='ml-2'>Existing Category?</p></div>
+                                <span className="label-text font-semibold">Category</span> <div className='flex items-center'> <input onClick={() => setExisting(!existing)} type="checkbox" className="checkbox checkbox-xs" /><p className='ml-2'>Existing Category?</p></div>
                             </label>
                             {existing ? <select defaultValue={'DEFAULT'} name='category' className="select select-warning w-full" required>
                                 <option value="DEFAULT" disabled >Seclct Category</option>
@@ -106,13 +168,31 @@ const CategoryModal = ({ refetch, isLoading, data }) => {
                         </div>
                         <div className={`form-control w-full mb-4 ${existing && 'hidden'}`}>
                             <label className="label">
-                                <span className="label-text">Sub Category Image</span>
+                                <span className="label-text font-semibold">Sub Category Image</span>
                             </label>
-                            <input name='img' type="text" placeholder="Sub Category Image here" className="input input-bordered w-full" />
+                            {/* <input name='img' type="text" placeholder="Sub Category Image here" className="input input-bordered w-full" /> */}
+
+
+
+
+
+                            <div>
+                                <label className="flex items-center ">
+                                    <span className="sr-only">Choose File</span>
+                                    <input type="file" name='img' defaultValue=''
+                                        className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                                        required={!existing}
+                                    />
+                                </label>
+                            </div>
+
+
+
+
                         </div>
                         <div className="form-control w-full mb-4">
                             <label className="label">
-                                <span className="label-text">Sub Category</span>
+                                <span className="label-text font-semibold">Sub Category</span>
                             </label>
                             <input name='subCategory' type="text" placeholder="Sub Category here" className="input input-bordered w-full" required />
                         </div>

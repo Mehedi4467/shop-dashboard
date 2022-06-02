@@ -25,7 +25,7 @@ const Products = () => {
 
     const [products, setProducts] = useState([]);
     useEffect(() => {
-        fetch(`http://localhost:5000/product/${user?.email}?name=${search}&page=${currentPage - 1}`, {
+        fetch(`http://localhost:5000/product/${user?.email}?name=${search.toLocaleLowerCase()}&page=${currentPage - 1}`, {
             method: "GET",
             headers: {
                 authorization: `Bearer ${localStorage.getItem('accessToken')}`
