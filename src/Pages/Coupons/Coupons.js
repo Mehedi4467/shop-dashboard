@@ -55,7 +55,7 @@ const Coupons = () => {
                 setPageCount(pages);
                 setTotalItem(count);
                 setCoupon(false);
-                console.log(data);
+
             })
     }, [user, search, currentPage, couponModal]);
 
@@ -165,7 +165,7 @@ const Coupons = () => {
                                     </div>
                                 </td >
 
-                            </tr >)
+                            </tr >).reverse()
                         }
 
                     </tbody >

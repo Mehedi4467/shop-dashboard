@@ -156,7 +156,7 @@ const Orders = () => {
                                 </td >
 
 
-                            </tr >)
+                            </tr >).reverse()
                         }
 
                     </tbody >

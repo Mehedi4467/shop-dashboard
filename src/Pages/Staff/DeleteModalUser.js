@@ -35,7 +35,7 @@ const deleteModalUser = ({ user, openModal, refetch, setOpenModal }) => {
                             <label onClick={() => handelDeleteUser(openModal._id)} className="btn bg-red-500">Delete</label>
                         </div>
                         <div className="modal-action">
-                            <label for="delete-modal-user" className="btn">Cencal</label>
+                            <label htmlFor="delete-modal-user" className="btn">Cencal</label>
                         </div>
                     </div>
                 </div>

@@ -1,15 +1,43 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Pagination from '../../Shared/Pagination/Pagination';
+import Spinner from '../../Shared/Spinner/Spinner';
+import CustomerDeleteModal from './CustomerDeleteModal';
+import CustomerViewModal from './CustomerViewModal';
 
 const Customers = () => {
-    const orderList = [
-        { _id: 1, time: 'Mar 20, 2022', phone: '01584452434', address: 'Salanga,Siraganj', method: 'Nagad', amount: '120', status: 'Confirm' },
-        { _id: 2, time: 'Mar 21, 2022', phone: '01784452434', address: 'Puthiya, Pabana', method: 'Card', amount: '1200', status: 'Delivery' },
-        { _id: 3, time: 'Mar 22, 2022', phone: '01384452434', address: 'Manglo,Bandarban', method: 'Roket', amount: '1020', status: 'Pending' },
-        { _id: 4, time: 'Mar 23, 2022', phone: '01484452434', address: 'BashKhali,Bogura', method: 'Bank', amount: '100', status: 'Processing' },
-        { _id: 5, time: 'Mar 24, 2022', phone: '01984452434', address: 'Mirpur-10, Dhaka', method: 'Bkash', amount: '130', status: 'Confirm' },
-        { _id: 6, time: 'Mar 25, 2022', phone: '01884452434', address: 'Dhanmundi-32,Dhaka', method: 'Nagad', amount: '200', status: 'Delivery' },
-    ]
+
+    const [customers, setCustomers] = useState([]);
+    const [search, setSearch] = useState('');
+    const [pageCount, setPageCount] = useState(0);
+    const [totalItem, setTotalItem] = useState(0)
+    const [currentPage, setCurrentPage] = useState(1);
+    const [customerLoading, setCustomerLoading] = useState(true);
+    const [customerModal, setCustomerModal] = useState(null);
+
+    useEffect(() => {
+        fetch(`http://localhost:5000/customer/admin?name=${search.toLocaleLowerCase()}&page=${currentPage - 1}`, {
+            method: "GET",
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('accessToken')}`
+            }
+
+        })
+            .then(res => res.json())
+            .then(data => {
+                setCustomers(data)
+                const count = data.length;
+                const pages = Math.ceil(parseInt(count) / 10);
+                setPageCount(pages);
+                setTotalItem(count);
+                setCustomerLoading(false);
+            })
+    }, [search, currentPage, customerModal])
+
+
+    if (customerLoading) {
+        return <Spinner></Spinner>
+    }
+
     return (
         <div className='container mx-auto'>
             <h1 className='text-center md:text-left mb-4 text-xl font-bold'>Customers</h1>
@@ -18,7 +46,7 @@ const Customers = () => {
 
             <div className='mt-5 '>
                 <div className='relative bg-white p-4 w-full order-2 md:order-1 rounded-full'>
-                    <input className='outline-0 p-2 h-12 rounded-full pl-10 text-orange-500 text-lg border-2  hover:shadow-lg w-full' type="text" name="search" placeholder='Search Name/Email/Phone' />
+                    <input onChange={(e) => setSearch(e.target.value)} className='outline-0 p-2 h-12 rounded-full pl-10 text-orange-500 text-lg border-2  hover:shadow-lg w-full' type="text" name="search" placeholder='Search Name/Email' />
                     <div className='absolute right-10 top-[35%] cursor-pointer'>
                         <i className="text-green-500 fa-solid fa-magnifying-glass"></i>
                     </div>
@@ -53,41 +81,50 @@ const Customers = () => {
                     </thead>
                     <tbody>
                         {
-                            orderList.map(order => <tr key={order._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            customers?.map((customer, index) => <tr key={customer._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                 <th scope="row" className="px-6 py-4 font-medium  dark:text-white whitespace-nowrap">
-                                    6DA1
+                                    {index + 1}
                                 </th>
                                 <td className="px-6 py-4">
-                                    Dec 10, 2021
+                                    {customer.date}
                                 </td>
                                 <td className="px-6 py-4">
-                                    Md.Mehedi Hassan
+                                    {customer.name}
                                 </td>
                                 <td className="px-6 py-4">
-                                    mehedihassan4467@gmail.com
+                                    {customer.email}
                                 </td>
                                 <td className="px-6 py-4">
-                                    01784452434
+                                    {customer.phone}
                                 </td>
 
                                 <td className="px-6 py-4">
                                     <div className='flex justify-between'>
+                                        <label htmlFor="customer-view-modal"> <i onClick={() => setCustomerModal(customer)} className="cursor-pointer fa-solid fa-eye"></i></label>
+                                        <label htmlFor="customer-delete-modal"> <i onClick={() => setCustomerModal(customer)} className="cursor-pointer fa-solid fa-trash-can"></i></label>
 
-                                        <i className="cursor-pointer fa-solid fa-eye"></i>
-                                        <i className="cursor-pointer fa-solid fa-trash-can"></i>
                                     </div>
                                 </td >
 
-                            </tr >)
+                            </tr >).reverse()
                         }
 
                     </tbody >
                 </table >
 
             </div >
-            <div className='flex justify-center md:justify-end'>
-                <Pagination></Pagination>
-            </div>
+            {
+                customerModal && <CustomerViewModal setCustomerModal={setCustomerModal} customerModal={customerModal}></CustomerViewModal>
+            }
+            {
+                customerModal && <CustomerDeleteModal setCustomerModal={setCustomerModal} customerModal={customerModal}></CustomerDeleteModal>
+            }
+
+            {
+                totalItem > 10 && <div className='flex justify-center md:justify-end'>
+                    <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} pageCount={pageCount}></Pagination>
+                </div>
+            }
         </div >
     );
 };

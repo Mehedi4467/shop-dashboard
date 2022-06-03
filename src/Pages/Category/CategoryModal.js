@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
+import ButtonSpinner from '../../Shared/Spinner/ButtonSpinner';
 import Spinner from '../../Shared/Spinner/Spinner';
 
 const CategoryModal = ({ refetch, isLoading, data }) => {
     const [existing, setExisting] = useState(false);
     const imgStore_key = '2f6c6879a39132782b251889cb5d783f';
     const [subCategoryItem, setSubCategoryItem] = useState([]);
-
+    const [addCategoryLoading, setAddCategoryLoading] = useState(false);
 
 
 
@@ -17,6 +18,7 @@ const CategoryModal = ({ refetch, isLoading, data }) => {
 
     const handelAddCategory = (event) => {
         event.preventDefault();
+        setAddCategoryLoading(true);
         const type = event.target.type.value;
         const category = event.target.category.value;
         const subCategory = event.target.subCategory.value;
@@ -58,7 +60,7 @@ const CategoryModal = ({ refetch, isLoading, data }) => {
                                 newCategory[index].subCategory.push({ name: subCategory, slug: subCategorySlug })
 
                             }
-                            console.log(newCategory)
+
                             fetch(`http://localhost:5000/category/${type}`, {
                                 method: "PUT",
                                 headers: {
@@ -73,6 +75,7 @@ const CategoryModal = ({ refetch, isLoading, data }) => {
                                         toast("Successful added category");
                                         event.target.reset();
                                         refetch();
+                                        setAddCategoryLoading(false);
                                     } else {
                                         toast.error("Some Problem Occurs! Please Reload Browser");
                                     }
@@ -124,9 +127,6 @@ const CategoryModal = ({ refetch, isLoading, data }) => {
                         }
                     });
             }
-
-
-
         }
     }
 
@@ -197,7 +197,12 @@ const CategoryModal = ({ refetch, isLoading, data }) => {
                             <input name='subCategory' type="text" placeholder="Sub Category here" className="input input-bordered w-full" required />
                         </div>
                         <div className="form-control w-full">
-                            <button type='submit' className="btn btn-primary">Add Category</button>
+                            {
+                                addCategoryLoading ? <div className='flex justify-center'>
+                                    <ButtonSpinner></ButtonSpinner>
+                                </div> : <button type='submit' className="btn btn-primary">Add Category</button>
+                            }
+
                         </div>
                     </form>
                 </div>

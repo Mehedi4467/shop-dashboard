@@ -23,8 +23,6 @@ const Category = () => {
         )
     );
 
-
-
     if (isLoading) {
         return <Spinner></Spinner>
     }
@@ -53,6 +51,15 @@ const Category = () => {
                     toast.error("Some Problem Occurs! Please Reload Browser");
                 }
             });
+    };
+
+    const handelSearchClean = (event) => {
+        event.preventDefault();
+        event.target.reset();
+        setSearch('');
+        refetch();
+
+
     }
 
     return (
@@ -68,15 +75,18 @@ const Category = () => {
                 </div>
 
                 <div className='relative  bg-white p-4 w-full order-2 md:order-1 rounded-full'>
-                    <input onChange={(e) => {
-                        refetch();
-                        setSearch(e.target.value)
-                    }
-                    } className='outline-0 p-2 h-12 rounded-full pl-10 text-orange-500 text-lg border-2  hover:shadow-lg w-full' type="text" name="search" placeholder='Search Category' />
-                    <div className='absolute right-10 top-[35%] cursor-pointer'>
-                        {/* <i onClick={refetch()} className="text-green-500 fa-solid fa-magnifying-glass"></i> */}
+                    <form onSubmit={handelSearchClean}>
+                        <input onChange={(e) => {
+                            refetch();
+                            setSearch(e.target.value);
+                        }
+                        } className='outline-0 p-2 h-12 rounded-full pl-10 text-orange-500 text-lg border-2  hover:shadow-lg w-full' type="text" name="search" placeholder='Search Category' />
+                        <button type='submit' className='absolute right-10 top-[35%] cursor-pointer'>
 
-                    </div>
+                            <i className=" text-green-500 fa-solid fa-x"></i>
+
+                        </button>
+                    </form>
                 </div>
 
             </div>

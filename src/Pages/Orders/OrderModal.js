@@ -8,8 +8,8 @@ const OrderModal = ({ openOrderModal }) => {
         <div>
 
             <input type="checkbox" id="order-modal" className="modal-toggle" />
-            <label for="order-modal" className="modal cursor-pointer">
-                <label className="modal-box relative" for="">
+            <label htmlFor="order-modal" className="modal cursor-pointer">
+                <label className="modal-box relative" htmlFor="">
                     <div className="card full my-10 bg-base-100 shadow-xl">
                         <figure><img src={productImage} width="300px" alt="Shoes" /></figure>
                         <div className="card-body">

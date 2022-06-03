@@ -155,7 +155,7 @@ const Products = () => {
 
                                 </td >
                                 <td className="px-6 py-4">
-                                    <label for="product-view-modal"> <i onClick={() => setProductModal(product)} className="cursor-pointer fa-solid fa-eye"></i></label>
+                                    <label htmlFor="product-view-modal"> <i onClick={() => setProductModal(product)} className="cursor-pointer fa-solid fa-eye"></i></label>
 
                                 </td >
                                 <td className="px-6 py-4">
@@ -167,7 +167,7 @@ const Products = () => {
                                     </div>
                                 </td >
 
-                            </tr >)
+                            </tr >).reverse()
                         }
 
                     </tbody >

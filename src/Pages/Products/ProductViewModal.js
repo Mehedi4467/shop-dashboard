@@ -7,7 +7,7 @@ const ProductViewModal = ({ productModal }) => {
             <input type="checkbox" id="product-view-modal" className="modal-toggle" />
             <div className="modal">
                 <div className="modal-box relative">
-                    <label for="product-view-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+                    <label htmlFor="product-view-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
 
                     <div className='flex justify-center'>
                         <img src={`http://localhost:5000/${primaryImage}`} width='150' alt="product images" />
