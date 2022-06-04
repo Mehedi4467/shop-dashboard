@@ -24,15 +24,21 @@ const AddProduct = () => {
 
 
 
-    const { isLoading, data, refetch } = useQuery('categories', () =>
-        fetch('http://localhost:5000/category').then(res =>
+    const { isLoading, data, refetch } = useQuery('category', () =>
+        fetch('http://localhost:5000/category/all', {
+            method: "GET",
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('accessToken')}`
+            }
+        }).then(res =>
             res.json()
         )
     );
 
+    console.log(subCategoryItem)
 
     const handelSubCategory = (id) => {
-        const exsitingSub = data.categories.find(e => e._id === id);
+        const exsitingSub = data?.find(e => e._id === id);
         setSubCategoryItem(exsitingSub?.category);
 
     }
@@ -40,6 +46,7 @@ const AddProduct = () => {
 
         const machName = subCategoryItem.find(e => e.name === name);
         setsubSubCategory(machName?.subCategory);
+
 
     }
 
@@ -328,10 +335,10 @@ const AddProduct = () => {
 
 
                                         >
-                                            <option selected value='' >Selecte Main Category</option>
+                                            <option selected disabled >Selecte Main Category</option>
 
                                             {
-                                                data?.categories?.map(category => <option value={category._id} key={category._id} >{category.name}</option>)
+                                                data?.map(category => <option value={category._id} key={category._id} >{category.name}</option>)
                                             }
 
                                         </select>
@@ -362,7 +369,7 @@ const AddProduct = () => {
                                         >
                                             <option value="" selected >Seclct Category</option>
 
-                                            {subCategoryItem?.map((category, index) => <option key={index} >{category?.name}</option>)
+                                            {subCategoryItem?.map((category, index) => category.status && <option key={index} >{category?.name}</option>)
 
                                             }
                                         </select>

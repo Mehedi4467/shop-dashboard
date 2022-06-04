@@ -6,7 +6,7 @@ import auth from '../../firebase.init';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import Spinner from '../../Shared/Spinner/Spinner';
 import { toast } from 'react-toastify';
-const AddCouponsModal = ({ setCouponModal }) => {
+const AddCouponsModal = ({ setAddCoupons }) => {
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const [user, loading] = useAuthState(auth);
@@ -40,7 +40,7 @@ const AddCouponsModal = ({ setCouponModal }) => {
                 if (data.acknowledged) {
                     toast("Your Coupons Added Successfully");
                     event.target.reset();
-                    setCouponModal(null);
+                    setAddCoupons(null);
                 }
             })
 

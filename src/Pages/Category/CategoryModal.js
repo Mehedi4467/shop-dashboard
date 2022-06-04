@@ -82,7 +82,7 @@ const CategoryModal = ({ refetch, isLoading, data }) => {
                                 });
 
                         }
-                        console.log(result)
+
                     })
 
 
@@ -107,7 +107,7 @@ const CategoryModal = ({ refetch, isLoading, data }) => {
 
                 }
 
-                console.log(newCategory)
+
                 fetch(`http://localhost:5000/category/${type}`, {
                     method: "PUT",
                     headers: {
@@ -122,6 +122,7 @@ const CategoryModal = ({ refetch, isLoading, data }) => {
                             toast("Successful added category");
                             event.target.reset();
                             refetch();
+                            setAddCategoryLoading(false);
                         } else {
                             toast.error("Some Problem Occurs! Please Reload Browser");
                         }

@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import logo from '../../Images/logo/logo.png';
 import CustomLink from '../../Pages/Menu/CustomLink/CustomLink';
 import './Header.css';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import Notification from './Notification/Notification';
 import auth from '../../firebase.init';
 import { signOut } from 'firebase/auth';
 import { Link } from 'react-router-dom';
@@ -11,32 +10,32 @@ import useAdminUserData from '../../Hooks/AdminUserData/useAdminUserData';
 import Spinner from '../Spinner/Spinner';
 const Header = ({ showHide, setShowHide }) => {
     const [showUser, setShowUser] = useState(false);
-    const [notificationShow, setNotificationShow] = useState(false);
-    const [notifications, setNotifications] = useState([]);
+    // const [notificationShow, setNotificationShow] = useState(false);
+    // const [notifications, setNotifications] = useState([]);
     const [user, loading] = useAuthState(auth);
     const [data, isLoading] = useAdminUserData(user?.email);
 
     const handelUser = () => {
         setShowUser(!showUser);
-        setNotificationShow(false);
+        // setNotificationShow(false);
     }
-    const handelNotification = () => {
-        setNotificationShow(!notificationShow);
-        setShowUser(false);
-    };
+    // const handelNotification = () => {
+    //     setNotificationShow(!notificationShow);
+    //     setShowUser(false);
+    // };
 
 
-    useEffect(() => {
-        fetch('../../notification.json')
-            .then(res => res.json())
-            .then(data => setNotifications(data));
+    // useEffect(() => {
+    //     fetch('../../notification.json')
+    //         .then(res => res.json())
+    //         .then(data => setNotifications(data));
 
-    }, []);
+    // }, []);
 
-    const handelCleanNotification = (id) => {
-        const reaming = notifications.filter(notification => notification._id !== id);
-        setNotifications(reaming);
-    }
+    // const handelCleanNotification = (id) => {
+    //     const reaming = notifications.filter(notification => notification._id !== id);
+    //     setNotifications(reaming);
+    // }
 
     if (isLoading || loading) {
         return <Spinner></Spinner>
@@ -51,7 +50,7 @@ const Header = ({ showHide, setShowHide }) => {
                         <img className='cursor-pointer' src={logo} width='50' height='50' alt="Dashboard logo" />
                     </div>
                     <div className='flex justify-end items-center image-body'>
-                        <div className='mx-10 p-bell'>
+                        {/* <div className='mx-10 p-bell'>
                             <i onClick={handelNotification} className="text-green-600 cursor-pointer text-2xl fa-solid fa-bell"></i>
                             <div className='p-count flex items-center justify-center bg-green-500 p-1 rounded-full'><p className='text-xs text-white'>{notifications.length}</p></div>
 
@@ -67,7 +66,12 @@ const Header = ({ showHide, setShowHide }) => {
 
                             </div>
 
+                        </div> */}
+
+                        <div>
+                            <h2 className='mr-4 text-orange-500'>{data?.name}</h2>
                         </div>
+
                         <div>
                             {
                                 data?.image ? <img onClick={handelUser} className='cursor-pointer rounded-full shadow-lg' src={data?.image} width='40' height='50' alt="User images" /> :

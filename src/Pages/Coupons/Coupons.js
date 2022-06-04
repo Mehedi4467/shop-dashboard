@@ -12,7 +12,7 @@ const Coupons = () => {
     const [couponModal, setCouponModal] = useState(null);
     const [user, loading] = useAuthState(auth);
     const [coupons, setCoupons] = useState([]);
-
+    const [addCoupons, setAddCoupons] = useState(null);
     const [couponLoad, setCoupon] = useState(true);
     const [pageCount, setPageCount] = useState(0);
     const [totalItem, setTotalItem] = useState(0)
@@ -57,7 +57,7 @@ const Coupons = () => {
                 setCoupon(false);
 
             })
-    }, [user, search, currentPage, couponModal]);
+    }, [user, search, currentPage, couponModal, addCoupons]);
 
     if (loading || couponLoad) {
         return <Spinner></Spinner>
@@ -70,7 +70,7 @@ const Coupons = () => {
 
             <div className='md:grid grid-cols-2 gap-4  mt-5 items-center '>
                 <div className='hidden md:flex justify-center order-1 md:order-2 gap-4 mb-8 md:mb-0'>
-                    <label onClick={() => setCouponModal(true)} htmlFor="coupons-modal" className='btn bg-green-400 hover:bg-green-500 h-12 w-52 text-white font-bold rounded-full '> Add Coupon</label>
+                    <label onClick={() => setAddCoupons(true)} htmlFor="coupons-modal" className='btn bg-green-400 hover:bg-green-500 h-12 w-52 text-white font-bold rounded-full '> Add Coupon</label>
                 </div>
 
                 <div className='relative bg-white p-4 w-full order-2 md:order-1 rounded-full'>
@@ -119,7 +119,7 @@ const Coupons = () => {
                     </thead>
                     <tbody>
                         {
-                            coupons?.map((coupon, index) => <tr key={coupon._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            coupons && coupons?.map((coupon, index) => <tr key={coupon._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                 <th scope="row" className="px-6 py-4 font-medium  dark:text-white whitespace-nowrap">
                                     {index + 1}
                                 </th>
@@ -193,7 +193,7 @@ const Coupons = () => {
 
             </label>
             {
-                couponModal && <AddCouponsModal setCouponModal={setCouponModal}></AddCouponsModal>
+                addCoupons && <AddCouponsModal setAddCoupons={setAddCoupons}></AddCouponsModal>
             }
 
 
