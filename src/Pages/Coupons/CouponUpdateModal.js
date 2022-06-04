@@ -30,7 +30,7 @@ const CouponUpdateModal = ({ couponModal, setCouponModal }) => {
         }
 
 
-        fetch(`http://localhost:5000/coupon/update/${_id}`, {
+        fetch(`https://stormy-peak-02130.herokuapp.com/coupon/update/${_id}`, {
             method: "PUT",
             headers: {
                 'content-type': 'application/json',

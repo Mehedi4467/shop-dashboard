@@ -39,7 +39,7 @@ const Profile = () => {
                     }
 
                     //send to database 
-                    fetch(`http://localhost:5000/adminUser/Update_profile/${data._id}`, {
+                    fetch(`https://stormy-peak-02130.herokuapp.com/adminUser/Update_profile/${data._id}`, {
                         method: 'PUT',
                         headers: {
                             'content-type': 'application/json'
@@ -66,7 +66,7 @@ const Profile = () => {
                         img: false
                     }
                     //send to database 
-                    fetch(`http://localhost:5000/adminUser/Update_profile/${data._id}`, {
+                    fetch(`https://stormy-peak-02130.herokuapp.com/adminUser/Update_profile/${data._id}`, {
                         method: 'PUT',
                         headers: {
                             'content-type': 'application/json'

@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 
 const SliderDeleteModal = ({ sliderModal, setSliderMoodal }) => {
     const handelSliderDelete = (id) => {
-        fetch(`http://localhost:5000/slider/delete/${id}?path=${sliderModal.img}`, {
+        fetch(`https://stormy-peak-02130.herokuapp.com/slider/delete/${id}?path=${sliderModal.img}`, {
             method: "DELETE",
             headers: {
                 authorization: `Bearer ${localStorage.getItem('accessToken')}`

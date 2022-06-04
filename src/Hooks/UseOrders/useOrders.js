@@ -12,7 +12,7 @@ const useOrders = (email, currentPage) => {
 
         if (email) {
 
-            fetch(`http://localhost:5000/order/${email}?name=${search.toLocaleLowerCase()}&page=${currentPage - 1}&status=${status}`, {
+            fetch(`https://stormy-peak-02130.herokuapp.com/order/${email}?name=${search.toLocaleLowerCase()}&page=${currentPage - 1}&status=${status}`, {
                 method: "GET",
                 headers: {
                     authorization: `Bearer ${localStorage.getItem('accessToken')}`

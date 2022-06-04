@@ -26,7 +26,7 @@ const AddCouponsModal = ({ setAddCoupons }) => {
             name, code, percentage, startDates, endDates, email, status: true
         };
 
-        fetch('http://localhost:5000/coupons', {
+        fetch('https://stormy-peak-02130.herokuapp.com/coupons', {
             method: "POST",
             headers: {
                 'content-type': 'application/json',

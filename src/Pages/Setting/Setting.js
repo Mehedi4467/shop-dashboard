@@ -15,7 +15,7 @@ const Setting = () => {
     const [search, setSearch] = useState('');
 
     useEffect(() => {
-        fetch(`http://localhost:5000/slider/${user?.email}?name=${search}`, {
+        fetch(`https://stormy-peak-02130.herokuapp.com/slider/${user?.email}?name=${search}`, {
             method: "GET",
             headers: {
                 authorization: `Bearer ${localStorage.getItem('accessToken')}`
@@ -29,7 +29,7 @@ const Setting = () => {
     }, [user, search, sliderModal])
 
     const handelSliderStatus = (id, value) => {
-        fetch(`http://localhost:5000/slider/status/${id}`, {
+        fetch(`https://stormy-peak-02130.herokuapp.com/slider/status/${id}`, {
             method: "PUT",
             headers: {
                 'content-type': 'application/json',

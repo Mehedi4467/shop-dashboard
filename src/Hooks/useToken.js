@@ -15,7 +15,7 @@ const useToken = (user) => {
         }
 
         if (email) {
-            fetch(`http://localhost:5000/adminUser/${email}`, {
+            fetch(`https://stormy-peak-02130.herokuapp.com/adminUser/${email}`, {
                 method: "PUT",
                 headers: {
                     'content-type': 'application/json'

@@ -12,7 +12,7 @@ const SliderUpdate = ({ sliderModal, setSliderMoodal }) => {
             title, description, link
         }
 
-        fetch(`http://localhost:5000/slider/update/${sliderModal._id}`, {
+        fetch(`https://stormy-peak-02130.herokuapp.com/slider/update/${sliderModal._id}`, {
             method: "PUT",
             headers: {
                 'content-type': 'application/json',

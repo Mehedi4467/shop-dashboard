@@ -10,7 +10,7 @@ const ProductViewModal = ({ productModal }) => {
                     <label htmlFor="product-view-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
 
                     <div className='flex justify-center'>
-                        <img src={`http://localhost:5000/${primaryImage}`} width='150' alt="product images" />
+                        <img src={`https://stormy-peak-02130.herokuapp.com/${primaryImage}`} width='150' alt="product images" />
                     </div>
                     <div>
                         <p className='text-center text-orange-500 font-semibold'>{productName}</p>

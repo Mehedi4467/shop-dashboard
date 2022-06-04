@@ -28,7 +28,7 @@ const CategoryEditModal = ({ subCategory: categoryModal, setCategoryModal, refet
         }
 
 
-        fetch(`http://localhost:5000/category/update/all/${categoryModal.slug}`, {
+        fetch(`https://stormy-peak-02130.herokuapp.com/category/update/all/${categoryModal.slug}`, {
             method: "PUT",
             headers: {
                 'content-type': 'application/json',

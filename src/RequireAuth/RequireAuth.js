@@ -17,7 +17,7 @@ function RequireAuth({ children }) {
 
     useEffect(() => {
         if (user && user?.emailVerified) {
-            fetch(`http://localhost:5000/adminUser/admin/verify/${user?.email}`, {
+            fetch(`https://stormy-peak-02130.herokuapp.com/adminUser/admin/verify/${user?.email}`, {
                 method: 'PUT',
                 headers: {
                     authorization: `Bearer ${localStorage.getItem('accessToken')}`,

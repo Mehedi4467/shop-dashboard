@@ -21,7 +21,7 @@ const Coupons = () => {
 
 
     const handelStatus = (id, value) => {
-        fetch(`http://localhost:5000/coupon/status/${id}`, {
+        fetch(`https://stormy-peak-02130.herokuapp.com/coupon/status/${id}`, {
             method: "PUT",
             headers: {
                 'content-type': 'application/json',
@@ -41,7 +41,7 @@ const Coupons = () => {
 
 
     useEffect(() => {
-        fetch(`http://localhost:5000/coupons/${user?.email}?couponName=${search}&page=${currentPage - 1}`, {
+        fetch(`https://stormy-peak-02130.herokuapp.com/coupons/${user?.email}?couponName=${search}&page=${currentPage - 1}`, {
             method: "GET",
             headers: {
                 authorization: `Bearer ${localStorage.getItem('accessToken')}`

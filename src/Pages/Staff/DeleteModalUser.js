@@ -6,7 +6,7 @@ const deleteModalUser = ({ user, openModal, refetch, setOpenModal }) => {
 
 
     const handelDeleteUser = id => {
-        fetch(`http://localhost:5000/adminUser/${id}`, {
+        fetch(`https://stormy-peak-02130.herokuapp.com/adminUser/${id}`, {
             method: "DELETE",
         })
             .then(res => res.json())

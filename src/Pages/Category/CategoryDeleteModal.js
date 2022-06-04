@@ -5,7 +5,7 @@ const CategoryDeleteModal = ({ categoryModal, subCategory, setCategoryModal, ref
 
 
     const handelDeleteCategory = () => {
-        fetch(`http://localhost:5000/category/delete/${categoryModal._id}`, {
+        fetch(`https://stormy-peak-02130.herokuapp.com/category/delete/${categoryModal._id}`, {
             method: "PUT",
             headers: {
                 'content-type': 'application/json',

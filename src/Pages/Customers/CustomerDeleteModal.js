@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 
 const CustomerDeleteModal = ({ setCustomerModal, customerModal }) => {
     const handelCustomerDelete = id => {
-        fetch(`http://localhost:5000/customer/admin/delete/${id}`, {
+        fetch(`https://stormy-peak-02130.herokuapp.com/customer/admin/delete/${id}`, {
             method: "DELETE",
             headers: {
                 authorization: `Bearer ${localStorage.getItem('accessToken')}`

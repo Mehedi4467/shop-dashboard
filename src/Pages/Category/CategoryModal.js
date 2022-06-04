@@ -61,7 +61,7 @@ const CategoryModal = ({ refetch, isLoading, data }) => {
 
                             }
 
-                            fetch(`http://localhost:5000/category/${type}`, {
+                            fetch(`https://stormy-peak-02130.herokuapp.com/category/${type}`, {
                                 method: "PUT",
                                 headers: {
                                     'content-type': 'application/json',
@@ -108,7 +108,7 @@ const CategoryModal = ({ refetch, isLoading, data }) => {
                 }
 
 
-                fetch(`http://localhost:5000/category/${type}`, {
+                fetch(`https://stormy-peak-02130.herokuapp.com/category/${type}`, {
                     method: "PUT",
                     headers: {
                         'content-type': 'application/json',

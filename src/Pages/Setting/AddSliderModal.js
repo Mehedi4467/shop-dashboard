@@ -48,7 +48,7 @@ const AddSliderModal = ({ sliderModal, setSliderMoodal }) => {
 
 
 
-        fetch('http://localhost:5000/slider', {
+        fetch('https://stormy-peak-02130.herokuapp.com/slider', {
             method: "POST",
             headers: {
                 authorization: `Bearer ${localStorage.getItem('accessToken')}`

@@ -4,7 +4,7 @@ const ProductDeleteModal = ({ products, setProducts, productModal, setProductMod
 
     const handelProductDelete = id => {
 
-        fetch(`http://localhost:5000/product/${id}?path=${productModal.primaryImage}&secondPath=${productModal.secondImage}`, {
+        fetch(`https://stormy-peak-02130.herokuapp.com/product/${id}?path=${productModal.primaryImage}&secondPath=${productModal.secondImage}`, {
             method: "DELETE",
             headers: {
                 authorization: `Bearer ${localStorage.getItem('accessToken')}`

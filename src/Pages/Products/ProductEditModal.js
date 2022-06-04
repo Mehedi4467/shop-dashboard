@@ -23,7 +23,7 @@ const ProductEditModal = ({ productModal, setProductModal }) => {
         }
         console.log(productUpdateInfo);
 
-        fetch(`http://localhost:5000/product/update/${productModal._id}`, {
+        fetch(`https://stormy-peak-02130.herokuapp.com/product/update/${productModal._id}`, {
             method: "PATCH",
             headers: {
                 'content-type': 'application/json',

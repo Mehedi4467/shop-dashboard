@@ -25,7 +25,7 @@ const AddProduct = () => {
 
 
     const { isLoading, data, refetch } = useQuery('category', () =>
-        fetch('http://localhost:5000/category/all', {
+        fetch('https://stormy-peak-02130.herokuapp.com/category/all', {
             method: "GET",
             headers: {
                 authorization: `Bearer ${localStorage.getItem('accessToken')}`
@@ -155,7 +155,7 @@ const AddProduct = () => {
 
 
 
-        await fetch('http://localhost:5000/product', {
+        await fetch('https://stormy-peak-02130.herokuapp.com/product', {
             method: "POST",
             body: formData,
 
