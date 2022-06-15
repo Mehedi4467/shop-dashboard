@@ -18,7 +18,7 @@ const Staff = () => {
     const [currentPage, setCurrentPage] = useState(1);
 
     const { isLoading, error, data, refetch } = useQuery(['adminUsers', currentPage], () =>
-        fetch(`https://stormy-peak-02130.herokuapp.com/adminUser?name=${search.toLocaleLowerCase()}&page=${currentPage - 1}`, {
+        fetch(`http://localhost:5000/adminUser?name=${search.toLocaleLowerCase()}&page=${currentPage - 1}`, {
             method: 'GET',
             headers: {
                 authorization: `Bearer ${localStorage.getItem('accessToken')}`
@@ -32,7 +32,7 @@ const Staff = () => {
 
 
     useEffect(() => {
-        fetch(`https://stormy-peak-02130.herokuapp.com/userCount`)
+        fetch(`http://localhost:5000/userCount`)
             .then(res => res.json())
             .then(data => {
                 const count = data.count;
@@ -46,7 +46,7 @@ const Staff = () => {
     }, []);
 
     const UserUpdatepdateStatus = (id, status) => {
-        fetch(`https://stormy-peak-02130.herokuapp.com/adminUser/admin/accept/${id}`, {
+        fetch(`http://localhost:5000/adminUser/admin/accept/${id}`, {
             method: "PUT",
             headers: {
                 'content-type': 'application/json'

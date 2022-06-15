@@ -15,7 +15,7 @@ const Customers = () => {
     const [customerModal, setCustomerModal] = useState(null);
 
     useEffect(() => {
-        fetch(`https://stormy-peak-02130.herokuapp.com/customer/admin?name=${search.toLocaleLowerCase()}&page=${currentPage - 1}`, {
+        fetch(`http://localhost:5000/customer/admin?name=${search.toLocaleLowerCase()}&page=${currentPage - 1}`, {
             method: "GET",
             headers: {
                 authorization: `Bearer ${localStorage.getItem('accessToken')}`

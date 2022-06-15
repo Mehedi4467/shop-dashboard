@@ -40,15 +40,17 @@ const AddSliderModal = ({ sliderModal, setSliderMoodal }) => {
         const descriptrion = event.target.description.value;
         const link = event.target.link.value;
         const title = event.target.title.value;
+        const textBox = event.target.check.checked;
         formData.append('slider', image);
         formData.append('title', title);
         formData.append('descriptrion', descriptrion);
         formData.append('link', link);
+        formData.append('textBox', textBox);
 
 
 
 
-        fetch('https://stormy-peak-02130.herokuapp.com/slider', {
+        fetch('http://localhost:5000/slider', {
             method: "POST",
             headers: {
                 authorization: `Bearer ${localStorage.getItem('accessToken')}`
@@ -121,6 +123,14 @@ const AddSliderModal = ({ sliderModal, setSliderMoodal }) => {
 
                         </div>
 
+
+
+                        <div className="form-control">
+                            <label className="label  cursor-pointer">
+                                <span className="label-text text-primary font-semibold">Text Hide/Show</span>
+                                <input type="checkbox" name='check' className="toggle toggle-primary" />
+                            </label>
+                        </div>
 
                         <div className='flex justify-end'>
                             <div className="modal-action mr-4">

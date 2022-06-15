@@ -25,7 +25,7 @@ const AddProduct = () => {
 
 
     const { isLoading, data, refetch } = useQuery('category', () =>
-        fetch('https://stormy-peak-02130.herokuapp.com/category/all', {
+        fetch('http://localhost:5000/category/all', {
             method: "GET",
             headers: {
                 authorization: `Bearer ${localStorage.getItem('accessToken')}`
@@ -123,6 +123,7 @@ const AddProduct = () => {
         const subCategory = data.subCategory;
         const category = data.category;
         const orderType = data.orderType;
+        const sPrice = data.sprice;
 
 
 
@@ -151,12 +152,16 @@ const AddProduct = () => {
         formData.append('subCategory', subCategory);
         formData.append('category', category);
         formData.append('orderType', orderType);
+        formData.append('sPrice', sPrice);
 
 
 
 
-        await fetch('https://stormy-peak-02130.herokuapp.com/product', {
+        await fetch('http://localhost:5000/product', {
             method: "POST",
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('accessToken')}`
+            },
             body: formData,
 
         })
@@ -472,6 +477,25 @@ const AddProduct = () => {
                                         {errors.price?.type === "required" && (
                                             <span className="label-text-alt text-warning">
                                                 {errors.price.message}
+                                            </span>
+                                        )}
+                                    </label>
+                                </div>
+                                <div className="form-control w-full ">
+                                    <label className="label">
+                                        <span className="label-text font-semibold">Product Special Price</span>
+                                    </label>
+                                    <input type="number" placeholder="Product Special Price" className="input input-bordered input-primary w-full"
+                                        {...register("sprice", {
+                                            required: {
+                                                value: false,
+                                            },
+                                        })}
+                                    />
+                                    <label className="label">
+                                        {errors.sprice?.type === "required" && (
+                                            <span className="label-text-alt text-warning">
+                                                {errors.sprice.message}
                                             </span>
                                         )}
                                     </label>

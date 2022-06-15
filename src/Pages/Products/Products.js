@@ -25,7 +25,7 @@ const Products = () => {
 
     const [products, setProducts] = useState([]);
     useEffect(() => {
-        fetch(`https://stormy-peak-02130.herokuapp.com/product/${user?.email}?name=${search.toLocaleLowerCase()}&page=${currentPage - 1}`, {
+        fetch(`http://localhost:5000/product/${user?.email}?name=${search.toLocaleLowerCase()}&page=${currentPage - 1}`, {
             method: "GET",
             headers: {
                 authorization: `Bearer ${localStorage.getItem('accessToken')}`
@@ -46,7 +46,7 @@ const Products = () => {
     }, [user, currentPage, search, productModal]);
 
     const productUpdateStatus = (id, value) => {
-        fetch(`https://stormy-peak-02130.herokuapp.com/product/status/update/${id}`, {
+        fetch(`http://localhost:5000/product/status/update/${id}`, {
             method: "PUT",
             headers: {
                 'content-type': 'application/json',
@@ -128,7 +128,7 @@ const Products = () => {
                                 </th>
                                 <td className="px-6 py-4">
                                     <div className='flex items-center justify-between'>
-                                        <img src={`https://stormy-peak-02130.herokuapp.com/${product.primaryImage}`} width='40' alt="" />
+                                        <img src={`http://localhost:5000/${product.primaryImage}`} width='40' alt="" />
                                         <p>{product.productName}</p>
                                     </div>
                                 </td>

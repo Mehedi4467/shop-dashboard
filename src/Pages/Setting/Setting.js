@@ -15,7 +15,7 @@ const Setting = () => {
     const [search, setSearch] = useState('');
 
     useEffect(() => {
-        fetch(`https://stormy-peak-02130.herokuapp.com/slider/${user?.email}?name=${search}`, {
+        fetch(`http://localhost:5000/slider/${user?.email}?name=${search}`, {
             method: "GET",
             headers: {
                 authorization: `Bearer ${localStorage.getItem('accessToken')}`
@@ -29,7 +29,7 @@ const Setting = () => {
     }, [user, search, sliderModal])
 
     const handelSliderStatus = (id, value) => {
-        fetch(`https://stormy-peak-02130.herokuapp.com/slider/status/${id}`, {
+        fetch(`http://localhost:5000/slider/status/${id}`, {
             method: "PUT",
             headers: {
                 'content-type': 'application/json',
@@ -84,8 +84,10 @@ const Setting = () => {
                         {
                             sliders?.map((slider, index) => <tr key={slider._id}>
                                 <th>{index + 1}</th>
-                                <td>{slider.title}</td>
-                                <td>{slider.description.slice(0, 20) + "..."}</td>
+                                <td className='text-center w-1/4'>
+                                    <img src={`http://localhost:5000/${slider.img}`} alt={slider.title} />
+                                    {slider.title}</td>
+                                <td>{slider.description?.slice(0, 20) + "..."}</td>
                                 <td>
                                     <a className='btn' href={slider.link} rel="noopener noreferrer" target='_blank'>Link</a>
                                 </td>

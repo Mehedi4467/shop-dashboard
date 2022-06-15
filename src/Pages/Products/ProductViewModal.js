@@ -1,7 +1,7 @@
 import React from 'react';
 
 const ProductViewModal = ({ productModal }) => {
-    const { productName, sku, subCategory, category, orderType, price, quantity, deliveryInDhaka, outDhaka, color, size, marchentShop, marchentEmail, marchantPhone, primaryImage, status, date, time } = productModal;
+    const { productName, sku, subCategory, category, orderType, price, quantity, deliveryInDhaka, outDhaka, color, size, marchentShop, marchentEmail, sPrice, marchantPhone, primaryImage, status, date, time } = productModal;
     return (
         <div>
             <input type="checkbox" id="product-view-modal" className="modal-toggle" />
@@ -10,7 +10,7 @@ const ProductViewModal = ({ productModal }) => {
                     <label htmlFor="product-view-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
 
                     <div className='flex justify-center'>
-                        <img src={`https://stormy-peak-02130.herokuapp.com/${primaryImage}`} width='150' alt="product images" />
+                        <img src={`http://localhost:5000/${primaryImage}`} width='150' alt="product images" />
                     </div>
                     <div>
                         <p className='text-center text-orange-500 font-semibold'>{productName}</p>
@@ -22,6 +22,7 @@ const ProductViewModal = ({ productModal }) => {
                         <p className='font-semibold'> Product Category : <span className='text-orange-500'>{category} </span></p>
                         <p className='font-semibold'> Product Sub Category : <span className='text-orange-500'>{subCategory}</span> </p>
                         <p className='font-semibold'> Product Price : <span className='text-orange-500'>{price}</span> </p>
+                        <p className='font-semibold'> Product Spical Price : <span className='text-orange-500'>{sPrice}</span> </p>
                         <p className='font-semibold'> Product Quantity : <span className='text-orange-500'>{quantity}</span> </p>
                         <p className='font-semibold'> Order Type : <span className='text-orange-500'>{orderType}</span> </p>
                         <p className='font-semibold'> Delivery Charge : <span className='text-orange-500'>In Dhaka- {deliveryInDhaka}, Out of Dhaka - {outDhaka}</span> </p>

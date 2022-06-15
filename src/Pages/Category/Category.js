@@ -13,7 +13,7 @@ const Category = () => {
     const [subCategory, setSubCategory] = useState([]);
     const [search, setSearch] = useState('');
     const { isLoading, error, data, refetch } = useQuery(['categories'], () =>
-        fetch(`https://stormy-peak-02130.herokuapp.com/category?name=${search.toLocaleLowerCase()}`, {
+        fetch(`http://localhost:5000/category?name=${search.toLocaleLowerCase()}`, {
             method: "GET",
             headers: {
                 authorization: `Bearer ${localStorage.getItem('accessToken')}`
@@ -34,7 +34,7 @@ const Category = () => {
     const handelStatus = (id, index, value, name, slug) => {
 
         const status = { index, value, category: name, slug }
-        fetch(`https://stormy-peak-02130.herokuapp.com/categoryStatus/${id}`, {
+        fetch(`http://localhost:5000/categoryStatus/${id}`, {
             method: "PUT",
             headers: {
                 'content-type': 'application/json',

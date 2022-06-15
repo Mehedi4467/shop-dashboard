@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 
 const CouponDeleteModal = ({ couponModal, setCouponModal }) => {
     const handelDelwtwCoupon = id => {
-        fetch(`https://stormy-peak-02130.herokuapp.com/coupon/delete/${id}`, {
+        fetch(`http://localhost:5000/coupon/delete/${id}`, {
             method: "DELETE",
             headers: {
                 authorization: `Bearer ${localStorage.getItem('accessToken')}`

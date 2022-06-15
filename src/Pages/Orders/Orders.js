@@ -21,7 +21,7 @@ const Orders = () => {
 
     const orderStatusUpdate = (id, value) => {
         const status = { value }
-        fetch(`https://stormy-peak-02130.herokuapp.com/order/status/${id}`, {
+        fetch(`http://localhost:5000/order/status/${id}`, {
             method: "PUT",
             headers: {
                 'content-type': 'application/json',

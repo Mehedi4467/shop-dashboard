@@ -8,7 +8,7 @@ const useAdminUserData = (email) => {
     useEffect(() => {
         if (email) {
             setAdminLoading(true)
-            fetch(`https://stormy-peak-02130.herokuapp.com/adminUser/user/${email}`, {
+            fetch(`http://localhost:5000/adminUser/user/${email}`, {
                 method: 'GET',
                 headers: {
                     authorization: `Bearer ${localStorage.getItem('accessToken')}`

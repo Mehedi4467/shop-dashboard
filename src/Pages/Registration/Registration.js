@@ -51,7 +51,7 @@ const Registration = () => {
       email: email, name: displayName, phone: phoneNumber, status: "Pending"
     }
 
-    fetch(`https://stormy-peak-02130.herokuapp.com/adminUser/${email}`, {
+    fetch(`http://localhost:5000/adminUser/${email}`, {
       method: "PUT",
       headers: {
         'content-type': 'application/json'

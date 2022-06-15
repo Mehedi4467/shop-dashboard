@@ -4,13 +4,14 @@ import { toast } from 'react-toastify';
 const ProductEditModal = ({ productModal, setProductModal }) => {
 
 
-    const { productName, orderType, price, quantity, deliveryInDhaka, outDhaka, color, size } = productModal;
+    const { productName, sPrice, orderType, price, quantity, deliveryInDhaka, outDhaka, color, size } = productModal;
 
     const handelProductUpdate = event => {
         event.preventDefault();
         const productNames = event.target.productName.value || productName;
         const orderTypes = event.target.orderType.value || orderType;
         const prices = event.target.price.value || price;
+        const sPrices = event.target.sPrice.value || sPrice;
         const quantitys = event.target.quantity.value || quantity;
         const deliveryInDhakas = event.target.deliveryInDhaka.value || deliveryInDhaka;
         const outDhakas = event.target.outDhaka.value || outDhaka;
@@ -19,11 +20,11 @@ const ProductEditModal = ({ productModal, setProductModal }) => {
 
 
         const productUpdateInfo = {
-            productNames, orderTypes, prices, quantitys, deliveryInDhakas, outDhakas, colors, sizes
+            productNames, orderTypes, sPrices, prices, quantitys, deliveryInDhakas, outDhakas, colors, sizes
         }
-        console.log(productUpdateInfo);
 
-        fetch(`https://stormy-peak-02130.herokuapp.com/product/update/${productModal._id}`, {
+
+        fetch(`http://localhost:5000/product/update/${productModal._id}`, {
             method: "PATCH",
             headers: {
                 'content-type': 'application/json',
@@ -66,6 +67,12 @@ const ProductEditModal = ({ productModal, setProductModal }) => {
                                 <span className="label-text">Product Price</span>
                             </label>
                             <input type="text" placeholder={price} name='price' className="input input-bordered w-full" />
+                        </div>
+                        <div className="form-control w-full mb-4">
+                            <label className="label">
+                                <span className="label-text">Product Spical Price</span>
+                            </label>
+                            <input type="text" placeholder={sPrice} name='sPrice' className="input input-bordered w-full" />
                         </div>
                         <div className="form-control w-full mb-4">
                             <label className="label">
