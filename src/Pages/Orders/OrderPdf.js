@@ -4,11 +4,11 @@ import logo from '../../Images/logo/logo.png';
 
 const ref = React.createRef();
 const OrderPdf = ({ openOrderModal }) => {
-
+    const { customerName, customerPhone, customerEmail, productName, quantity, address, marchentEmail, totalAmount } = openOrderModal;
     const currentDate = new Date();
     const date = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`;
 
-
+    console.log(openOrderModal)
 
     return (
         <div>
@@ -29,7 +29,7 @@ const OrderPdf = ({ openOrderModal }) => {
                                     <p className='font-bold'>From : </p>
                                     <p>Shop in Shop BD</p>
                                     <p>Shewrapara Mirpur-10,Dhaka,Bangladesh</p>
-                                    <p>shopinshopbd12@gmail.com</p>
+                                    <p>{marchentEmail}</p>
                                 </div>
 
                                 <div className='ml-10'>
@@ -48,7 +48,7 @@ const OrderPdf = ({ openOrderModal }) => {
                                         </tr>
                                         <tr className='border-2 border-slate-300 bg-slate-300'>
                                             <td className='border-2 border-slate-300 p-2'>Total</td>
-                                            <td className='p-2'>120 tk</td>
+                                            <td className='p-2'>{totalAmount} tk</td>
 
                                         </tr>
                                     </table>
@@ -58,10 +58,10 @@ const OrderPdf = ({ openOrderModal }) => {
                             <div className='px-6'>
                                 <div className='mt-6'>
                                     <p className='font-bold'>To : </p>
-                                    <p>Md.Mehedi Hassan</p>
-                                    <p>Bogura Sadar,Bogura</p>
-                                    <p>mehedihassan4478@gmail.com</p>
-                                    <p>01784452434</p>
+                                    <p>{customerName}</p>
+                                    <p>{address}</p>
+                                    <p>{customerEmail}</p>
+                                    <p>{customerPhone}</p>
                                 </div>
                             </div>
 
@@ -77,11 +77,11 @@ const OrderPdf = ({ openOrderModal }) => {
 
                                     </tr>
                                     <tr className='border-2 border-slate-300'>
-                                        <td className='border-2 border-slate-300 p-2'>Wedding ring/wedding band</td>
+                                        <td className='border-2 border-slate-300 p-2'>{productName}</td>
                                         <td className='p-2 border-2 border-slate-300'>Pink</td>
-                                        <td className='p-2 border-2 border-slate-300'>2</td>
-                                        <td className='p-2 border-2 border-slate-300'>5000 tk</td>
-                                        <td className='p-2'>10000 tk</td>
+                                        <td className='p-2 border-2 border-slate-300'>{quantity}</td>
+                                        <td className='p-2 border-2 border-slate-300'>{totalAmount} tk</td>
+                                        <td className='p-2'>{totalAmount} tk</td>
 
                                     </tr>
 
@@ -93,7 +93,7 @@ const OrderPdf = ({ openOrderModal }) => {
 
                                     <tr className='border-2 border-slate-300'>
                                         <td className='border-2 border-slate-300 p-2'>Sub Total</td>
-                                        <td className='p-2'>10000 tk</td>
+                                        <td className='p-2'>{totalAmount} tk</td>
 
                                     </tr>
                                     <tr className='border-2 border-slate-300'>
@@ -118,7 +118,7 @@ const OrderPdf = ({ openOrderModal }) => {
                     </div >
 
                     <div className='flex justify-end'>
-                        <Pdf targetRef={ref} filename="code-example.pdf">
+                        <Pdf targetRef={ref} filename={customerName}>
                             {({ toPdf }) => <button className='btn bg-orange-500 mt-6 mr-6' onClick={toPdf}>Download Invoice</button>}
                         </Pdf>
 
