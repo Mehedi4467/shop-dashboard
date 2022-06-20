@@ -8,8 +8,6 @@ const OrderPdf = ({ openOrderModal }) => {
     const currentDate = new Date();
     const date = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`;
 
-    console.log(openOrderModal)
-
     return (
         <div>
 

@@ -19,7 +19,6 @@ const Dashboard = () => {
             <div className='mt-8'>
                 <Charts></Charts>
             </div>
-
             <div className='mt-8'>
                 <OrderList></OrderList>
             </div>

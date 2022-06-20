@@ -16,7 +16,7 @@ const VerifyEmail = () => {
         return <Spinner></Spinner>
     }
     return (
-        <div className='w-3/4  mt-32 mx-auto text-center'>
+        <div className='w-3/4  my-32 mx-auto text-center'>
             <div>
                 <h2 className='text-orange-700 text-2xl text-center my-4'>Verify Your Email Address</h2>
                 <p className='text-primary text-lg mb-2'>To continue using Shop in Shop DB, Please verify your email address</p>
