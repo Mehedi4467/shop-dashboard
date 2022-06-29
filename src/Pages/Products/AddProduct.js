@@ -7,6 +7,8 @@ import auth from '../../firebase.init';
 import useAdminUserData from '../../Hooks/AdminUserData/useAdminUserData';
 import ButtonSpinner from '../../Shared/Spinner/ButtonSpinner';
 import Spinner from '../../Shared/Spinner/Spinner';
+import CategorySelection from './CategorySelection';
+
 
 const AddProduct = () => {
     const { register, formState: { errors }, handleSubmit, reset } = useForm({ mode: "onChange" });
@@ -18,11 +20,12 @@ const AddProduct = () => {
     const [secondImageSize, setsecondImageSize] = useState('');
     const [user, loading, error] = useAuthState(auth);
     const [userData, adminLoadingData] = useAdminUserData(user?.email);
-    const [subCategoryItem, setSubCategoryItem] = useState([]);
-    const [subSubCategory, setsubSubCategory] = useState([]);
+    // const [subCategoryItem, setSubCategoryItem] = useState([]);
+    // const [subSubCategory, setsubSubCategory] = useState([]);
     const [buttonLoading, setButtonLoading] = useState(false);
-
-
+    const [selected, setSelected] = useState([]);
+    const [selectedCate, setSelectedCate] = useState([]);
+    const [selectedSub, setSelectedSub] = useState([]);
 
     const { isLoading, data, refetch } = useQuery('category', () =>
         fetch('http://localhost:5000/category/all', {
@@ -35,20 +38,20 @@ const AddProduct = () => {
         )
     );
 
-    console.log(subCategoryItem)
+    // console.log(subCategoryItem)
 
-    const handelSubCategory = (id) => {
-        const exsitingSub = data?.find(e => e._id === id);
-        setSubCategoryItem(exsitingSub?.category);
+    // const handelSubCategory = (id) => {
+    //     const exsitingSub = data?.find(e => e._id === id);
+    //     setSubCategoryItem(exsitingSub?.category);
 
-    }
-    const handelUnderSubCategory = (name) => {
+    // }
+    // const handelUnderSubCategory = (name) => {
 
-        const machName = subCategoryItem.find(e => e.name === name);
-        setsubSubCategory(machName?.subCategory);
+    //     const machName = subCategoryItem.find(e => e.name === name);
+    //     setsubSubCategory(machName?.subCategory);
 
 
-    }
+    // }
 
 
     if (loading || adminLoadingData || isLoading) {
@@ -119,9 +122,9 @@ const AddProduct = () => {
         const marchentShop = userData.name;
         const marchentEmail = userData.email;
         const marchantPhone = userData.phone;
-        const mainCategoryID = data.mainCategory;
-        const subCategory = data.subCategory;
-        const category = data.category;
+        // const mainCategoryID = data.mainCategory;
+        // const subCategory = data.subCategory;
+        // const category = data.category;
         const orderType = data.orderType;
         const sPrice = data.sprice;
 
@@ -148,9 +151,17 @@ const AddProduct = () => {
         formData.append('marchentShop', marchentShop);
         formData.append('marchentEmail', marchentEmail);
         formData.append('marchantPhone', marchantPhone);
-        formData.append('mainCategoryID', mainCategoryID);
-        formData.append('subCategory', subCategory);
-        formData.append('category', category);
+
+
+        for (let i = 0; i < selected.length; i++) {
+            formData.append(`mainCategory`, selected[i].value);
+        };
+        for (let i = 0; i < selectedCate.length; i++) {
+            formData.append(`category`, selectedCate[i].value);
+        };
+        for (let i = 0; i < selectedSub.length; i++) {
+            formData.append(`SubCategory`, selectedSub[i].value);
+        };
         formData.append('orderType', orderType);
         formData.append('sPrice', sPrice);
 
@@ -320,106 +331,7 @@ const AddProduct = () => {
                                 </div>
 
 
-
-
-                                <div>
-
-                                    <div className="form-control w-full">
-
-                                        <label className="label">
-                                            <span className="label-text font-semibold">Main Category *</span>
-                                        </label>
-
-                                        <select onClick={(e) => handelSubCategory(e.target.value)} className="select select-primary w-full"
-                                            {...register("mainCategory", {
-                                                required: {
-                                                    value: true,
-                                                    message: "Product Main Category is required",
-                                                },
-                                            })}
-
-
-                                        >
-                                            <option selected disabled >Selecte Main Category</option>
-
-                                            {
-                                                data?.map(category => <option value={category._id} key={category._id} >{category.name}</option>)
-                                            }
-
-                                        </select>
-
-
-                                        <label className="label">
-                                            {errors.mainCategory?.type === "required" && (
-                                                <span className="label-text-alt text-warning">
-                                                    {errors.mainCategory.message}
-                                                </span>
-                                            )}
-                                        </label>
-                                    </div>
-
-
-                                    <div className="form-control w-full">
-                                        <label className="label">
-                                            <span className="label-text font-semibold">Category *</span>
-                                        </label>
-
-                                        <select onClick={(e) => handelUnderSubCategory(e.target.value)} className="select font-normal select-primary w-full"
-                                            {...register("category", {
-                                                required: {
-                                                    value: true,
-                                                    message: "Product Category is required",
-                                                },
-                                            })}
-                                        >
-                                            <option value="" selected >Seclct Category</option>
-
-                                            {subCategoryItem?.map((category, index) => category.status && <option key={index} >{category?.name}</option>)
-
-                                            }
-                                        </select>
-
-                                        <label className="label">
-                                            {errors.category?.type === "required" && (
-                                                <span className="label-text-alt text-warning">
-                                                    {errors.category.message}
-                                                </span>
-                                            )}
-                                        </label>
-                                    </div>
-
-                                    <div className="form-control w-full">
-                                        <label className="label">
-                                            <span className="label-text font-semibold">Sub Category *</span>
-                                        </label>
-
-                                        <select className="select select-primary w-full font-normal"
-                                            {...register("subCategory", {
-                                                required: {
-                                                    value: true,
-                                                    message: "Product Sub Category is required",
-                                                },
-                                            })}
-                                        >
-                                            <option value="" selected >Seclct Sub Category</option>
-
-                                            {subSubCategory?.map((category, index) => <option key={index} >{category?.name}</option>)
-
-                                            }
-                                        </select>
-
-                                        <label className="label">
-                                            {errors.subCategory?.type === "required" && (
-                                                <span className="label-text-alt text-warning">
-                                                    {errors.subCategory.message}
-                                                </span>
-                                            )}
-                                        </label>
-                                    </div>
-                                </div>
-
-
-
+                                <CategorySelection setSelectedSub={setSelectedSub} selectedSub={selectedSub} selectedCate={selectedCate} setSelectedCate={setSelectedCate} setSelected={setSelected} selected={selected} data={data}></CategorySelection>
 
 
 
@@ -570,8 +482,6 @@ const AddProduct = () => {
                                 </div>
 
 
-
-
                                 <div className="form-control w-full ">
                                     <label className="label">
                                         <span className="label-text font-semibold">Order Type *</span>
@@ -588,6 +498,7 @@ const AddProduct = () => {
                                     >
                                         <option disabled selected>Selete Order Type</option>
                                         <option>COD</option>
+                                        <option>Pay</option>
                                         <option>Pre-Order</option>
                                     </select>
                                     <label className="label">
@@ -645,8 +556,6 @@ const AddProduct = () => {
                                         )}
                                     </label>
                                 </div>
-
-
 
                             </div>
                         </div>

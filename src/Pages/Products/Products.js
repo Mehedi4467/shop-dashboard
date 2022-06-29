@@ -10,6 +10,7 @@ import ProductDeleteModal from './ProductDeleteModal';
 import ProductEditModal from './ProductEditModal';
 import ProductViewModal from './ProductViewModal';
 
+
 const Products = () => {
     const [user, loading] = useAuthState(auth);
     const [productModal, setProductModal] = useState(null);
@@ -19,7 +20,6 @@ const Products = () => {
     const [search, setSearch] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [isAdmin] = useAdmin(user);
-
 
 
 
@@ -44,6 +44,7 @@ const Products = () => {
             })
 
     }, [user, currentPage, search, productModal]);
+
 
     const productUpdateStatus = (id, value) => {
         fetch(`http://localhost:5000/product/status/update/${id}`, {
@@ -129,11 +130,13 @@ const Products = () => {
                                 <td className="px-6 py-4">
                                     <div className='flex items-center justify-between'>
                                         <img src={`http://localhost:5000/${product.primaryImage}`} width='40' alt="" />
-                                        <p>{product.productName}</p>
+                                        <p className='w-40 ml-4'>{product.productName}</p>
                                     </div>
                                 </td>
                                 <td className="px-6 py-4 capitalize">
-                                    {product.category}
+                                    {
+                                        Array.isArray(product.category) && product.category.slice(0, 4).map(p => p).join(' , ')
+                                    }
                                 </td>
                                 <td className="px-6 py-4">
                                     &#x09F3; {product.price}

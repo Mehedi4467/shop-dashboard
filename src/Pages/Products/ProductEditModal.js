@@ -70,7 +70,7 @@ const ProductEditModal = ({ productModal, setProductModal }) => {
                         </div>
                         <div className="form-control w-full mb-4">
                             <label className="label">
-                                <span className="label-text">Product Spical Price</span>
+                                <span className="label-text">Product Special Price</span>
                             </label>
                             <input type="text" placeholder={sPrice} name='sPrice' className="input input-bordered w-full" />
                         </div>
@@ -113,6 +113,7 @@ const ProductEditModal = ({ productModal, setProductModal }) => {
                             <select className="select select-bordered" name='orderType'>
                                 <option value='' disabled selected>{orderType}</option>
                                 <option>COD</option>
+                                <option>Pay</option>
                                 <option>Pre-Order</option>
                             </select>
                         </div>

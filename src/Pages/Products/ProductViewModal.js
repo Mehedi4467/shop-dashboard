@@ -19,13 +19,13 @@ const ProductViewModal = ({ productModal }) => {
 
                     <div className='mt-4'>
                         <p className='font-semibold'> Product SKU : <span className='text-orange-500'>{sku}</span> </p>
-                        <p className='font-semibold'> Product Category : <span className='text-orange-500'>{category} </span></p>
-                        <p className='font-semibold'> Product Sub Category : <span className='text-orange-500'>{subCategory}</span> </p>
-                        <p className='font-semibold'> Product Price : <span className='text-orange-500'>{price}</span> </p>
-                        <p className='font-semibold'> Product Spical Price : <span className='text-orange-500'>{sPrice}</span> </p>
+                        <p className='font-semibold'> Product Category : <span className='text-orange-500'>{category.join(' , ')} </span></p>
+                        <p className='font-semibold'> Product Sub Category : <span className='text-orange-500'>{subCategory.join(' , ')}</span> </p>
+                        <p className='font-semibold'> Product Price : <span className='text-orange-500'>{price} &#2547;</span> </p>
+                        <p className='font-semibold'> Product Spical Price : <span className='text-orange-500'>{sPrice} &#2547;</span> </p>
                         <p className='font-semibold'> Product Quantity : <span className='text-orange-500'>{quantity}</span> </p>
                         <p className='font-semibold'> Order Type : <span className='text-orange-500'>{orderType}</span> </p>
-                        <p className='font-semibold'> Delivery Charge : <span className='text-orange-500'>In Dhaka- {deliveryInDhaka}, Out of Dhaka - {outDhaka}</span> </p>
+                        <p className='font-semibold'> Delivery Charge : <span className='text-orange-500'>In Dhaka- {deliveryInDhaka} &#2547;, Out of Dhaka - {outDhaka} &#2547;</span> </p>
                         <p className='font-semibold'> Product Color : <span className='text-orange-500'>{color}</span> </p>
                         <p className='font-semibold'> Product Size : <span className='text-orange-500'>{size}</span> </p>
                         <p className='font-semibold'> Product Status : <span className='text-orange-500'>{status}</span> </p>
