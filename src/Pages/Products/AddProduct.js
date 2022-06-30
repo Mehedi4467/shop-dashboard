@@ -8,6 +8,7 @@ import useAdminUserData from '../../Hooks/AdminUserData/useAdminUserData';
 import ButtonSpinner from '../../Shared/Spinner/ButtonSpinner';
 import Spinner from '../../Shared/Spinner/Spinner';
 import CategorySelection from './CategorySelection';
+import ProductPromo from './ProductPromo';
 
 
 const AddProduct = () => {
@@ -20,12 +21,12 @@ const AddProduct = () => {
     const [secondImageSize, setsecondImageSize] = useState('');
     const [user, loading, error] = useAuthState(auth);
     const [userData, adminLoadingData] = useAdminUserData(user?.email);
-    // const [subCategoryItem, setSubCategoryItem] = useState([]);
-    // const [subSubCategory, setsubSubCategory] = useState([]);
     const [buttonLoading, setButtonLoading] = useState(false);
     const [selected, setSelected] = useState([]);
     const [selectedCate, setSelectedCate] = useState([]);
     const [selectedSub, setSelectedSub] = useState([]);
+
+    const [promo, setPromo] = useState([]);
 
     const { isLoading, data, refetch } = useQuery('category', () =>
         fetch('http://localhost:5000/category/all', {
@@ -37,21 +38,6 @@ const AddProduct = () => {
             res.json()
         )
     );
-
-    // console.log(subCategoryItem)
-
-    // const handelSubCategory = (id) => {
-    //     const exsitingSub = data?.find(e => e._id === id);
-    //     setSubCategoryItem(exsitingSub?.category);
-
-    // }
-    // const handelUnderSubCategory = (name) => {
-
-    //     const machName = subCategoryItem.find(e => e.name === name);
-    //     setsubSubCategory(machName?.subCategory);
-
-
-    // }
 
 
     if (loading || adminLoadingData || isLoading) {
@@ -122,9 +108,6 @@ const AddProduct = () => {
         const marchentShop = userData.name;
         const marchentEmail = userData.email;
         const marchantPhone = userData.phone;
-        // const mainCategoryID = data.mainCategory;
-        // const subCategory = data.subCategory;
-        // const category = data.category;
         const orderType = data.orderType;
         const sPrice = data.sprice;
 
@@ -162,10 +145,11 @@ const AddProduct = () => {
         for (let i = 0; i < selectedSub.length; i++) {
             formData.append(`SubCategory`, selectedSub[i].value);
         };
+        for (let i = 0; i < promo.length; i++) {
+            formData.append(`productPromo`, promo[i].value);
+        };
         formData.append('orderType', orderType);
         formData.append('sPrice', sPrice);
-
-
 
 
         await fetch('http://localhost:5000/product', {
@@ -276,7 +260,7 @@ const AddProduct = () => {
                                                 {
                                                     secondImage ? <div className='flex justify-around'>
                                                         {
-                                                            secondImage.map(image => <img className="mr-2 object-cover w-10 h-10 rounded-full"
+                                                            secondImage.map((image, index) => <img key={index} className="mr-2 object-cover w-10 h-10 rounded-full"
                                                                 src={image} alt="Product Images" />)
                                                         }
                                                     </div> : <i className="far fa-image"></i>
@@ -511,12 +495,12 @@ const AddProduct = () => {
 
                                 </div>
 
-
+                                <ProductPromo promo={promo} setPromo={setPromo}></ProductPromo>
 
 
                                 <div className="form-control w-full ">
                                     <label className="label">
-                                        <span className="label-text font-semibold">Product Color</span>
+                                        <span className="label-text font-semibold">Product Color <span className='text-orange-500 text-sm'>(Write the colors separately with comma)</span></span>
                                     </label>
                                     <input type="text" placeholder="Product Color" className="input input-bordered input-primary w-full"
                                         {...register("color", {
@@ -537,7 +521,7 @@ const AddProduct = () => {
                                 </div>
                                 <div className="form-control w-full ">
                                     <label className="label">
-                                        <span className="label-text font-semibold">Product Size</span>
+                                        <span className="label-text font-semibold">Product Size <span className='text-orange-500 text-sm'>(Write the sizes separately with comma)</span></span>
                                     </label>
                                     <input type="text" placeholder="Product Size" className="input input-bordered input-primary w-full"
                                         {...register("size", {
