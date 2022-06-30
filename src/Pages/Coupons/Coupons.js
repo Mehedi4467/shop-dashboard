@@ -104,6 +104,9 @@ const Coupons = () => {
                             <th scope="col" className="px-6 py-3">
                                 PERCENTAGE
                             </th>
+                            <th scope="col" className="px-6 py-3">
+                                CATEGORYS
+                            </th>
 
                             <th scope="col" className="px-6 py-3">
                                 MUTE/UNMUTE
@@ -140,6 +143,9 @@ const Coupons = () => {
                                 <td className="px-6 py-4">
                                     {coupon.percentage}%
                                 </td>
+                                <td className="px-6 py-4">
+                                    {coupon.category.length > 0 && coupon.category.map(cate => cate.name).join(',')}
+                                </td>
                                 <td className="px-6 py-4 text-center">
                                     <div className="form-control">
                                         <label className="label cursor-pointer">
@@ -161,7 +167,6 @@ const Coupons = () => {
                                     <div className='flex justify-between'>
                                         <label htmlFor="coupon-update">  <i onClick={() => setCouponModal(coupon)} className=" cursor-pointer fa-solid fa-pen-to-square"></i></label>
                                         <label htmlFor="coupon-delete"><i onClick={() => setCouponModal(coupon)} className="cursor-pointer fa-solid fa-trash-can"></i></label>
-
                                     </div>
                                 </td >
 
