@@ -49,6 +49,7 @@ const CategorySelection = ({ data, setSelected, selected, setSelectedCate, selec
         secondCate.push({
             label: xy.name,
             value: xy.name,
+            slug: xy.slug,
         })
     }
 
@@ -65,6 +66,7 @@ const CategorySelection = ({ data, setSelected, selected, setSelectedCate, selec
         thirdCate.push({
             label: xyz.name,
             value: xyz.name,
+            slug: xyz.slug,
         })
     }
 

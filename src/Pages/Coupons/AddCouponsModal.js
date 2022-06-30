@@ -6,10 +6,30 @@ import auth from '../../firebase.init';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import Spinner from '../../Shared/Spinner/Spinner';
 import { toast } from 'react-toastify';
+import CategorySelection from '../Products/CategorySelection';
+import { useQuery } from 'react-query';
+
+
+
 const AddCouponsModal = ({ setAddCoupons }) => {
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const [user, loading] = useAuthState(auth);
+
+    const [selected, setSelected] = useState([]);
+    const [selectedCate, setSelectedCate] = useState([]);
+    const [selectedSub, setSelectedSub] = useState([]);
+
+    const { isLoading, data } = useQuery('category', () =>
+        fetch('http://localhost:5000/category/all', {
+            method: "GET",
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('accessToken')}`
+            }
+        }).then(res =>
+            res.json()
+        )
+    );
 
 
     const handelCoupons = (event) => {
@@ -20,10 +40,32 @@ const AddCouponsModal = ({ setAddCoupons }) => {
         const startDates = format(startDate, 'PP')
         const endDates = format(endDate, 'PP');
         const email = user?.email;
+        const mainCategory = [];
+        for (let i = 0; i < selected.length; i++) {
+            mainCategory.push({
+                _id: selected[i].value,
+                name: selected[i].label
+            })
+        };
+        const category = [];
+        for (let i = 0; i < selectedCate.length; i++) {
+            category.push({
+                slug: selectedCate[i].slug,
+                name: selectedCate[i].label
+            })
+        };
 
+        const subCategory = [];
+
+        for (let i = 0; i < selectedSub.length; i++) {
+            subCategory.push({
+                slug: selectedSub[i].slug,
+                name: selectedSub[i].label
+            })
+        };
 
         const couponsInfo = {
-            name, code, percentage, startDates, endDates, email, status: true
+            name, mainCategory, category, code, subCategory, percentage, startDates, endDates, email, status: true
         };
 
         fetch('http://localhost:5000/coupons', {
@@ -47,7 +89,7 @@ const AddCouponsModal = ({ setAddCoupons }) => {
     }
 
 
-    if (loading) {
+    if (loading || isLoading) {
         return <Spinner></Spinner>
     }
     return (
@@ -65,19 +107,24 @@ const AddCouponsModal = ({ setAddCoupons }) => {
                                 <label className="label">
                                     <span className="label-text font-semibold">Campaigns Name</span>
                                 </label>
-                                <input type="text" placeholder="Campaigns Name" name='name' className="input input-warning w-full" required />
+                                <input type="text" placeholder="Campaigns Name" name='name' className="input input-primary w-full" required />
                             </div>
+
+
+                            <CategorySelection setSelectedSub={setSelectedSub} selectedSub={selectedSub} selectedCate={selectedCate} setSelectedCate={setSelectedCate} setSelected={setSelected} selected={selected} data={data}></CategorySelection>
+
+
                             <div className="form-control w-full mb-4 ">
                                 <label className="label">
                                     <span className="label-text font-semibold">Coupon Code</span>
                                 </label>
-                                <input type="text" placeholder="Coupon Code" name='code' className="input input-warning w-full" required />
+                                <input type="text" placeholder="Coupon Code" name='code' className="input input-primary w-full" required />
                             </div>
                             <div className="form-control w-full mb-4 ">
                                 <label className="label">
                                     <span className="label-text font-semibold">Coupon Percentage %</span>
                                 </label>
-                                <input type="number" placeholder="Coupon Percentage" name='percentage' className="input input-warning w-full" required />
+                                <input type="number" placeholder="Coupon Percentage" name='percentage' className="input input-primary w-full" required />
                             </div>
 
                             <div className="form-control w-full mb-4 ">
@@ -88,7 +135,7 @@ const AddCouponsModal = ({ setAddCoupons }) => {
 
                                 <DayPicker
                                     styles={{
-                                        caption: { color: 'red', fontSize: '12px' }
+                                        caption: { color: 'skyblue', fontSize: '12px' }
 
                                     }}
                                     mode="single"
@@ -107,7 +154,7 @@ const AddCouponsModal = ({ setAddCoupons }) => {
 
                                 <DayPicker
                                     styles={{
-                                        caption: { color: 'red', fontSize: '12px' }
+                                        caption: { color: 'skyblue', fontSize: '12px' }
 
                                     }}
                                     mode="single"

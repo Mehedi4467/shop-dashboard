@@ -8,10 +8,15 @@ const ProductPromo = ({ promo, setPromo }) => {
         { value: '10% Discount', label: '10% Discount' },
         { value: '100% Indian Product', label: '100% Indian Product' },
         { value: 'Made in Bangladesh', label: 'Made in Bangladesh' },
+        { value: 'Made in Chaina', label: 'Made in Chaina' },
+        { value: 'Made in India', label: 'Made in India' },
+        { value: 'Made in Japan', label: 'Made in Japan' },
+        { value: 'Made in USA', label: 'Made in USA' },
         { value: '100% Child Save', label: '100% Child Save' },
         { value: '100% Organic', label: '100% Organic' },
         { value: 'Warranty 60 Days', label: 'Warranty 60 Days' },
         { value: 'Pure Ayurvedic', label: 'Pure Ayurvedic' },
+
     ]
 
     return (
