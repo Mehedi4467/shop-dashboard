@@ -89,7 +89,7 @@ const CouponUpdateModal = ({ couponModal, setCouponModal }) => {
                                 selected={startDate}
                                 onSelect={setStartDate}
                             />
-                            <input type="text" value={format(startDate, 'PP')} placeholder="Coupon Percentage" className="input input-warning w-full" disabled />
+                            {/* <input type="text" value={format(startDate, 'PP')} placeholder="Coupon Percentage" className="input input-warning w-full" disabled /> */}
 
                         </div>
 
@@ -108,7 +108,7 @@ const CouponUpdateModal = ({ couponModal, setCouponModal }) => {
                                 selected={endDate}
                                 onSelect={setEndDate}
                             />
-                            <input type="text" value={format(endDate, 'PP')} placeholder="Coupon Percentage" className="input input-warning w-full" disabled />
+                            {/* <input type="text" value={format(endDate, 'PP')} placeholder="Coupon Percentage" className="input input-warning w-full" disabled /> */}
 
                         </div>
                         <div className='flex justify-end'>

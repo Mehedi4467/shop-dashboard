@@ -15,7 +15,7 @@ const AddCouponsModal = ({ setAddCoupons }) => {
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const [user, loading] = useAuthState(auth);
-
+    console.log(startDate)
     const [selected, setSelected] = useState([]);
     const [selectedCate, setSelectedCate] = useState([]);
     const [selectedSub, setSelectedSub] = useState([]);
@@ -136,13 +136,12 @@ const AddCouponsModal = ({ setAddCoupons }) => {
                                 <DayPicker
                                     styles={{
                                         caption: { color: 'skyblue', fontSize: '12px' }
-
                                     }}
                                     mode="single"
                                     selected={startDate}
                                     onSelect={setStartDate}
                                 />
-                                <input type="text" value={format(startDate, 'PP')} placeholder="Coupon Percentage" className="input input-warning w-full" disabled />
+                                {/* <input type="text" value={format(startDate, 'PP')} placeholder="Coupon Percentage" className="input input-warning w-full" disabled /> */}
 
                             </div>
 
@@ -161,7 +160,7 @@ const AddCouponsModal = ({ setAddCoupons }) => {
                                     selected={endDate}
                                     onSelect={setEndDate}
                                 />
-                                <input type="text" value={format(endDate, 'PP')} placeholder="Coupon Percentage" className="input input-warning w-full" disabled />
+                                {/* <input type="text" value={format(endDate, 'PP')} placeholder="Coupon Percentage" className="input input-warning w-full" disabled /> */}
 
                             </div>
 
