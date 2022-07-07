@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import useOrders from '../../Hooks/UseOrders/useOrders';
@@ -52,22 +52,22 @@ const OrderList = () => {
                         {
                             orders?.map(order => <tr key={order._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                 <th scope="row" className="px-6 py-4 font-medium  dark:text-white whitespace-nowrap">
-                                    {order.time}
+                                    {order.date} : {order.time}
                                 </th>
                                 <td className="px-6 py-4">
-                                    {order.address}
+                                    {order.customerState}-{order.customerCity}
                                 </td>
                                 <td className="px-6 py-4">
                                     {order.customerPhone}
                                 </td>
                                 <td className="px-6 py-4">
-                                    {order.paymentMethod}
+                                    {order.orderType}
                                 </td>
                                 <td className="px-6 py-4">
                                     {order.quantity}
                                 </td>
                                 <td className="px-6 py-4">
-                                    &#x09F3; {order.totalAmount}
+                                    {order.totalPrice} &#x09F3;
                                 </td>
                                 <td className="px-6 py-4">
                                     <p className='bg-orange-200 p-1 rounded-full text-center text-blue-500'>{order.status}</p>

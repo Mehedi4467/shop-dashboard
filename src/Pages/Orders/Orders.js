@@ -17,8 +17,7 @@ const Orders = () => {
     const [orders, pageCount, totalItem, dataLodiang, setSearch, setStatus] = useOrders(user?.email, currentPage);
     const [openOrderModal, setOpenOrderModal] = useState(null);
 
-
-
+    console.log(orders)
     const orderStatusUpdate = (id, value) => {
         const status = { value }
         fetch(`http://localhost:5000/order/status/${id}`, {
@@ -121,19 +120,19 @@ const Orders = () => {
                                     {index + 1}
                                 </th>
                                 <td className="px-6 py-4">
-                                    {order.time}
+                                    {order.date} : {order.time}
                                 </td>
                                 <td title={order.address} className="px-6 py-4">
-                                    {order.address.slice(0, 20) + '...'}
+                                    {order.customerState}-{order.customerCity}
                                 </td>
                                 <td className="px-6 py-4">
                                     {order.customerPhone}
                                 </td>
                                 <td className="px-6 py-4">
-                                    {order.paymentMethod}
+                                    {order.orderType}
                                 </td>
                                 <td className="px-6 py-4">
-                                    &#x09F3; {order.totalAmount}
+                                    {order.totalPrice}  &#x09F3;
                                 </td>
 
                                 <td className="px-6 py-4">
