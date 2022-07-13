@@ -69,7 +69,7 @@ const Products = () => {
         return <Spinner></Spinner>
     }
 
-
+    // console.log(products[5].category.map(x => JSON.parse(x).value))
 
     return (
         <div className='container mx-auto'>
@@ -135,7 +135,7 @@ const Products = () => {
                                 </td>
                                 <td className="px-6 py-4 capitalize">
                                     {
-                                        Array.isArray(product.category) && product.category.slice(0, 4).map(p => p).join(' , ')
+                                        Array.isArray(product.category) && product.category.map(x => JSON.parse(x).value).join(' , ')
                                     }
                                 </td>
                                 <td className="px-6 py-4">
