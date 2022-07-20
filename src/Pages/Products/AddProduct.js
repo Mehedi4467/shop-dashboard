@@ -110,6 +110,7 @@ const AddProduct = () => {
         const marchantPhone = userData.phone;
         const orderType = data.orderType;
         const sPrice = data.sprice;
+        const video = data.video;
 
 
 
@@ -134,6 +135,7 @@ const AddProduct = () => {
         formData.append('marchentShop', marchentShop);
         formData.append('marchentEmail', marchentEmail);
         formData.append('marchantPhone', marchantPhone);
+        formData.append('video', video);
 
 
         for (let i = 0; i < selected.length; i++) {
@@ -535,6 +537,26 @@ const AddProduct = () => {
                                         {errors.size?.type === "required" && (
                                             <span className="label-text-alt text-warning">
                                                 {errors.size.message}
+                                            </span>
+                                        )}
+                                    </label>
+                                </div>
+                                <div className="form-control w-full ">
+                                    <label className="label">
+                                        <span className="label-text font-semibold">Product Youtube Video ID <span className='text-orange-500 text-sm'>(Youtube Video Id (Optional))</span></span>
+                                    </label>
+                                    <input type="text" placeholder="Product Size" className="input input-bordered input-primary w-full"
+                                        {...register("video", {
+                                            required: {
+                                                value: false,
+                                            },
+                                            deps: [],
+                                        })}
+                                    />
+                                    <label className="label">
+                                        {errors.video?.type === "required" && (
+                                            <span className="label-text-alt text-warning">
+                                                {errors.video.message}
                                             </span>
                                         )}
                                     </label>

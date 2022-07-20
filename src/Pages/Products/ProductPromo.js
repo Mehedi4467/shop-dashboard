@@ -4,18 +4,18 @@ import { MultiSelect } from "react-multi-select-component";
 const ProductPromo = ({ promo, setPromo }) => {
 
     const promodata = [
-        { value: '7 Days Retuen', label: '7 Days Retuen' },
-        { value: '10% Discount', label: '10% Discount' },
-        { value: '100% Indian Product', label: '100% Indian Product' },
-        { value: 'Made in Bangladesh', label: 'Made in Bangladesh' },
-        { value: 'Made in Chaina', label: 'Made in Chaina' },
-        { value: 'Made in India', label: 'Made in India' },
-        { value: 'Made in Japan', label: 'Made in Japan' },
-        { value: 'Made in USA', label: 'Made in USA' },
-        { value: '100% Child Save', label: '100% Child Save' },
-        { value: '100% Organic', label: '100% Organic' },
-        { value: 'Warranty 60 Days', label: 'Warranty 60 Days' },
-        { value: 'Pure Ayurvedic', label: 'Pure Ayurvedic' },
+        { value: 'https://i.ibb.co/Fqv6q2R/return.jpg', label: '7 Days Return' },
+        { value: 'https://i.ibb.co/gZV9ZKs/ezgif-com-gif-maker.jpg', label: '10% Discount' },
+        { value: 'https://i.ibb.co/zxRWf5c/made-in-india.jpg', label: '100% Indian Product' },
+        { value: 'https://i.ibb.co/JnHTqk6/made-in-bangladesh.jpg', label: 'Made in Bangladesh' },
+        { value: 'https://i.ibb.co/R6pp6Lh/made-in-china.jpg', label: 'Made in Chaina' },
+        { value: 'https://i.ibb.co/zxRWf5c/made-in-india.jpg', label: 'Made in India' },
+        { value: 'https://i.ibb.co/3mrTffZ/made-in-japan.jpg', label: 'Made in Japan' },
+        { value: 'https://i.ibb.co/Wx2zytn/usa.jpg', label: 'Made in USA' },
+        { value: 'https://i.ibb.co/31MqTvZ/Child-Save.jpg', label: '100% Child Save' },
+        { value: 'https://i.ibb.co/dJ3HRjg/organic.jpg', label: '100% Organic' },
+        { value: 'https://i.ibb.co/G9vWgg1/warranty.jpg', label: 'Warranty 60 Days' },
+        { value: 'https://i.ibb.co/gFXLpYm/pure-ayurvedic.jpg', label: 'Pure Ayurvedic' },
 
     ]
 
