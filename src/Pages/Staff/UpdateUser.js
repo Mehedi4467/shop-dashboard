@@ -2,8 +2,6 @@ import React from 'react';
 import logo from '../../Images/logo/logo.png';
 const UpdateUser = ({ openModal, setOpenModal, refetch }) => {
 
-
-
     return (
         <div>
             <input type="checkbox" id="update-user-modal" className="modal-toggle" />
@@ -16,8 +14,8 @@ const UpdateUser = ({ openModal, setOpenModal, refetch }) => {
 
                             <div className="avatar flex justify-center">
                                 {
-                                    openModal?.image ? <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                        <img src={openModal?.image} alt='business logo' />
+                                    openModal?.logo ? <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                        <img src={`http://localhost:5000/${openModal?.logo}`} alt='business logo' />
                                     </div> : <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
                                         <img src={logo} alt='business logo' />
                                     </div>
@@ -62,8 +60,22 @@ const UpdateUser = ({ openModal, setOpenModal, refetch }) => {
                                 </label>
                             </div>
 
-
-
+                            <div className="form-control w-full">
+                                <label className="label">
+                                    <span className="label-text text-primary">Marchent NID</span>
+                                </label>
+                                {
+                                    openModal?.bin ? <img className='h-[645px] w-[454px]' src={`http://localhost:5000/${openModal?.nid}`} alt="marchent nid" /> : <p>Merchant has not uploaded NID yet</p>
+                                }
+                            </div>
+                            <div className="form-control w-full">
+                                <label className="label">
+                                    <span className="label-text text-primary">Marchent BIN</span>
+                                </label>
+                                {
+                                    openModal?.bin ? <img className='h-[645px] w-[454px]' src={`http://localhost:5000/${openModal?.bin}`} alt="marchent bin" /> : <p>Merchant has not uploaded BIN yet</p>
+                                }
+                            </div>
                         </form>
                     </div>
 

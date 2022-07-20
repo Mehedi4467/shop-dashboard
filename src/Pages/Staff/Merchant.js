@@ -35,6 +35,7 @@ const Merchant = ({ user, index, setOpenModal, UserUpdatepdateStatus }) => {
                         <option defaultValue="Pending">Pending</option>
                         <option defaultValue="Reject">Reject</option>
                         <option defaultValue="Block">Block</option>
+                        <option defaultValue="Resubmit">Resubmit</option>
 
                     </select> : <p className='text-orange-600'>Email not verify</p>
                 }
@@ -43,9 +44,7 @@ const Merchant = ({ user, index, setOpenModal, UserUpdatepdateStatus }) => {
             <td className="px-6 py-4">
                 <div className='flex justify-between'>
                     <label onClick={() => setOpenModal(user)} htmlFor="update-user-modal"> <i className="cursor-pointer fa-solid fa-eye"></i></label>
-
                     <label onClick={() => setOpenModal(user)} htmlFor="delete-modal-user"> <i className="cursor-pointer fa-solid fa-trash-can"></i></label>
-
                 </div>
             </td >
             <td className="px-6 py-4">

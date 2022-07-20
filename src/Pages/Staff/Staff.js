@@ -39,8 +39,6 @@ const Staff = () => {
                 const pages = Math.ceil(count / 10);
                 setPageCount(pages);
                 setTotalItem(count);
-
-
             })
 
     }, []);

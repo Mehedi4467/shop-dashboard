@@ -14,7 +14,6 @@ function RequireAuth({ children }) {
     const nevigate = useNavigate();
     const [data, adminLoadingData] = useAdminUserData(user?.email);
 
-
     useEffect(() => {
         if (user && user?.emailVerified) {
             fetch(`http://localhost:5000/adminUser/admin/verify/${user?.email}`, {

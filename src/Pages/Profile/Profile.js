@@ -6,13 +6,11 @@ import Spinner from '../../Shared/Spinner/Spinner';
 import { toast } from 'react-toastify';
 import useAdminUserData from '../../Hooks/AdminUserData/useAdminUserData';
 
-
-
 const Profile = () => {
     const { register, handleSubmit } = useForm();
 
     const [user] = useAuthState(auth);
-    const imgStore_key = '2f6c6879a39132782b251889cb5d783f';
+    // const imgStore_key = '2f6c6879a39132782b251889cb5d783f';
     const [data, adminLoadingData] = useAdminUserData(user?.email)
 
     if (adminLoadingData) {
@@ -20,77 +18,35 @@ const Profile = () => {
     }
 
     const onSubmit = async (inputData) => {
-        const image = inputData.image[0];
+        // const image = inputData.image[0];
         const phone = inputData.phone;
-        const formData = new FormData();
-        formData.append('image', image);
-        const url = `https://api.imgbb.com/1/upload?key=${imgStore_key}`;
-        fetch(url, {
-            method: 'POST',
-            body: formData
+        const profile = {
+            phone: phone,
+            img: false
+        }
+        //send to database 
+        fetch(`http://localhost:5000/adminUser/Update_profile/${data._id}`, {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(profile)
         })
             .then(res => res.json())
-            .then(result => {
-                if (result.success) {
-                    const img = result.data.url
-                    const profile = {
-                        phone: phone,
-                        img: img
-                    }
+            .then(updateImage => {
 
-                    //send to database 
-                    fetch(`http://localhost:5000/adminUser/Update_profile/${data._id}`, {
-                        method: 'PUT',
-                        headers: {
-                            'content-type': 'application/json'
-                        },
-                        body: JSON.stringify(profile)
-                    })
-                        .then(res => res.json())
-                        .then(updateImage => {
+                if (updateImage.acknowledged) {
+                    toast("Profile Update Successfully!");
 
-                            if (updateImage.acknowledged) {
-                                toast("Profile Update Successfully!");
-
-                            }
-                            else {
-                                toast("Something is wrong. Please Reload your Browser!")
-                            }
-                        })
                 }
                 else {
-
-
-                    const profile = {
-                        phone: phone,
-                        img: false
-                    }
-                    //send to database 
-                    fetch(`http://localhost:5000/adminUser/Update_profile/${data._id}`, {
-                        method: 'PUT',
-                        headers: {
-                            'content-type': 'application/json'
-                        },
-                        body: JSON.stringify(profile)
-                    })
-                        .then(res => res.json())
-                        .then(updateImage => {
-
-                            if (updateImage.acknowledged) {
-                                toast("Profile Update Successfully!");
-
-                            }
-                            else {
-                                toast("Something is wrong. Please Reload your Browser!")
-                            }
-                        })
-                    toast("Business Logo do not Upload")
+                    toast("Something is wrong. Please Reload your Browser!")
                 }
             })
+
     };
 
 
-    console.log(data.phone)
 
     return (
         <div>
@@ -98,14 +54,14 @@ const Profile = () => {
                 <div className="card-body">
                     <div className='flex justify-center'>
                         {
-                            data?.image ? <img src={data?.image} width='70' alt="Business Logo" /> : <img src={logo} width='70' alt="Business Logo" />
+                            data?.logo ? <img src={data?.logo} width='70' alt="Business Logo" /> : <img src={logo} width='70' alt="Business Logo" />
                         }
                     </div>
 
 
                     <form onSubmit={handleSubmit(onSubmit)} >
 
-                        <div className='mb-4'>
+                        {/* <div className='mb-4'>
                             <label className="label">
                                 <span className="label-text text-primary">Business Logo</span>
                             </label>
@@ -119,7 +75,7 @@ const Profile = () => {
                                     />
                                 </label>
                             </div>
-                        </div>
+                        </div> */}
 
 
 
@@ -167,12 +123,6 @@ const Profile = () => {
                             <button className="btn btn-primary">Update</button>
                         </div>
                     </form>
-
-
-
-
-
-
 
                 </div>
             </div>

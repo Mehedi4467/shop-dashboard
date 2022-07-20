@@ -66,9 +66,10 @@ const Registration = () => {
         }
       });
 
+    if (!error) {
+      toast("You have been sent an email for verification! ")
+    }
 
-
-    toast("You have been sent an email for verification! ")
   };
 
 
