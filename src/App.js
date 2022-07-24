@@ -21,9 +21,7 @@ import RequireAdmin from "./Hooks/RequireAdmin/RequireAdmin";
 import Profile from "./Pages/Profile/Profile";
 import AddProduct from "./Pages/Products/AddProduct";
 import Account from "./Pages/Account/Account";
-
-
-
+import ResetPassword from "./Pages/Login/ResetPassword";
 
 function App() {
   const [showHide, setShowHide] = useState(false);
@@ -39,6 +37,7 @@ function App() {
         <div className="p-10 col-span-4 bg-[#F9FAFB]">
           <Routes>
             <Route path="/login" element={<Login />}></Route>
+            <Route path="/resetpassword" element={<ResetPassword></ResetPassword>}></Route>
             <Route path="/registration" element={<Registration></Registration>}></Route>
             <Route path='/' element={<RequireAuth><Dashboard></Dashboard></RequireAuth>}></Route>
             <Route path='/profile' element={<RequireAuth><Profile></Profile></RequireAuth>}></Route>

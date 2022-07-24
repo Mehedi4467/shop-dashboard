@@ -1,32 +1,29 @@
-import React, { useState } from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import auth from '../../firebase.init';
-import useOrders from '../../Hooks/UseOrders/useOrders';
-import Pagination from '../Pagination/Pagination';
+import React from 'react';
 import Spinner from '../Spinner/Spinner';
 
-const OrderList = () => {
 
-    const [user, loading] = useAuthState(auth);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [orders, pageCount, totalItem, dataLodiang] = useOrders(user?.email, currentPage);
+const OrderList = ({ isLoading, data, refetch }) => {
 
 
 
-    if (loading || dataLodiang) {
+
+    if (isLoading) {
         return <Spinner></Spinner>
     }
 
 
     return (
         <div>
-            <h1 className='text-center md:text-left my-2 text-xl font-bold'>Recent Order</h1>
+            <h1 className='text-center md:text-left my-2 text-xl font-bold'>Today Order</h1>
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-[#F4F5F7] dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" className="px-6 py-3">
                                 ORDER TIME
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                CUSTOMER NAME
                             </th>
                             <th scope="col" className="px-6 py-3">
                                 DELIVERY ADDRESS
@@ -37,9 +34,7 @@ const OrderList = () => {
                             <th scope="col" className="px-6 py-3">
                                 PAYMENT METHOD
                             </th>
-                            <th scope="col" className="px-6 py-3">
-                                Quantity
-                            </th>
+
                             <th scope="col" className="px-6 py-3">
                                 ORDER AMOUNT
                             </th>
@@ -50,10 +45,13 @@ const OrderList = () => {
                     </thead>
                     <tbody>
                         {
-                            orders?.map(order => <tr key={order._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            data?.map(order => <tr key={order._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                 <th scope="row" className="px-6 py-4 font-medium  dark:text-white whitespace-nowrap">
-                                    {order.date} : {order.time}
+                                    {order.date}
                                 </th>
+                                <td className="px-6 py-4">
+                                    {order.customerName}
+                                </td>
                                 <td className="px-6 py-4">
                                     {order.customerState}-{order.customerCity}
                                 </td>
@@ -61,11 +59,9 @@ const OrderList = () => {
                                     {order.customerPhone}
                                 </td>
                                 <td className="px-6 py-4">
-                                    {order.orderType}
+                                    {order.paymentMethod}
                                 </td>
-                                <td className="px-6 py-4">
-                                    {order.quantity}
-                                </td>
+
                                 <td className="px-6 py-4">
                                     {order.totalPrice} &#x09F3;
                                 </td>
@@ -80,11 +76,7 @@ const OrderList = () => {
                 </table >
 
             </div >
-            {
-                totalItem > 10 && <div className='flex justify-center md:justify-end'>
-                    <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} pageCount={pageCount}></Pagination>
-                </div>
-            }
+
         </div >
     );
 };
