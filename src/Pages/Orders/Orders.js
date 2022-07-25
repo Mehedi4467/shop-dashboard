@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { toast } from 'react-toastify';
 import auth from '../../firebase.init';
@@ -8,6 +8,8 @@ import OrderModal from './OrderModal';
 import OrderPdf from './OrderPdf';
 import useOrders from '../../Hooks/UseOrders/useOrders';
 import useAdmin from '../../Hooks/useAdmin';
+import { useReactToPrint } from 'react-to-print';
+import ComponentToPrint from './ComponentToPrint';
 
 
 
@@ -18,10 +20,14 @@ const Orders = () => {
     const [orders, pageCount, totalItem, dataLodiang, setSearch, setStatus, setTotalItem, setPageCount] = useOrders(user?.email, currentPage);
     const [openOrderModal, setOpenOrderModal] = useState(null);
 
+
     const [admin, adminLoading] = useAdmin(user);
-    console.log(orders)
+    // console.log(orders)
 
-
+    const componentRef = useRef(null);
+    const handlePrint = useReactToPrint({
+        content: () => componentRef.current
+    });
 
     // console.log(totalPrice)
     const orderStatusUpdate = (id, value) => {
@@ -106,6 +112,7 @@ const Orders = () => {
 
             </div>
 
+
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-10">
                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-[#F4F5F7] dark:bg-gray-700 dark:text-gray-400">
@@ -113,29 +120,29 @@ const Orders = () => {
                             {/* <th scope="col" className="px-6 py-3">
                                 SR NO
                             </th> */}
-                            <th scope="col" className="px-6 w-28 py-3">
+                            <th scope="col" className="px-2  py-3">
                                 DATE AND TIME
                             </th>
-                            <th scope="col" className="px-6 py-3">
+                            <th scope="col" className="px-2 py-3">
                                 CUSTOMER NAME
                             </th>
-                            <th scope="col" className="px-6 py-3">
+                            <th scope="col" className="px-2 py-3">
                                 SHIPPING ADDRESS
                             </th>
-                            <th scope="col" className="px-6 py-3">
+                            <th scope="col" className="px-2 py-3">
                                 PHONE
                             </th>
 
-                            <th scope="col" className="px-6 py-3">
+                            <th scope="col" className="px-2 py-3">
                                 AMOUNT
                             </th>
-                            <th scope="col" className="px-6 py-3">
+                            <th scope="col" className="px-2 py-3">
                                 PAYMENT METHOD
                             </th>
-                            <th scope="col" className="px-6 py-3">
+                            <th scope="col" className="px-2 py-3">
                                 ACTIONS
                             </th>
-                            <th scope="col" className="px-6 py-3">
+                            <th scope="col" className="px-2 py-3">
                                 INVOICE
                             </th>
                         </tr>
@@ -143,9 +150,7 @@ const Orders = () => {
                     <tbody>
                         {
                             orders?.map((order, index) => <tr key={order._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                {/* <th scope="row" className="px-6 py-4 font-medium  dark:text-white whitespace-nowrap">
-                                    {index + 1}
-                                </th> */}
+
                                 <td className="px-6  py-4">
                                     <p className='w-28'>{order.date} : {order.time}</p>
                                 </td>
@@ -191,9 +196,17 @@ const Orders = () => {
                                 }
 
                                 <td className="px-6 py-4">
-                                    <div className='flex justify-between'>
+                                    <div className='flex gap-x-4 justify-between'>
                                         <label htmlFor="my-modal-60"><i onClick={() => setOpenOrderModal(order)} className="cursor-pointer fa-solid fa-eye"></i></label>
                                         <label htmlFor="pdf-modal"><i onClick={() => setOpenOrderModal(order)} className="text-orange-500 fas fa-file-alt cursor-pointer"></i></label>
+
+                                        <div>
+                                            <i onClick={handlePrint} className="text-orange-500 cursor-pointer fa-solid fa-print"></i>
+                                            <div className='hidden'>
+                                                <ComponentToPrint order={order} ref={componentRef} />
+                                            </div>
+
+                                        </div>
                                     </div>
                                 </td >
 
@@ -224,3 +237,7 @@ const Orders = () => {
 };
 
 export default Orders;
+
+
+
+

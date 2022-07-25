@@ -1,28 +1,16 @@
 import React from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import Pdf from "react-to-pdf";
-import auth from '../../firebase.init';
-import useAdmin from '../../Hooks/useAdmin';
 import logo from '../../Images/logo/logo.png';
 
 
-const ref = React.createRef();
-const OrderPdf = ({ openOrderModal }) => {
-    const currentDate = new Date();
-    const date = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`;
-    console.log(openOrderModal)
-    const [user] = useAuthState(auth);
-    const [admin] = useAdmin(user);
-    const subTotal = openOrderModal?.products?.reduce(
-        (previousValue, currentValue) => previousValue + currentValue?.productTotalPrice, 0);
+const ComponentToPrint = React.forwardRef((props, ref) => {
+    const { order } = props;
+    // console.log('print', order)
+
 
     return (
-        <div>
-
-            <input type="checkbox" id="pdf-modal" className="modal-toggle" />
-            <label htmlFor="pdf-modal" className="modal justify-end">
-                <label htmlFor='' className="modal-box w-[900px] max-w-5xl">
-
+        <div className="bg-gray-200 p-6" ref={ref}>
+            <div className="a4-screen-sized">
+                <div className="aspect-ratio-box shadow-lg rounded-lg overflow-hidden">
                     <div>
                         <div className='px-12 border-2 w-[795px]' ref={ref}>
                             <div className='pt-6'>
@@ -43,20 +31,17 @@ const OrderPdf = ({ openOrderModal }) => {
 
                                         <tr className='border-2 border-slate-300'>
                                             <td className='border-2 border-slate-300 p-2'>Order Number</td>
-                                            <td className='p-2'>{openOrderModal?.orderID}</td>
+                                            <td className='p-2'>{order.orderID}</td>
 
                                         </tr>
                                         <tr className='border-2 border-slate-300'>
                                             <td className='border-2 border-slate-300 p-2'>Invoice Date</td>
-                                            <td className='p-2'>{date}</td>
+                                            <td className='p-2'>{order.date}</td>
 
                                         </tr>
                                         <tr className='border-2 border-slate-300 bg-slate-300'>
                                             <td className='border-2 border-slate-300 p-2'>Total</td>
-                                            {/* <td className='p-2'>{openOrderModal.totalPrice} tk</td> */}
-                                            <td className="px-6 py-4">
-                                                {admin ? openOrderModal.totalPrice : openOrderModal?.products?.reduce((previousValue, currentValue) => previousValue + (currentValue?.productTotalPrice + parseInt(currentValue.deliveryCharge)), 0)}  &#x09F3;
-                                            </td>
+                                            <td className='p-2'>{order.totalPrice} tk</td>
 
                                         </tr>
                                     </table>
@@ -66,10 +51,10 @@ const OrderPdf = ({ openOrderModal }) => {
                             <div className='px-6'>
                                 <div className='mt-6'>
                                     <p className='font-bold'>To : </p>
-                                    <p>{openOrderModal.customerName}</p>
-                                    <p>{openOrderModal.customerState}, {openOrderModal.customerCity}, {openOrderModal.customerDetails}</p>
-                                    <p>{openOrderModal.customerEmail}</p>
-                                    <p>{openOrderModal.customerPhone}</p>
+                                    <p>{order.customerName}</p>
+                                    <p>{order.customerState}, {order.customerCity}, {order.customerDetails}</p>
+                                    <p>{order.customerEmail}</p>
+                                    <p>{order.customerPhone}</p>
                                 </div>
                             </div>
 
@@ -86,10 +71,10 @@ const OrderPdf = ({ openOrderModal }) => {
 
                                     </tr>
                                     {
-                                        openOrderModal?.products?.map((product, index) => <tr key={index} className='border-2 border-slate-300'>
+                                        order?.products?.map((product, index) => <tr key={index} className='border-2 border-slate-300'>
                                             <td className='border-2 border-slate-300 p-2'>{product.productName}</td>
-                                            <td className='p-2 border-2 border-slate-300'>{openOrderModal?.color || '---'}</td>
-                                            <td className='p-2 border-2 border-slate-300'>{openOrderModal?.size || '---'}</td>
+                                            <td className='p-2 border-2 border-slate-300'>{order?.color || '---'}</td>
+                                            <td className='p-2 border-2 border-slate-300'>{order?.size || '---'}</td>
                                             <td className='p-2 border-2 border-slate-300'>{product.quantity}</td>
                                             <td className='p-2 border-2 border-slate-300'>{product.productPrices} tk</td>
                                             {/* product price with quantity */}
@@ -107,26 +92,27 @@ const OrderPdf = ({ openOrderModal }) => {
                                     <tr className='border-2 font-bold border-slate-300'>
                                         <td className='border-2 border-slate-300 p-2'>Sub Total</td>
 
-                                        <td className='p-2'>{subTotal} tk</td>
+                                        {/* <td className='p-2'>{subTotal} tk</td> */}
 
                                     </tr>
                                     <tr className='border-2 border-slate-300'>
                                         <td className='border-2 border-slate-300 p-2'>Delivery Charge</td>
-                                        <td className='p-2'>{openOrderModal?.deliveryCharge} tk</td>
+                                        <td className='p-2'>{order?.deliveryCharge} tk</td>
 
                                     </tr>
+                                    <tr className='border-2 border-slate-300'>
+                                        <td className='border-2 border-slate-300 p-2'>Vat</td>
+                                        <td className='p-2'>{order?.vatPrice} tk</td>
 
+                                    </tr>
                                     <tr className='border-2 border-slate-300'>
                                         <td className='border-2 border-slate-300 p-2'>Due</td>
-                                        <td className='p-2'>{openOrderModal?.duePrice ? openOrderModal?.duePrice : '0'} tk</td>
+                                        <td className='p-2'>{order?.duePrice ? order?.duePrice : '0'} tk</td>
 
                                     </tr>
                                     <tr className='border-2 font-bold border-slate-300 bg-slate-300'>
                                         <td className='border-2 border-slate-300 p-2'>Total</td>
                                         {/* <td className='p-2 '>{subTotal + parseFloat(pdfs?.deliveryCharge) + parseFloat(pdfs?.vatPrice)} tk</td> */}
-                                        <td className="px-6 py-4">
-                                            {admin ? openOrderModal.totalPrice : openOrderModal?.products?.reduce((previousValue, currentValue) => previousValue + (currentValue?.productTotalPrice + parseInt(currentValue.deliveryCharge)), 0)}  &#x09F3;
-                                        </td>
 
                                     </tr>
                                 </table>
@@ -139,25 +125,10 @@ const OrderPdf = ({ openOrderModal }) => {
 
                         </div>
                     </div >
-
-                    <div className='flex justify-end'>
-                        <Pdf targetRef={ref} filename={openOrderModal.customerName}>
-                            {({ toPdf }) => <button className='btn bg-orange-500 mt-6 mr-6' onClick={toPdf}>Download Invoice</button>}
-                        </Pdf>
-
-                        <div className="modal-action">
-                            <label htmlFor="pdf-modal" className="btn">Cencle</label>
-                        </div>
-
-                    </div>
-                </label>
-            </label>
+                </div>
+            </div>
         </div>
     );
-};
+});
 
-export default OrderPdf;
-
-
-
-
+export default ComponentToPrint;
