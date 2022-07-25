@@ -26,6 +26,7 @@ const Dashboard = () => {
     if (loading || isLoading) {
         return <Spinner></Spinner>
     }
+    console.log(data)
 
     return (
         <div>

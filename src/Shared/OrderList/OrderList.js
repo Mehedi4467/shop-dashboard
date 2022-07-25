@@ -47,7 +47,7 @@ const OrderList = ({ isLoading, data, refetch }) => {
                         {
                             data?.map(order => <tr key={order._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                 <th scope="row" className="px-6 py-4 font-medium  dark:text-white whitespace-nowrap">
-                                    {order.date}
+                                    {order.date} : {order.time}
                                 </th>
                                 <td className="px-6 py-4">
                                     {order.customerName}
