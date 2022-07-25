@@ -2,6 +2,7 @@ import React from 'react';
 
 const ProductViewModal = ({ productModal }) => {
     const { productName, sku, subCategory, category, orderType, price, quantity, deliveryInDhaka, outDhaka, color, size, marchentShop, marchentEmail, sPrice, marchantPhone, primaryImage, status, date, time } = productModal;
+    console.log(category)
     return (
         <div>
             <input type="checkbox" id="product-view-modal" className="modal-toggle" />
@@ -19,7 +20,7 @@ const ProductViewModal = ({ productModal }) => {
 
                     <div className='mt-4'>
                         <p className='font-semibold'> Product SKU : <span className='text-orange-500'>{sku}</span> </p>
-                        <p className='font-semibold'> Product Category : <span className='text-orange-500'>{category.map(x => JSON.parse(x).value).join(' , ')} </span></p>
+                        <p className='font-semibold'> Product Category : <span className='text-orange-500'>{category?.map(x => JSON.parse(x).value).join(' , ')} </span></p>
                         <p className='font-semibold'> Product Sub Category : <span className='text-orange-500'>{subCategory.map(x => JSON.parse(x).value).join(' , ')}</span> </p>
                         <p className='font-semibold'> Product Price : <span className='text-orange-500'>{price} &#2547;</span> </p>
                         <p className='font-semibold'> Product Special Price : <span className='text-orange-500'>{sPrice} &#2547;</span> </p>

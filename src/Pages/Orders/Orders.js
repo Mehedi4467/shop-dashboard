@@ -7,6 +7,7 @@ import Spinner from '../../Shared/Spinner/Spinner';
 import OrderModal from './OrderModal';
 import OrderPdf from './OrderPdf';
 import useOrders from '../../Hooks/UseOrders/useOrders';
+import useAdmin from '../../Hooks/useAdmin';
 
 
 
@@ -17,14 +18,15 @@ const Orders = () => {
     const [orders, pageCount, totalItem, dataLodiang, setSearch, setStatus, setTotalItem, setPageCount] = useOrders(user?.email, currentPage);
     const [openOrderModal, setOpenOrderModal] = useState(null);
 
+    const [admin, adminLoading] = useAdmin(user);
     console.log(orders)
 
 
 
-
+    // console.log(totalPrice)
     const orderStatusUpdate = (id, value) => {
         const status = { value }
-        fetch(`http://localhost:5000/order/status/${id}`, {
+        fetch(`http://localhost:5000/order/status/${id}?email=${user?.email}`, {
             method: "PUT",
             headers: {
                 'content-type': 'application/json',
@@ -50,7 +52,6 @@ const Orders = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
                 const count = data.count;
                 const pages = Math.ceil(parseInt(count) / 10);
                 setPageCount(pages);
@@ -71,7 +72,7 @@ const Orders = () => {
     }
 
 
-    if (loading || dataLodiang) {
+    if (loading || dataLodiang || adminLoading) {
         return <Spinner></Spinner>
     }
 
@@ -109,9 +110,9 @@ const Orders = () => {
                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-[#F4F5F7] dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th scope="col" className="px-6 py-3">
+                            {/* <th scope="col" className="px-6 py-3">
                                 SR NO
-                            </th>
+                            </th> */}
                             <th scope="col" className="px-6 w-28 py-3">
                                 DATE AND TIME
                             </th>
@@ -142,9 +143,9 @@ const Orders = () => {
                     <tbody>
                         {
                             orders?.map((order, index) => <tr key={order._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                <th scope="row" className="px-6 py-4 font-medium  dark:text-white whitespace-nowrap">
+                                {/* <th scope="row" className="px-6 py-4 font-medium  dark:text-white whitespace-nowrap">
                                     {index + 1}
-                                </th>
+                                </th> */}
                                 <td className="px-6  py-4">
                                     <p className='w-28'>{order.date} : {order.time}</p>
                                 </td>
@@ -159,27 +160,39 @@ const Orders = () => {
                                 </td>
 
                                 <td className="px-6 py-4">
-                                    {order.totalPrice}  &#x09F3;
+                                    {admin ? order.totalPrice : order?.products?.reduce((previousValue, currentValue) => previousValue + (currentValue?.productTotalPrice + parseInt(currentValue.deliveryCharge)), 0)}  &#x09F3;
                                 </td>
                                 <td className="px-6 py-4">
-                                    {order.paymentMethod}  &#x09F3;
+                                    {order.paymentMethod}
                                 </td>
 
-                                <td className="px-6 py-4">
-                                    <select onChange={(e) => orderStatusUpdate(order._id, e.target.value)} className='outline-0 cursor-pointer border-2 hover:shadow-lg text-slate-400 p-1 rounded-full px-4' id="cars">
-                                        <option className='text-orange-600' defaultValue={order.status} selected disabled>{order.status}</option>
-                                        <option>Pending</option>
-                                        <option>Processing</option>
-                                        <option>Delivered</option>
-                                        <option>Completed</option>
-                                        <option>Cancel</option>
-                                    </select>
+                                {
+                                    admin ? <td className="px-6 py-4">
+                                        <select onChange={(e) => orderStatusUpdate(order._id, e.target.value)} className='outline-0 cursor-pointer border-2 hover:shadow-lg text-slate-400 p-1 rounded-full px-4' id="cars">
+                                            <option className='text-orange-600' defaultValue={order.status} selected disabled>{order.status}</option>
+                                            <option>Pending</option>
+                                            <option>Processing</option>
+                                            <option>Delivered</option>
+                                            <option>Completed</option>
+                                            <option>Cancel</option>
+                                        </select>
 
-                                </td >
+                                    </td > : <td className="px-6 py-4">
+                                        <select onChange={(e) => orderStatusUpdate(order._id, e.target.value)} className='outline-0 cursor-pointer border-2 hover:shadow-lg text-slate-400 p-1 rounded-full px-4' id="cars">
+                                            <option className='text-orange-600' defaultValue={order?.products[0]?.status} selected disabled>{order?.products[0]?.status}</option>
+                                            <option>Pending</option>
+                                            <option>Processing</option>
+                                            <option>Delivered</option>
+                                            <option>Completed</option>
+                                            <option>Cancel</option>
+                                        </select>
+
+                                    </td >
+                                }
 
                                 <td className="px-6 py-4">
                                     <div className='flex justify-between'>
-                                        <label htmlFor="my-modal-6"><i onClick={() => setOpenOrderModal(order)} className="cursor-pointer fa-solid fa-eye"></i></label>
+                                        <label htmlFor="my-modal-60"><i onClick={() => setOpenOrderModal(order)} className="cursor-pointer fa-solid fa-eye"></i></label>
                                         <label htmlFor="pdf-modal"><i onClick={() => setOpenOrderModal(order)} className="text-orange-500 fas fa-file-alt cursor-pointer"></i></label>
                                     </div>
                                 </td >
@@ -191,7 +204,7 @@ const Orders = () => {
                     </tbody >
                 </table >
                 {
-                    openOrderModal && <OrderModal openOrderModal={openOrderModal}></OrderModal>
+                    openOrderModal && <OrderModal admin={admin} setOpenOrderModal={setOpenOrderModal} openOrderModal={openOrderModal}></OrderModal>
                 }
             </div >
             {

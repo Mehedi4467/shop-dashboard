@@ -577,7 +577,7 @@ const AddProduct = () => {
                         }
 
 
-
+                        {/* <button className="btn btn-primary">Upload</button> */}
 
                     </form>
 
