@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import Pdf from "react-to-pdf";
 import auth from '../../firebase.init';
 import useAdmin from '../../Hooks/useAdmin';
 import logo from '../../Images/logo/logo.png';
-
+import { useReactToPrint } from 'react-to-print';
+import ComponentToPrint from './ComponentToPrint';
 
 const ref = React.createRef();
 const OrderPdf = ({ openOrderModal }) => {
@@ -16,9 +17,14 @@ const OrderPdf = ({ openOrderModal }) => {
     const subTotal = openOrderModal?.products?.reduce(
         (previousValue, currentValue) => previousValue + currentValue?.productTotalPrice, 0);
 
+
+    const componentRef = useRef(null);
+    const handlePrint = useReactToPrint({
+        content: () => componentRef.current
+    });
+
     return (
         <div>
-
             <input type="checkbox" id="pdf-modal" className="modal-toggle" />
             <label htmlFor="pdf-modal" className="modal justify-end">
                 <label htmlFor='' className="modal-box w-[900px] max-w-5xl">
@@ -133,7 +139,7 @@ const OrderPdf = ({ openOrderModal }) => {
                             </div>
 
                             <div className='pb-6'>
-                                <img src={logo} width='90' alt="marehent logo" />
+                                <h2 className='text-2xl font-bold text-orange-500'>{openOrderModal?.products[0]?.shopName}</h2>
                                 <p>A merchant belongs to Shop in Shop</p>
                             </div>
 
@@ -144,6 +150,14 @@ const OrderPdf = ({ openOrderModal }) => {
                         <Pdf targetRef={ref} filename={openOrderModal.customerName}>
                             {({ toPdf }) => <button className='btn bg-orange-500 mt-6 mr-6' onClick={toPdf}>Download Invoice</button>}
                         </Pdf>
+
+                        <div>
+                            {/* <i onClick={handlePrint} className="text-orange-500 cursor-pointer fa-solid fa-print"></i> */}
+                            <button className='btn bg-orange-500 mt-6 mr-6' onClick={handlePrint}>Print Invoice</button>
+                            <div className='hidden'>
+                                <ComponentToPrint openOrderModal={openOrderModal} ref={componentRef} />
+                            </div>
+                        </div>
 
                         <div className="modal-action">
                             <label htmlFor="pdf-modal" className="btn">Cencle</label>

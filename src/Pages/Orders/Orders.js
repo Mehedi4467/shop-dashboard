@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { toast } from 'react-toastify';
 import auth from '../../firebase.init';
@@ -8,8 +8,7 @@ import OrderModal from './OrderModal';
 import OrderPdf from './OrderPdf';
 import useOrders from '../../Hooks/UseOrders/useOrders';
 import useAdmin from '../../Hooks/useAdmin';
-import { useReactToPrint } from 'react-to-print';
-import ComponentToPrint from './ComponentToPrint';
+
 
 
 
@@ -17,17 +16,11 @@ const Orders = () => {
 
     const [currentPage, setCurrentPage] = useState(1);
     const [user, loading] = useAuthState(auth);
-    const [orders, pageCount, totalItem, dataLodiang, setSearch, setStatus, setTotalItem, setPageCount] = useOrders(user?.email, currentPage);
-    const [openOrderModal, setOpenOrderModal] = useState(null);
-
+    const [orders, pageCount, totalItem, dataLodiang, setSearch, setStatus, setTotalItem, setPageCount, openOrderModal, setOpenOrderModal] = useOrders(user?.email, currentPage);
 
     const [admin, adminLoading] = useAdmin(user);
     // console.log(orders)
 
-    const componentRef = useRef(null);
-    const handlePrint = useReactToPrint({
-        content: () => componentRef.current
-    });
 
     // console.log(totalPrice)
     const orderStatusUpdate = (id, value) => {
@@ -172,7 +165,7 @@ const Orders = () => {
                                 </td>
 
                                 {
-                                    admin ? <td className="px-6 py-4">
+                                    admin && order.status !== 'Cancel' ? <td className="px-6 py-4">
                                         <select onChange={(e) => orderStatusUpdate(order._id, e.target.value)} className='outline-0 cursor-pointer border-2 hover:shadow-lg text-slate-400 p-1 rounded-full px-4' id="cars">
                                             <option className='text-orange-600' defaultValue={order.status} selected disabled>{order.status}</option>
                                             <option>Pending</option>
@@ -182,7 +175,7 @@ const Orders = () => {
                                             <option>Cancel</option>
                                         </select>
 
-                                    </td > : <td className="px-6 py-4">
+                                    </td > : order.status !== 'Cancel' ? <td className="px-6 py-4">
                                         <select onChange={(e) => orderStatusUpdate(order._id, e.target.value)} className='outline-0 cursor-pointer border-2 hover:shadow-lg text-slate-400 p-1 rounded-full px-4' id="cars">
                                             <option className='text-orange-600' defaultValue={order?.products[0]?.status} selected disabled>{order?.products[0]?.status}</option>
                                             <option>Pending</option>
@@ -192,7 +185,7 @@ const Orders = () => {
                                             <option>Cancel</option>
                                         </select>
 
-                                    </td >
+                                    </td > : <td><p className='text-orange-500 text-center'>Cancel</p></td>
                                 }
 
                                 <td className="px-6 py-4">
@@ -200,13 +193,6 @@ const Orders = () => {
                                         <label htmlFor="my-modal-60"><i onClick={() => setOpenOrderModal(order)} className="cursor-pointer fa-solid fa-eye"></i></label>
                                         <label htmlFor="pdf-modal"><i onClick={() => setOpenOrderModal(order)} className="text-orange-500 fas fa-file-alt cursor-pointer"></i></label>
 
-                                        <div>
-                                            <i onClick={handlePrint} className="text-orange-500 cursor-pointer fa-solid fa-print"></i>
-                                            <div className='hidden'>
-                                                <ComponentToPrint order={order} ref={componentRef} />
-                                            </div>
-
-                                        </div>
                                     </div>
                                 </td >
 

@@ -7,6 +7,7 @@ const useOrders = (email, currentPage) => {
     const [search, setSearch] = useState('');
     const [status, setStatus] = useState('');
     const [dataLodiang, setDataLoading] = useState(true);
+    const [openOrderModal, setOpenOrderModal] = useState(null);
 
     useEffect(() => {
 
@@ -29,7 +30,7 @@ const useOrders = (email, currentPage) => {
 
                 })
         }
-    }, [email, currentPage, search, status]);
-    return [orders, pageCount, totalItem, dataLodiang, setSearch, setStatus, setTotalItem, setPageCount];
+    }, [email, currentPage, search, status, openOrderModal]);
+    return [orders, pageCount, totalItem, dataLodiang, setSearch, setStatus, setTotalItem, setPageCount, openOrderModal, setOpenOrderModal];
 }
 export default useOrders;

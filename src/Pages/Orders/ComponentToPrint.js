@@ -1,11 +1,19 @@
 import React from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import auth from '../../firebase.init';
+import useAdmin from '../../Hooks/useAdmin';
 import logo from '../../Images/logo/logo.png';
 
 
 const ComponentToPrint = React.forwardRef((props, ref) => {
-    const { order } = props;
+    const { openOrderModal } = props;
     // console.log('print', order)
-
+    const currentDate = new Date();
+    const date = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`;
+    const [user] = useAuthState(auth);
+    const [admin] = useAdmin(user);
+    const subTotal = openOrderModal?.products?.reduce(
+        (previousValue, currentValue) => previousValue + currentValue?.productTotalPrice, 0);
 
     return (
         <div className="bg-gray-200 p-6" ref={ref}>
@@ -31,17 +39,20 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
 
                                         <tr className='border-2 border-slate-300'>
                                             <td className='border-2 border-slate-300 p-2'>Order Number</td>
-                                            <td className='p-2'>{order.orderID}</td>
+                                            <td className='p-2'>{openOrderModal?.orderID}</td>
 
                                         </tr>
                                         <tr className='border-2 border-slate-300'>
                                             <td className='border-2 border-slate-300 p-2'>Invoice Date</td>
-                                            <td className='p-2'>{order.date}</td>
+                                            <td className='p-2'>{date}</td>
 
                                         </tr>
                                         <tr className='border-2 border-slate-300 bg-slate-300'>
                                             <td className='border-2 border-slate-300 p-2'>Total</td>
-                                            <td className='p-2'>{order.totalPrice} tk</td>
+                                            {/* <td className='p-2'>{openOrderModal.totalPrice} tk</td> */}
+                                            <td className="px-6 py-4">
+                                                {admin ? openOrderModal.totalPrice : openOrderModal?.products?.reduce((previousValue, currentValue) => previousValue + (currentValue?.productTotalPrice + parseInt(currentValue.deliveryCharge)), 0)}  &#x09F3;
+                                            </td>
 
                                         </tr>
                                     </table>
@@ -51,10 +62,10 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
                             <div className='px-6'>
                                 <div className='mt-6'>
                                     <p className='font-bold'>To : </p>
-                                    <p>{order.customerName}</p>
-                                    <p>{order.customerState}, {order.customerCity}, {order.customerDetails}</p>
-                                    <p>{order.customerEmail}</p>
-                                    <p>{order.customerPhone}</p>
+                                    <p>{openOrderModal.customerName}</p>
+                                    <p>{openOrderModal.customerState}, {openOrderModal.customerCity}, {openOrderModal.customerDetails}</p>
+                                    <p>{openOrderModal.customerEmail}</p>
+                                    <p>{openOrderModal.customerPhone}</p>
                                 </div>
                             </div>
 
@@ -71,10 +82,10 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
 
                                     </tr>
                                     {
-                                        order?.products?.map((product, index) => <tr key={index} className='border-2 border-slate-300'>
+                                        openOrderModal?.products?.map((product, index) => <tr key={index} className='border-2 border-slate-300'>
                                             <td className='border-2 border-slate-300 p-2'>{product.productName}</td>
-                                            <td className='p-2 border-2 border-slate-300'>{order?.color || '---'}</td>
-                                            <td className='p-2 border-2 border-slate-300'>{order?.size || '---'}</td>
+                                            <td className='p-2 border-2 border-slate-300'>{openOrderModal?.color || '---'}</td>
+                                            <td className='p-2 border-2 border-slate-300'>{openOrderModal?.size || '---'}</td>
                                             <td className='p-2 border-2 border-slate-300'>{product.quantity}</td>
                                             <td className='p-2 border-2 border-slate-300'>{product.productPrices} tk</td>
                                             {/* product price with quantity */}
@@ -92,34 +103,33 @@ const ComponentToPrint = React.forwardRef((props, ref) => {
                                     <tr className='border-2 font-bold border-slate-300'>
                                         <td className='border-2 border-slate-300 p-2'>Sub Total</td>
 
-                                        {/* <td className='p-2'>{subTotal} tk</td> */}
+                                        <td className='p-2'>{subTotal} tk</td>
 
                                     </tr>
                                     <tr className='border-2 border-slate-300'>
                                         <td className='border-2 border-slate-300 p-2'>Delivery Charge</td>
-                                        <td className='p-2'>{order?.deliveryCharge} tk</td>
+                                        <td className='p-2'>{openOrderModal?.deliveryCharge} tk</td>
 
                                     </tr>
-                                    <tr className='border-2 border-slate-300'>
-                                        <td className='border-2 border-slate-300 p-2'>Vat</td>
-                                        <td className='p-2'>{order?.vatPrice} tk</td>
 
-                                    </tr>
                                     <tr className='border-2 border-slate-300'>
                                         <td className='border-2 border-slate-300 p-2'>Due</td>
-                                        <td className='p-2'>{order?.duePrice ? order?.duePrice : '0'} tk</td>
+                                        <td className='p-2'>{openOrderModal?.duePrice ? openOrderModal?.duePrice : '0'} tk</td>
 
                                     </tr>
                                     <tr className='border-2 font-bold border-slate-300 bg-slate-300'>
                                         <td className='border-2 border-slate-300 p-2'>Total</td>
                                         {/* <td className='p-2 '>{subTotal + parseFloat(pdfs?.deliveryCharge) + parseFloat(pdfs?.vatPrice)} tk</td> */}
+                                        <td className="px-6 py-4">
+                                            {admin ? openOrderModal.totalPrice : openOrderModal?.products?.reduce((previousValue, currentValue) => previousValue + (currentValue?.productTotalPrice + parseInt(currentValue.deliveryCharge)), 0)}  &#x09F3;
+                                        </td>
 
                                     </tr>
                                 </table>
                             </div>
 
                             <div className='pb-6'>
-                                <img src={logo} width='90' alt="marehent logo" />
+                                <h2 className='text-2xl font-bold text-orange-500'>{openOrderModal?.products[0]?.shopName}</h2>
                                 <p>A merchant belongs to Shop in Shop</p>
                             </div>
 
