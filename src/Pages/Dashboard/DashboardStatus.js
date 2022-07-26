@@ -1,7 +1,13 @@
 import React from 'react';
-
 import './Dashboard.css';
-const DashboardStatus = () => {
+
+
+const DashboardStatus = ({ monthData, user }) => {
+    const totalOrder = monthData?.length;
+    const pendingOrder = monthData?.filter(pending => pending?.products[0]?.status === 'Pending' && pending?.products[0]?.marchentEmail === user?.email)
+    const processingOrder = monthData?.filter(Processing => Processing?.products[0]?.status === 'Processing' && Processing?.products[0]?.marchentEmail === user?.email)
+    const deliveredOrder = monthData?.filter(Delivered => Delivered?.products[0]?.status === 'Delivered' && Delivered?.products[0]?.marchentEmail === user?.email)
+
     return (
         <div className='grid grid-cols-1 md:grid-cols-4 gap-4'>
             <div className='flex items-center justify-start bg-white p-4 border-[1px] rounded-lg border-orange-300'>
@@ -10,7 +16,7 @@ const DashboardStatus = () => {
                 </div>
                 <div className='ml-3'>
                     <h2 className='text-[#4C4F52] font-semibold '>Total Order</h2>
-                    <p className='text-[#4C4F52] font-bold text-lg '>170</p>
+                    <p className='text-[#4C4F52] font-bold text-lg '>{totalOrder}</p>
                 </div>
             </div>
 
@@ -20,7 +26,7 @@ const DashboardStatus = () => {
                 </div>
                 <div className='ml-3'>
                     <h2 className='text-[#4C4F52] font-semibold '>Order Pending</h2>
-                    <p className='text-[#4C4F52] font-bold text-lg '>30</p>
+                    <p className='text-[#4C4F52] font-bold text-lg '>{pendingOrder.length}</p>
                 </div>
             </div>
 
@@ -30,7 +36,7 @@ const DashboardStatus = () => {
                 </div>
                 <div className='ml-3'>
                     <h2 className='text-[#4C4F52] font-semibold '>Order Processing</h2>
-                    <p className='text-[#4C4F52] font-bold text-lg '>20</p>
+                    <p className='text-[#4C4F52] font-bold text-lg '>{processingOrder.length}</p>
                 </div>
             </div>
 
@@ -40,7 +46,7 @@ const DashboardStatus = () => {
                 </div>
                 <div className='ml-3'>
                     <h2 className='text-[#4C4F52] font-semibold '>Order Delivered</h2>
-                    <p className='text-[#4C4F52] font-bold text-lg '>50</p>
+                    <p className='text-[#4C4F52] font-bold text-lg '>{deliveredOrder.length}</p>
                 </div>
             </div>
         </div>

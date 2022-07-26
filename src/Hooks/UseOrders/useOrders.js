@@ -22,10 +22,6 @@ const useOrders = (email, currentPage) => {
                 .then(res => res.json())
                 .then(data => {
                     setOrders(data);
-                    // const count = data.length;
-                    // const pages = Math.ceil(parseInt(count) / 10);
-                    // setPageCount(pages);
-                    // setTotalItem(count);
                     setDataLoading(false)
 
                 })

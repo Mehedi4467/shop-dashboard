@@ -175,7 +175,7 @@ const Orders = () => {
                                             <option>Cancel</option>
                                         </select>
 
-                                    </td > : order.status !== 'Cancel' ? <td className="px-6 py-4">
+                                    </td > : !admin && order.status !== 'Cancel' && order?.products[0]?.status !== 'Completed' ? <td className="px-6 py-4">
                                         <select onChange={(e) => orderStatusUpdate(order._id, e.target.value)} className='outline-0 cursor-pointer border-2 hover:shadow-lg text-slate-400 p-1 rounded-full px-4' id="cars">
                                             <option className='text-orange-600' defaultValue={order?.products[0]?.status} selected disabled>{order?.products[0]?.status}</option>
                                             <option>Pending</option>
@@ -185,7 +185,7 @@ const Orders = () => {
                                             <option>Cancel</option>
                                         </select>
 
-                                    </td > : <td><p className='text-orange-500 text-center'>Cancel</p></td>
+                                    </td > : !admin && order?.products[0]?.status === 'Completed' ? <td><p className='text-orange-500 text-center'>Completed</p></td> : <td><p className='text-orange-500 text-center'>Cancel</p></td>
                                 }
 
                                 <td className="px-6 py-4">
