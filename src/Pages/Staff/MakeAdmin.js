@@ -36,7 +36,7 @@ const MakeAdmin = ({ openModal, setOpenModal, refetch }) => {
                             <label onClick={makeAdmin} className="btn bg-red-500">Make Admin</label>
                         </div>
                         <div className="modal-action">
-                            <label for="makeAdmin-modal-user" className="btn">Cencal</label>
+                            <label htmlFor="makeAdmin-modal-user" className="btn">Cencal</label>
                         </div>
                     </div>
                 </div>

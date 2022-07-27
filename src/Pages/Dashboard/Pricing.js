@@ -1,23 +1,61 @@
 import React from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
-
-import auth from '../../firebase.init';
-import useMonthData from '../../Hooks/useAdminData/useMonthData';
+import useAdmin from '../../Hooks/useAdmin';
 import useYearData from '../../Hooks/useAdminData/useYearData';
 import Spinner from '../../Shared/Spinner/Spinner';
 
 
-const Pricing = ({ todayData }) => {
-    const orderPrice = todayData?.reduce((previousValue, currentValue) => previousValue + currentValue.totalPrice, 0);
-    const [user, loading] = useAuthState(auth);
-    const [monthData, monthLoading] = useMonthData(user);
+const Pricing = ({ todayData, user, monthData }) => {
+    const [admin, adminLoading] = useAdmin(user);
     const [data, isLoading] = useYearData(user)
-    const orderMonthPrice = monthData?.reduce((previousValue, currentValue) => previousValue + currentValue.totalPrice, 0);
-    const orderYearPrice = data?.reduce((previousValue, currentValue) => previousValue + currentValue.totalPrice, 0);
 
-    if (loading || monthLoading || isLoading) {
+
+    if (isLoading || adminLoading) {
         return <Spinner></Spinner>
     }
+
+    let orderPrice = 0;
+    let orderMonthPrice = 0;
+    let orderYearPrice = 0;
+    for (let today of todayData) {
+        if (admin) {
+            orderPrice += today.totalPrice;
+        }
+        else {
+            for (let x of today.products) {
+                orderPrice += x.productTotalPrice + parseInt(x.deliveryCharge);
+            }
+        }
+
+    };
+    for (let monthPrice of monthData) {
+        if (admin) {
+            orderMonthPrice += monthPrice.totalPrice;
+        }
+        else {
+            for (let y of monthPrice.products) {
+                orderMonthPrice += y.productTotalPrice + parseInt(y.deliveryCharge);
+            }
+        }
+
+    };
+    for (let yearPrice of data) {
+        if (admin) {
+            orderYearPrice += yearPrice.totalPrice;
+        }
+        else {
+            for (let z of yearPrice.products) {
+                orderYearPrice += z.productTotalPrice + parseInt(z.deliveryCharge);
+            }
+        }
+
+    };
+
+
+    // const [data, isLoading] = useYearData(user)
+    // const orderMonthPrice = monthData?.reduce((previousValue, currentValue) => previousValue + currentValue.totalPrice, 0);
+    // const orderYearPrice = data?.reduce((previousValue, currentValue) => previousValue + currentValue.totalPrice, 0);
+
+
     // console.log(data)
     return (
         <div className='grid grid-cols-1 md:grid-cols-3 gap-4 mt-4'>

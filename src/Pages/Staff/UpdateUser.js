@@ -7,7 +7,7 @@ const UpdateUser = ({ openModal, setOpenModal, refetch }) => {
             <input type="checkbox" id="update-user-modal" className="modal-toggle" />
             <div className="modal">
                 <div className="modal-box relative">
-                    <label for="update-user-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+                    <label htmlFor="update-user-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
                     <h3 className="text-lg capitalize text-center font-bold text-primary"> {openModal.name}'s Profile</h3>
                     <div className='py-4'>
                         <form>

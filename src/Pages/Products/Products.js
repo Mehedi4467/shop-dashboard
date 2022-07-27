@@ -170,7 +170,7 @@ const Products = () => {
                                     </div>
                                 </td >
 
-                            </tr >).reverse()
+                            </tr >)
                         }
 
                     </tbody >

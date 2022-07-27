@@ -47,9 +47,7 @@ const CategoryEditModal = ({ subCategory: categoryModal, setCategoryModal, refet
                 }
             });
 
-
-
-        console.log(updateAllCategory);
+        // console.log(updateAllCategory);
     }
 
 

@@ -86,6 +86,7 @@ const AddSliderModal = ({ sliderModal, setSliderMoodal }) => {
                         <div>
                             <div className='flex justify-between gap-4'>
                                 <div className='my-6'>
+                                    <span className="pb-4 label-text w-full text-warning font-semibold capitalize">(File Size 300KB and width - 1920px Higth - 500px)</span>
                                     <label className="block">
                                         <span className="sr-only">Choose File</span>
                                         <input type="file" onChange={onImageChange} name='img' className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" required />

@@ -11,7 +11,7 @@ const ref = React.createRef();
 const OrderPdf = ({ openOrderModal }) => {
     const currentDate = new Date();
     const date = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`;
-    console.log(openOrderModal)
+    // console.log(openOrderModal)
     const [user] = useAuthState(auth);
     const [admin] = useAdmin(user);
     const subTotal = openOrderModal?.products?.reduce(

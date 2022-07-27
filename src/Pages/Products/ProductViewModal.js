@@ -2,7 +2,7 @@ import React from 'react';
 
 const ProductViewModal = ({ productModal }) => {
     const { productName, sku, subCategory, category, orderType, price, quantity, deliveryInDhaka, outDhaka, color, size, marchentShop, marchentEmail, sPrice, marchantPhone, primaryImage, status, date, time } = productModal;
-    console.log(category)
+    // console.log(category)
     return (
         <div>
             <input type="checkbox" id="product-view-modal" className="modal-toggle" />

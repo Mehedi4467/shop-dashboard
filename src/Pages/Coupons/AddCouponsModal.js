@@ -15,7 +15,7 @@ const AddCouponsModal = ({ setAddCoupons }) => {
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const [user, loading] = useAuthState(auth);
-    console.log(startDate)
+    // console.log(startDate)
     const [selected, setSelected] = useState([]);
     const [selectedCate, setSelectedCate] = useState([]);
     const [selectedSub, setSelectedSub] = useState([]);

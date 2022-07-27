@@ -36,13 +36,13 @@ const Dashboard = () => {
             <h1 className='text-center md:text-left text-xl font-bold'>Dashboard Overview</h1>
 
             <div>
-                <Pricing todayData={data} refetch={refetch}></Pricing>
+                <Pricing user={user} monthData={monthData} todayData={data} refetch={refetch}></Pricing>
             </div >
             <div className='mt-8'>
                 <DashboardStatus user={user} monthData={monthData}></DashboardStatus>
             </div>
             <div className='mt-8'>
-                <Charts monthData={monthData}></Charts>
+                <Charts user={user}></Charts>
             </div>
             <div className='mt-8'>
                 <OrderList isLoading={isLoading} data={data} refetch={refetch}></OrderList>

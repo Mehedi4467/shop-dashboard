@@ -170,7 +170,7 @@ const Coupons = () => {
                                     </div>
                                 </td >
 
-                            </tr >).reverse()
+                            </tr >)
                         }
 
                     </tbody >

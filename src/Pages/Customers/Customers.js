@@ -70,9 +70,9 @@ const Customers = () => {
                             <th scope="col" className="px-6 py-3">
                                 EMAIL
                             </th>
-                            <th scope="col" className="px-6 py-3">
+                            {/* <th scope="col" className="px-6 py-3">
                                 PHONE
-                            </th>
+                            </th> */}
 
                             <th scope="col" className="px-6 py-3">
                                 ACTIONS
@@ -86,7 +86,7 @@ const Customers = () => {
                                     {index + 1}
                                 </th>
                                 <td className="px-6 py-4">
-                                    {customer.date}
+                                    {customer.creationTime}
                                 </td>
                                 <td className="px-6 py-4">
                                     {customer.name}
@@ -94,9 +94,9 @@ const Customers = () => {
                                 <td className="px-6 py-4">
                                     {customer.email}
                                 </td>
-                                <td className="px-6 py-4">
+                                {/* <td className="px-6 py-4">
                                     {customer.phone}
-                                </td>
+                                </td> */}
 
                                 <td className="px-6 py-4">
                                     <div className='flex justify-between'>
@@ -106,7 +106,7 @@ const Customers = () => {
                                     </div>
                                 </td >
 
-                            </tr >).reverse()
+                            </tr >)
                         }
 
                     </tbody >
