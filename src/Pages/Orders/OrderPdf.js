@@ -106,37 +106,44 @@ const OrderPdf = ({ openOrderModal }) => {
 
                                 </table>
                             </div>
+                            <div className='flex justify-between'>
+                                <div className='border-2 m-6 w-96'>
+                                    <p className='font-bold'>Note : </p>
+                                    <p className='px-6'>{openOrderModal.customerNote}</p>
+                                </div>
+                                <div className='mt-6 flex justify-end'>
+                                    <table className='border-2 w-38 border-slate-300 text-center'>
 
-                            <div className='mt-6 flex justify-end'>
-                                <table className='border-2 w-30 border-slate-300 text-center'>
+                                        <tr className='border-2 font-bold border-slate-300'>
+                                            <td className='border-2 border-slate-300 p-2'>Sub Total</td>
 
-                                    <tr className='border-2 font-bold border-slate-300'>
-                                        <td className='border-2 border-slate-300 p-2'>Sub Total</td>
+                                            <td className='p-2'>{subTotal} tk</td>
 
-                                        <td className='p-2'>{subTotal} tk</td>
+                                        </tr>
+                                        <tr className='border-2 border-slate-300'>
+                                            <td className='border-2 border-slate-300 p-2'>Delivery Charge</td>
+                                            <td className='p-2'>{openOrderModal?.deliveryCharge} tk</td>
 
-                                    </tr>
-                                    <tr className='border-2 border-slate-300'>
-                                        <td className='border-2 border-slate-300 p-2'>Delivery Charge</td>
-                                        <td className='p-2'>{openOrderModal?.deliveryCharge} tk</td>
+                                        </tr>
 
-                                    </tr>
+                                        <tr className='border-2 border-slate-300'>
+                                            <td className='border-2 border-slate-300 p-2'>Due</td>
+                                            <td className='p-2'>{openOrderModal?.duePrice ? openOrderModal?.duePrice : '0'} tk</td>
 
-                                    <tr className='border-2 border-slate-300'>
-                                        <td className='border-2 border-slate-300 p-2'>Due</td>
-                                        <td className='p-2'>{openOrderModal?.duePrice ? openOrderModal?.duePrice : '0'} tk</td>
+                                        </tr>
+                                        <tr className='border-2 font-bold border-slate-300 bg-slate-300'>
+                                            <td className='border-2 border-slate-300 p-2'>Total</td>
+                                            {/* <td className='p-2 '>{subTotal + parseFloat(pdfs?.deliveryCharge) + parseFloat(pdfs?.vatPrice)} tk</td> */}
+                                            <td className="px-6 py-4">
+                                                {admin ? openOrderModal.totalPrice : openOrderModal?.products?.reduce((previousValue, currentValue) => previousValue + (currentValue?.productTotalPrice + parseInt(currentValue.deliveryCharge)), 0)}  &#x09F3;
+                                            </td>
 
-                                    </tr>
-                                    <tr className='border-2 font-bold border-slate-300 bg-slate-300'>
-                                        <td className='border-2 border-slate-300 p-2'>Total</td>
-                                        {/* <td className='p-2 '>{subTotal + parseFloat(pdfs?.deliveryCharge) + parseFloat(pdfs?.vatPrice)} tk</td> */}
-                                        <td className="px-6 py-4">
-                                            {admin ? openOrderModal.totalPrice : openOrderModal?.products?.reduce((previousValue, currentValue) => previousValue + (currentValue?.productTotalPrice + parseInt(currentValue.deliveryCharge)), 0)}  &#x09F3;
-                                        </td>
-
-                                    </tr>
-                                </table>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
+
+
 
                             <div className='pb-6'>
                                 <h2 className='text-2xl font-bold text-orange-500'>{openOrderModal?.products[0]?.shopName}</h2>
