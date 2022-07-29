@@ -188,7 +188,7 @@ const AddProduct = () => {
                                 <div className='flex'>
                                     <div className="form-control w-full ">
                                         <label className="label">
-                                            <p className="label-text font-semibold">Product primery Image <span className='text-orange-500'>(MAX 300MB Size 300X300) *</span> </p>
+                                            <p className="label-text font-semibold">Product primery Image <span className='text-orange-500'>(MAX 300KB Size 300X300) *</span> </p>
                                         </label>
                                         <div className='flex items-center space-x-6'>
                                             <div className="shrink-0">
@@ -228,7 +228,7 @@ const AddProduct = () => {
                                     <div className="form-control w-full ">
                                         <label className="label">
 
-                                            <p className="label-text font-semibold">Product secondary Image <span className='text-orange-500 text-xs'>(Each image MAX 300MB Size 300X300 and upload 1 to 4 image) *</span> </p>
+                                            <p className="label-text font-semibold">Product secondary Image <span className='text-orange-500 text-xs'>(Each image MAX 300KB Size 300X300 and upload 1 to 4 image) *</span> </p>
                                         </label>
                                         <div className=' space-x-6'>
 
@@ -481,7 +481,7 @@ const AddProduct = () => {
                                             },
                                         })}
                                     >
-                                        <option disabled selected>Selete Order Type</option>
+                                        <option disabled selected>Select Order Type</option>
                                         <option>COD</option>
                                         <option>Pay</option>
                                         <option>Pre-Order</option>
