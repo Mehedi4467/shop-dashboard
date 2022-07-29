@@ -4,11 +4,13 @@ import auth from '../../firebase.init';
 import Spinner from '../../Shared/Spinner/Spinner';
 import useAdminUserData from '../AdminUserData/useAdminUserData';
 import VerifyNID from './VerifyNID';
+import { useNavigate } from "react-router-dom";
 
 const NotAccept = () => {
     const [user, loading] = useAuthState(auth);
     const [data, adminLoadingData] = useAdminUserData(user?.email);
     const [nidModal, setNidModal] = useState(null);
+    const navigate = useNavigate();;
 
     if (loading || adminLoadingData) {
         return <Spinner></Spinner>
@@ -34,7 +36,7 @@ const NotAccept = () => {
 
                     <div className="card-actions justify-end">
                         {
-                            data?.status === 'Pending' || <button className="btn">Contact us</button>
+                            data?.status === 'Pending' || <button onClick={() => navigate(`/contact`)} className="btn">Contact us</button>
                         }
 
                     </div>
