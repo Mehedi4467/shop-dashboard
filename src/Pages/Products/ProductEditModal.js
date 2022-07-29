@@ -82,13 +82,13 @@ const ProductEditModal = ({ productModal, setProductModal }) => {
                         </div>
                         <div className="form-control w-full mb-4">
                             <label className="label">
-                                <p className="label-text">Product color <span className='text-orange-500 text-xs'>If you give more than one color, you must give a comma(,) </span></p>
+                                <p className="label-text">Product color <span className='text-orange-500 text-xs'>If you want to give more than one color, you must give a comma(,) </span></p>
                             </label>
                             <input type="text" placeholder={color} name='color' className="input input-bordered w-full" />
                         </div>
                         <div className="form-control w-full mb-4">
                             <label className="label">
-                                <p className="label-text">Product Size <span className='text-orange-500 text-xs'>If you give more than one size, you must give a comma(,) </span></p>
+                                <p className="label-text">Product Size <span className='text-orange-500 text-xs'>If you want to give more than one size, you must give a comma(,) </span></p>
                             </label>
                             <input type="text" placeholder={size} name='size' className="input input-bordered w-full" />
                         </div>

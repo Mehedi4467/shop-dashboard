@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from '../../Images/logo/logo.png';
 const UpdateUser = ({ openModal, setOpenModal, refetch }) => {
+    // console.log(openModal)
 
     return (
         <div>

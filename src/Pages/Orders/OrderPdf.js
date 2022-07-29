@@ -167,7 +167,7 @@ const OrderPdf = ({ openOrderModal }) => {
                         </div>
 
                         <div className="modal-action">
-                            <label htmlFor="pdf-modal" className="btn">Cencle</label>
+                            <label htmlFor="pdf-modal" className="btn">Cancel</label>
                         </div>
 
                     </div>

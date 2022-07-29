@@ -169,7 +169,7 @@ const AddCouponsModal = ({ setAddCoupons }) => {
                                     <button className="btn bg-orange-500">Add Coupon</button>
                                 </div>
                                 <div className="modal-action">
-                                    <label htmlFor="coupons-modal" className="btn">Cencel</label>
+                                    <label htmlFor="coupons-modal" className="btn">Cancel</label>
                                 </div>
                             </div>
                         </form>

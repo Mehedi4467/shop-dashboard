@@ -58,7 +58,7 @@ const OrderModal = ({ setOpenOrderModal, openOrderModal, admin }) => {
                     </div>
 
                     <div className="modal-action">
-                        <label onClick={() => setOpenOrderModal(null)} htmlFor="my-modal-60" className="btn btn-primary">Cencel</label>
+                        <label onClick={() => setOpenOrderModal(null)} htmlFor="my-modal-60" className="btn btn-primary">Cancel</label>
                     </div>
                 </div>
             </div>

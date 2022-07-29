@@ -141,12 +141,9 @@ const AddSliderModal = ({ sliderModal, setSliderMoodal }) => {
 
                             </div>
                             <div className="modal-action">
-                                <label htmlFor="slider-add-modal" className="btn">Cencle</label>
+                                <label htmlFor="slider-add-modal" className="btn">Cancel</label>
                             </div>
                         </div>
-
-
-
                     </form>
 
                 </div>

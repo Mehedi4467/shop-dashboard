@@ -41,7 +41,7 @@ const CategoryDeleteModal = ({ categoryModal, subCategory, setCategoryModal, ref
                             <button onClick={handelDeleteCategory} className="btn bg-orange-500">Delete</button>
                         </div>
                         <div className="modal-action">
-                            <label htmlFor="category-delete-modal" className="btn">Cencle</label>
+                            <label htmlFor="category-delete-modal" className="btn">Cancel</label>
                         </div>
                     </div>
                 </div>

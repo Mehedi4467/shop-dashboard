@@ -31,7 +31,7 @@ const CouponDeleteModal = ({ couponModal, setCouponModal }) => {
                             <button onClick={() => handelDelwtwCoupon(couponModal._id)} className="btn bg-orange-500">Delete</button>
                         </div>
                         <div className="modal-action">
-                            <label htmlFor="coupon-delete" className="btn">Cencel</label>
+                            <label htmlFor="coupon-delete" className="btn">Cancel</label>
                         </div>
                     </div>
                 </div>

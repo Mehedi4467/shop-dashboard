@@ -85,7 +85,7 @@ const SliderUpdate = ({ sliderModal, setSliderMoodal }) => {
                                 </div>
 
                                 <div className="modal-action">
-                                    <button onClick={() => setSliderMoodal(null)} type='reset' className="btn">Cencle</button>
+                                    <button onClick={() => setSliderMoodal(null)} type='reset' className="btn">Cancel</button>
                                 </div>
                             </div>
 

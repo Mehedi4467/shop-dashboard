@@ -32,7 +32,7 @@ const SliderDeleteModal = ({ sliderModal, setSliderMoodal }) => {
                             < button onClick={(e) => handelSliderDelete(sliderModal._id)} className="btn bg-orange-500">Delete</button>
                         </div>
                         <div className="modal-action">
-                            <label htmlFor="slider-delete-modal" className="btn">Cencle</label>
+                            <label htmlFor="slider-delete-modal" className="btn">Cancel</label>
                         </div>
                     </div>
                 </div>

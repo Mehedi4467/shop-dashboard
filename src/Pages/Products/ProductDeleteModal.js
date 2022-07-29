@@ -37,7 +37,7 @@ const ProductDeleteModal = ({ products, setProducts, productModal, setProductMod
                             <button onClick={() => handelProductDelete(productModal._id)} className="btn bg-orange-500">Delete</button>
                         </div>
                         <div className="modal-action">
-                            <label htmlFor="product-delete-modal" className="btn">Cencle</label>
+                            <label htmlFor="product-delete-modal" className="btn">Cancel</label>
                         </div>
                     </div>
                 </div>

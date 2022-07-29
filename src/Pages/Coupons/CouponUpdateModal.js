@@ -116,7 +116,7 @@ const CouponUpdateModal = ({ couponModal, setCouponModal }) => {
                                 <button className="btn bg-orange-500">Update</button>
                             </div>
                             <div className="modal-action">
-                                <button onClick={() => setCouponModal(null)} type='rest' className="btn"> Cencel</button>
+                                <button onClick={() => setCouponModal(null)} type='rest' className="btn">Cancel</button>
                             </div>
                         </div>
 

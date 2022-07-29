@@ -32,7 +32,7 @@ const CustomerDeleteModal = ({ setCustomerModal, customerModal }) => {
                             <button onClick={() => handelCustomerDelete(customerModal._id)} className="btn bg-orange-500">Delete</button>
                         </div>
                         <div className="modal-action">
-                            <label htmlFor="customer-delete-modal" className="btn">Cencle</label>
+                            <label htmlFor="customer-delete-modal" className="btn">Cancel</label>
                         </div>
                     </div>
                 </div>
