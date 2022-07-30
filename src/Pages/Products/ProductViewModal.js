@@ -20,10 +20,10 @@ const ProductViewModal = ({ productModal }) => {
 
                     <div className='mt-4'>
                         <p className='font-semibold'> Product SKU : <span className='text-orange-500'>{sku}</span> </p>
-                        <p className='font-semibold'> Product Category : <span className='text-orange-500'>{category?.map(x => JSON.parse(x).value).join(' , ')} </span></p>
-                        <p className='font-semibold'> Product Sub Category : <span className='text-orange-500'>{subCategory.map(x => JSON.parse(x).value).join(' , ')}</span> </p>
+                        <p className='font-semibold'> Product Category : <span className='text-orange-500'>{category?.map(x => x.value).join(' , ') || 'N/A'} </span></p>
+                        <p className='font-semibold'> Product Sub Category : <span className='text-orange-500'>{subCategory.map(x => x.value).join(' , ') || 'N/A'}</span> </p>
                         <p className='font-semibold'> Product Price : <span className='text-orange-500'>{price} &#2547;</span> </p>
-                        <p className='font-semibold'> Product Special Price : <span className='text-orange-500'>{sPrice} &#2547;</span> </p>
+                        <p className='font-semibold'> Product Special Price : <span className='text-orange-500'>{sPrice || "N/A"} &#2547;</span> </p>
                         <p className='font-semibold'> Product Quantity : <span className='text-orange-500'>{quantity}</span> </p>
                         <p className='font-semibold'> Order Type : <span className='text-orange-500'>{orderType}</span> </p>
                         <p className='font-semibold'> Delivery Charge : <span className='text-orange-500'>In Dhaka- {deliveryInDhaka} &#2547;, Out of Dhaka - {outDhaka} &#2547;</span> </p>

@@ -20,10 +20,10 @@ const Products = () => {
     const [search, setSearch] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [isAdmin] = useAdmin(user);
-
-
-
+    const [productStatis, setProductStatus] = useState('');
     const [products, setProducts] = useState([]);
+
+
     useEffect(() => {
         fetch(`http://localhost:5000/product/${user?.email}?name=${search.toLocaleLowerCase()}&page=${currentPage - 1}`, {
             method: "GET",
@@ -34,16 +34,29 @@ const Products = () => {
             .then(res => res.json())
             .then(data => {
                 setProducts(data);
-
-                const count = data.length;
-                const pages = Math.ceil(parseInt(count) / 10);
-                setPageCount(pages);
-                setTotalItem(count);
                 setProductLoad(false);
 
             })
 
-    }, [user, currentPage, search, productModal]);
+    }, [user, currentPage, search, productModal, productStatis]);
+
+    useEffect(() => {
+        fetch(`http://localhost:5000/products/dashboard/count/${user?.email}`, {
+            method: "GET",
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('accessToken')}`
+            },
+        })
+            .then(res => res.json())
+            .then(data => {
+                const count = data.count;
+                const pages = Math.ceil(parseInt(count) / 10);
+                setPageCount(pages);
+                setTotalItem(count);
+
+
+            })
+    }, [])
 
 
     const productUpdateStatus = (id, value) => {
@@ -81,7 +94,7 @@ const Products = () => {
                 </div>
 
                 <div className='relative bg-white p-4 w-full order-2 md:order-1 rounded-full'>
-                    <input onChange={(e) => setSearch(e.target.value)} className='outline-0 p-2 h-12 rounded-full pl-10 text-orange-500 text-lg border-2  hover:shadow-lg w-full' type="text" name="search" placeholder='Search Product Name' />
+                    <input onChange={(e) => setSearch(e.target.value)} className='outline-0 p-2 h-12 rounded-full pl-10 text-orange-500 text-lg border-2  hover:shadow-lg w-full' type="text" name="search" placeholder='Search Product Name/SKU' />
                     <div className='absolute right-10 top-[35%] cursor-pointer'>
                         <i className="text-green-500 fa-solid fa-magnifying-glass"></i>
                     </div>
@@ -92,61 +105,70 @@ const Products = () => {
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-10">
                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-[#F4F5F7] dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                            <th scope="col" className="px-6 py-3">
+                        <tr className='text-center'>
+                            <th scope="col" className="px-4 py-3">
                                 SKU
                             </th>
-                            <th scope="col" className="px-6 py-3">
+                            <th scope="col" className="px-4 py-3">
                                 PRODUCT NAME
                             </th>
-                            <th scope="col" className="px-6 py-3">
+                            <th scope="col" className="px-4 py-3">
                                 CATEGORY
                             </th>
-                            <th scope="col" className="px-6 py-3">
+                            <th scope="col" className="px-4 py-3">
                                 PRICE
                             </th>
-                            <th scope="col" className="px-6 py-3">
+                            <th scope="col" className="px-4 py-3">
+                                Special Price
+                            </th>
+                            <th scope="col" className="px-4 py-3">
                                 STOCK
                             </th>
-                            <th scope="col" className="px-6 py-3">
+                            <th scope="col" className="px-4 py-3">
                                 STATUS
                             </th>
 
-                            <th scope="col" className="px-6 py-3">
+                            <th scope="col" className="px-4 py-3">
                                 DETAILS
                             </th>
 
-                            <th scope="col" className="px-6 py-3">
+                            <th scope="col" className="px-4 py-3">
                                 ACTIONS
                             </th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className='text-center'>
                         {
                             products?.map(product => <tr key={product._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                 <th scope="row" className="px-6 py-4 font-medium  dark:text-white whitespace-nowrap">
                                     {product.sku}
                                 </th>
-                                <td className="px-6 py-4">
-                                    <div className='flex items-center justify-between'>
+                                <td className="px-4 py-4">
+                                    <div className='flex items-center tooltip justify-between' data-tip={product.productName}>
                                         <img src={`http://localhost:5000/${product.primaryImage}`} width='40' alt="" />
-                                        <p className='w-40 ml-4'>{product.productName}</p>
+                                        <p className='w-40 ml-4'>{product.productName.slice(0, 15)}</p>
                                     </div>
                                 </td>
-                                <td className="px-6 py-4 capitalize">
+                                <td className="px-4 py-4 capitalize">
                                     {
-                                        Array.isArray(product.category) && product.category.map(x => JSON.parse(x).value).join(' , ')
+                                        Array.isArray(product.category) && product.mainCategoryID.map(x => x.label).join(' , ')
                                     }
                                 </td>
-                                <td className="px-6 py-4">
+                                <td className="px-4 py-4">
                                     &#x09F3; {product.price}
                                 </td>
-                                <td className="px-6 py-4">
+                                <td className="px-4 py-4">
+                                    &#x09F3; {product.Sprice || "N/A"}
+                                </td>
+                                <td className="px-4 py-4">
                                     {product.quantity}
                                 </td>
-                                <td className="px-6 py-4">
+                                <td className="px-4 py-4">
                                     {
-                                        isAdmin ? <select onChange={(e) => productUpdateStatus(product._id, e.target.value)} className='outline-0 cursor-pointer border-2 hover:shadow-lg text-slate-400 p-1 rounded-full px-4' id="cars">
+                                        isAdmin ? <select onChange={(e) => {
+                                            setProductStatus(e.target.value);
+                                            productUpdateStatus(product._id, e.target.value)
+                                        }} className='outline-0 cursor-pointer border-2 hover:shadow-lg text-slate-400 p-1 rounded-full px-4' id="cars">
                                             <option className='text-orange-600' defaultValue={product.status} selected disabled>{product.status}</option>
                                             <option>Pending</option>
                                             <option>Accept</option>

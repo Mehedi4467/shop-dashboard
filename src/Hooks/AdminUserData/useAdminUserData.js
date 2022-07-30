@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 const useAdminUserData = (email) => {
     const [data, setData] = useState([]);
     const [adminLoadingData, setAdminLoading] = useState(false);
+    const [nidModal, setNidModal] = useState(null);
 
     useEffect(() => {
         if (email) {
@@ -23,10 +24,10 @@ const useAdminUserData = (email) => {
                     console.log(error)
                 })
         }
-    }, [email])
+    }, [email, nidModal])
 
 
-    return [data, adminLoadingData];
+    return [data, adminLoadingData, nidModal, setNidModal];
 
 
 }

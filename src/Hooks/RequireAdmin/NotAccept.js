@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import Spinner from '../../Shared/Spinner/Spinner';
@@ -8,8 +8,8 @@ import { useNavigate } from "react-router-dom";
 
 const NotAccept = () => {
     const [user, loading] = useAuthState(auth);
-    const [data, adminLoadingData] = useAdminUserData(user?.email);
-    const [nidModal, setNidModal] = useState(null);
+    const [data, adminLoadingData, nidModal, setNidModal] = useAdminUserData(user?.email);
+    // const [nidModal, setNidModal] = useState(null);
     const navigate = useNavigate();;
 
     if (loading || adminLoadingData) {

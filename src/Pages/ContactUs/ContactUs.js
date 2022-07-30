@@ -103,7 +103,7 @@ const ContactUs = () => {
                                 </div>
                                 <div className="w-full">
                                     <h4 className="font-bold text-dark text-xl mb-1">Phone Number</h4>
-                                    <p className="text-base text-body-color">(+880)178057784</p>
+                                    <p className="text-base text-body-color">(+880)1778057784</p>
                                 </div>
                             </div>
                             <div className="flex mb-8 max-w-[370px] w-full">

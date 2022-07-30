@@ -137,19 +137,22 @@ const AddProduct = () => {
         formData.append('marchantPhone', marchantPhone);
         formData.append('video', video);
 
-
-        for (let i = 0; i < selected.length; i++) {
-            formData.append(`mainCategory`, JSON.stringify(selected[i]));
-        };
-        for (let i = 0; i < selectedCate.length; i++) {
-            formData.append(`category`, JSON.stringify(selectedCate[i]));
-        };
-        for (let i = 0; i < selectedSub.length; i++) {
-            formData.append(`SubCategory`, JSON.stringify(selectedSub[i]));
-        };
-        for (let i = 0; i < promo.length; i++) {
-            formData.append(`productPromo`, JSON.stringify(promo[i]));
-        };
+        formData.append(`mainCategory`, JSON.stringify(selected));
+        // for (let i = 0; i < selected.length; i++) {
+        //     formData.append(`mainCategory`, JSON.stringify(selected[i]));
+        // };
+        formData.append(`category`, JSON.stringify(selectedCate));
+        // for (let i = 0; i < selectedCate.length; i++) {
+        //     formData.append(`category`, JSON.stringify(selectedCate[i]));
+        // };
+        formData.append(`SubCategory`, JSON.stringify(selectedSub));
+        // for (let i = 0; i < selectedSub.length; i++) {
+        //     formData.append(`SubCategory`, JSON.stringify(selectedSub[i]));
+        // };
+        formData.append(`productPromo`, JSON.stringify(promo));
+        // for (let i = 0; i < promo.length; i++) {
+        //     formData.append(`productPromo`, JSON.stringify(promo[i]));
+        // };
         formData.append('orderType', orderType);
         formData.append('sPrice', sPrice);
 
@@ -561,7 +564,6 @@ const AddProduct = () => {
                                         )}
                                     </label>
                                 </div>
-
                             </div>
                         </div>
 

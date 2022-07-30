@@ -74,7 +74,7 @@ const Coupons = () => {
                 </div>
 
                 <div className='relative bg-white p-4 w-full order-2 md:order-1 rounded-full'>
-                    <input onChange={(e) => setSearch(e.target.value)} className='outline-0 p-2 h-12 rounded-full pl-10 text-orange-500 text-lg border-2  hover:shadow-lg w-full' type="text" name="search" placeholder='Search Campaigns Name' />
+                    <input onChange={(e) => setSearch(e.target.value)} className='outline-0 p-2 h-12 rounded-full pl-10 text-orange-500 text-lg border-2  hover:shadow-lg w-full' type="text" name="search" placeholder='Search Campaigns Name/CODE' />
                     <div className='absolute right-10 top-[35%] cursor-pointer'>
                         <i className="text-green-500 fa-solid fa-magnifying-glass"></i>
                     </div>
@@ -85,68 +85,70 @@ const Coupons = () => {
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-10">
                 <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-[#F4F5F7] dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                            <th scope="col" className="px-6 py-3">
+                        <tr className='text-center'>
+                            <th scope="col" className="px-2 py-3">
                                 ID
                             </th>
-                            <th scope="col" className="px-6 py-3">
+                            <th scope="col" className="px-2 py-3">
                                 START DATE
                             </th>
-                            <th scope="col" className="px-6 py-3">
+                            <th scope="col" className="px-2 py-3">
                                 END DATE
                             </th>
-                            <th scope="col" className="px-6 py-3">
+                            <th scope="col" className="px-2 py-3">
                                 CAMPAIGNS NAME
                             </th>
-                            <th scope="col" className="px-6 py-3">
+                            <th scope="col" className="px-2 py-3">
                                 CODE
                             </th>
-                            <th scope="col" className="px-6 py-3">
+                            <th scope="col" className="px-2 py-3">
                                 PERCENTAGE
                             </th>
-                            <th scope="col" className="px-6 py-3">
+                            <th scope="col" className="px-2 py-3">
                                 CATEGORYS
                             </th>
 
-                            <th scope="col" className="px-6 py-3">
+                            <th scope="col" className="px-2 py-3">
                                 MUTE/UNMUTE
                             </th>
 
-                            <th scope="col" className="px-6 py-3">
+                            <th scope="col" className="px-2 py-3">
                                 STATUS
                             </th>
-                            <th scope="col" className="px-6 py-3">
+                            <th scope="col" className="px-2 py-3">
                                 ACTIONS
                             </th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            coupons && coupons?.map((coupon, index) => <tr key={coupon._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            coupons && coupons?.map((coupon, index) => <tr key={coupon._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-center">
                                 <th scope="row" className="px-6 py-4 font-medium  dark:text-white whitespace-nowrap">
                                     {index + 1}
                                 </th>
-                                <td className="px-6 py-4">
+                                <td className="px-2 py-4">
 
                                     {coupon.startDates}
                                 </td>
-                                <td className="px-6 py-4">
+                                <td className="px-2 py-4">
 
                                     {coupon.endDates}
                                 </td>
-                                <td className="px-6 py-4">
+                                <td className="px-2 py-4">
                                     {coupon.name}
                                 </td>
-                                <td className="px-6 py-4">
+                                <td className="px-2 py-4">
                                     {coupon.code}
                                 </td>
-                                <td className="px-6 py-4">
+                                <td className="px-2 py-4">
                                     {coupon.percentage}%
                                 </td>
-                                <td className="px-6 py-4">
+                                <td className="px-2 py-4">
+                                    {coupon.mainCategory.length > 0 && coupon.mainCategory.map(cate => cate.name).join(',')}
                                     {coupon.category.length > 0 && coupon.category.map(cate => cate.name).join(',')}
+
                                 </td>
-                                <td className="px-6 py-4 text-center">
+                                <td className="px-2 py-4 text-center">
                                     <div className="form-control">
                                         <label className="label cursor-pointer">
 
@@ -154,16 +156,16 @@ const Coupons = () => {
                                         </label>
                                     </div>
                                 </td>
-                                <td className="px-6 py-4">
+                                <td className="px-2 py-4">
                                     <p className='bg-orange-200 p-1 rounded-full text-center text-blue-500'>
                                         {
-                                            new Date() > new Date(coupon.endDates) ? 'Expired' : new Date() < new Date(coupon.startDates) ? 'Pending' : 'Running'
+                                            new Date().toLocaleString('en-US', { timeZone: 'Asia/Dhaka' }) > new Date(coupon.endDates).toLocaleString('en-US', { timeZone: 'Asia/Dhaka' }) ? 'Expired' : new Date().toLocaleString('en-US', { timeZone: 'Asia/Dhaka' }) < new Date(coupon.startDates).toLocaleString('en-US', { timeZone: 'Asia/Dhaka' }) ? 'Pending' : 'Running'
                                         }
 
                                     </p>
                                 </td >
 
-                                <td className="px-6 py-4">
+                                <td className="px-2 py-4">
                                     <div className='flex justify-between'>
                                         <label htmlFor="coupon-update">  <i onClick={() => setCouponModal(coupon)} className=" cursor-pointer fa-solid fa-pen-to-square"></i></label>
                                         <label htmlFor="coupon-delete"><i onClick={() => setCouponModal(coupon)} className="cursor-pointer fa-solid fa-trash-can"></i></label>

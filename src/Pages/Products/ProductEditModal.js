@@ -4,8 +4,8 @@ import { toast } from 'react-toastify';
 const ProductEditModal = ({ productModal, setProductModal }) => {
 
 
-    const { productName, sPrice, orderType, price, quantity, deliveryInDhaka, outDhaka, color, size } = productModal;
-
+    const { productName, sPrice, orderType, price, quantity, video, deliveryInDhaka, outDhaka, color, size } = productModal;
+    // console.log(sPrice)
     const handelProductUpdate = event => {
         event.preventDefault();
         const productNames = event.target.productName.value || productName;
@@ -17,10 +17,10 @@ const ProductEditModal = ({ productModal, setProductModal }) => {
         const outDhakas = event.target.outDhaka.value || outDhaka;
         const colors = event.target.color.value || color;
         const sizes = event.target.size.value || size;
-
+        const videos = event.target.video.value || video;
 
         const productUpdateInfo = {
-            productNames, orderTypes, sPrices, prices, quantitys, deliveryInDhakas, outDhakas, colors, sizes
+            productNames, orderTypes, sPrices, prices, videos, quantitys, deliveryInDhakas, outDhakas, colors, sizes
         }
 
 
@@ -66,13 +66,13 @@ const ProductEditModal = ({ productModal, setProductModal }) => {
                             <label className="label">
                                 <span className="label-text">Product Price</span>
                             </label>
-                            <input type="text" placeholder={price} name='price' className="input input-bordered w-full" />
+                            <input type="number" placeholder={price} name='price' className="input input-bordered w-full" />
                         </div>
                         <div className="form-control w-full mb-4">
                             <label className="label">
-                                <span className="label-text">Product Special Price</span>
+                                <span className="label-text">Product Special Price <span className='text-orange-500 text-sm'>(Enter 0 if you don't want to pay Special Price)</span></span>
                             </label>
-                            <input type="text" placeholder={sPrice} name='sPrice' className="input input-bordered w-full" />
+                            <input type="text" placeholder={sPrice || 'Special Price is now closed. If you want to open then give the price'} name='sPrice' className="input input-bordered w-full" />
                         </div>
                         <div className="form-control w-full mb-4">
                             <label className="label">
@@ -117,7 +117,12 @@ const ProductEditModal = ({ productModal, setProductModal }) => {
                                 <option>Pre-Order</option>
                             </select>
                         </div>
-
+                        <div className="form-control w-full mb-4">
+                            <label className="label">
+                                <p className="label-text">Product Youtube Video ID</p>
+                            </label>
+                            <input type="text" placeholder={video || "N/A"} name='video' className="input input-bordered w-full" />
+                        </div>
 
 
                         <div className='flex justify-end'>
@@ -125,7 +130,7 @@ const ProductEditModal = ({ productModal, setProductModal }) => {
                                 <button className="btn bg-orange-500">Update</button>
                             </div>
                             <div className="modal-action">
-                                <button type='reset' onClick={() => setProductModal(null)} className="btn">Cencel</button>
+                                <button type='reset' onClick={() => setProductModal(null)} className="btn">Cancel</button>
                             </div>
                         </div>
                     </form>

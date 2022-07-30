@@ -139,7 +139,7 @@ const VerifyNID = ({ setNidModal }) => {
                                     loadings && !error ? <ButtonSpinner></ButtonSpinner> : <button className='btn btn-primary'>Upload</button>
                                 }
 
-                                <label htmlFor="verify-modal" className="btn">Cencel</label>
+                                <label htmlFor="verify-modal" className="btn">Cancel</label>
                             </div>
                         </form>
                     </div>
