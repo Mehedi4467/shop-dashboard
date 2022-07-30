@@ -158,7 +158,7 @@ const Products = () => {
                                     &#x09F3; {product.price}
                                 </td>
                                 <td className="px-4 py-4">
-                                    &#x09F3; {product.Sprice || "N/A"}
+                                    &#x09F3; {product.sPrice || "N/A"}
                                 </td>
                                 <td className="px-4 py-4">
                                     {product.quantity}
