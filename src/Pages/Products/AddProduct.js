@@ -8,6 +8,7 @@ import useAdminUserData from '../../Hooks/AdminUserData/useAdminUserData';
 import ButtonSpinner from '../../Shared/Spinner/ButtonSpinner';
 import Spinner from '../../Shared/Spinner/Spinner';
 import CategorySelection from './CategorySelection';
+import LongDescription from './LongDescription';
 import ProductPromo from './ProductPromo';
 
 
@@ -25,6 +26,7 @@ const AddProduct = () => {
     const [selected, setSelected] = useState([]);
     const [selectedCate, setSelectedCate] = useState([]);
     const [selectedSub, setSelectedSub] = useState([]);
+    const [text, settext] = useState('');
 
     const [promo, setPromo] = useState([]);
 
@@ -97,8 +99,9 @@ const AddProduct = () => {
         setButtonLoading(true);
         const productName = data.productName;
         const sku = data.sku;
+        const brand = data.brand;
         const shortDescription = data.shortDescription;
-        const logDescription = data.longDescription;
+        // const logDescription = data.longDescription;
         const price = data.price;
         const quantity = data.quantity;
         const deliveryInDhaka = data.dInDhaka;
@@ -115,7 +118,7 @@ const AddProduct = () => {
 
 
         const imageData = data.img[0];
-        const secondImageData = data.secondImg;
+        const secondImageData = data.secondImg || [];
         let formData = new FormData();
         formData.append('primaryImage', imageData);
 
@@ -125,7 +128,7 @@ const AddProduct = () => {
         formData.append('productName', productName);
         formData.append('sku', sku);
         formData.append('shortDescription', shortDescription);
-        formData.append('logDescription', logDescription);
+        formData.append('logDescription', text);
         formData.append('price', price);
         formData.append('quantity', quantity);
         formData.append('deliveryInDhaka', deliveryInDhaka);
@@ -136,6 +139,7 @@ const AddProduct = () => {
         formData.append('marchentEmail', marchentEmail);
         formData.append('marchantPhone', marchantPhone);
         formData.append('video', video);
+        formData.append('brand', brand);
 
         formData.append(`mainCategory`, JSON.stringify(selected));
         // for (let i = 0; i < selected.length; i++) {
@@ -231,7 +235,7 @@ const AddProduct = () => {
                                     <div className="form-control w-full ">
                                         <label className="label">
 
-                                            <p className="label-text font-semibold">Product secondary Image <span className='text-orange-500 text-xs'>(Each image MAX 300KB Size 300X300 and upload 1 to 4 image) *</span> </p>
+                                            <p className="label-text font-semibold">Product secondary Image <span className='text-orange-500 text-xs'>(Each image MAX 300KB Size 300X300 and upload 1 to 4 image)</span> </p>
                                         </label>
                                         <div className=' space-x-6'>
 
@@ -241,8 +245,8 @@ const AddProduct = () => {
                                                     className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                                                     {...register("secondImg", {
                                                         required: {
-                                                            value: true,
-                                                            message: "Product secondary Image is required",
+                                                            value: false,
+
 
                                                         },
 
@@ -251,13 +255,7 @@ const AddProduct = () => {
                                                     multiple
 
                                                 />
-                                                <label className="label">
-                                                    {errors.secondImg?.type === "required" && (
-                                                        <span className="label-text-alt text-warning">
-                                                            {errors.secondImg.message}
-                                                        </span>
-                                                    )}
-                                                </label>
+
                                             </label>
 
                                             <div className="flex  items-center shrink-0 ml-0">
@@ -345,7 +343,7 @@ const AddProduct = () => {
                                         )}
                                     </label>
                                 </div>
-                                <div className="form-control">
+                                {/* <div className="form-control">
                                     <label className="label">
                                         <span className="label-text font-semibold">Product Long Description</span>
 
@@ -359,6 +357,13 @@ const AddProduct = () => {
 
                                     />
 
+                                </div> */}
+                                <div >
+                                    <label className="label">
+                                        <span className="label-text font-semibold">Product Long Description</span>
+
+                                    </label>
+                                    <LongDescription text={text} settext={settext}></LongDescription>
                                 </div>
 
                                 <div className="form-control w-full ">
@@ -522,6 +527,20 @@ const AddProduct = () => {
                                             </span>
                                         )}
                                     </label>
+                                </div>
+                                <div className="form-control w-full ">
+                                    <label className="label">
+                                        <span className="label-text font-semibold">Product Brand</span>
+                                    </label>
+                                    <input type="text" placeholder="Product Brand Name" className="input input-bordered input-primary w-full"
+                                        {...register("brand", {
+                                            required: {
+                                                value: false,
+                                            },
+
+                                        })}
+                                    />
+
                                 </div>
                                 <div className="form-control w-full ">
                                     <label className="label">

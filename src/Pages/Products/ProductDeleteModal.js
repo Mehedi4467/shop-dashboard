@@ -21,7 +21,6 @@ const ProductDeleteModal = ({ products, setProducts, productModal, setProductMod
                 }
 
             })
-
     }
 
     return (

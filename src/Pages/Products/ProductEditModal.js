@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
+import LongDescription from './LongDescription';
 
 const ProductEditModal = ({ productModal, setProductModal }) => {
 
 
-    const { productName, sPrice, orderType, price, quantity, video, deliveryInDhaka, outDhaka, color, size } = productModal;
+    const { productName, sPrice, orderType, price, logDescription, quantity, video, deliveryInDhaka, outDhaka, color, size } = productModal;
     // console.log(sPrice)
+    const [text, settext] = useState(logDescription);
     const handelProductUpdate = event => {
         event.preventDefault();
         const productNames = event.target.productName.value || productName;
@@ -18,9 +20,10 @@ const ProductEditModal = ({ productModal, setProductModal }) => {
         const colors = event.target.color.value || color;
         const sizes = event.target.size.value || size;
         const videos = event.target.video.value || video;
+        const logDescriptions = text;
 
         const productUpdateInfo = {
-            productNames, orderTypes, sPrices, prices, videos, quantitys, deliveryInDhakas, outDhakas, colors, sizes
+            productNames, orderTypes, sPrices, logDescriptions, prices, videos, quantitys, deliveryInDhakas, outDhakas, colors, sizes
         }
 
 
@@ -79,6 +82,13 @@ const ProductEditModal = ({ productModal, setProductModal }) => {
                                 <span className="label-text">Product quantity</span>
                             </label>
                             <input type="text" placeholder={quantity} name='quantity' className="input input-bordered w-full" />
+                        </div>
+                        <div >
+                            <label className="label">
+                                <span className="label-text font-semibold">Product Long Description</span>
+
+                            </label>
+                            <LongDescription text={text} settext={settext}></LongDescription>
                         </div>
                         <div className="form-control w-full mb-4">
                             <label className="label">

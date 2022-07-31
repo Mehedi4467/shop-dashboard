@@ -155,10 +155,10 @@ const Products = () => {
                                     }
                                 </td>
                                 <td className="px-4 py-4">
-                                    &#x09F3; {product.price}
+                                    {product.price} &#x09F3;
                                 </td>
                                 <td className="px-4 py-4">
-                                    &#x09F3; {product.sPrice || "N/A"}
+                                    {product.sPrice || "N/A"} &#x09F3;
                                 </td>
                                 <td className="px-4 py-4">
                                     {product.quantity}
@@ -179,12 +179,12 @@ const Products = () => {
                                     }
 
                                 </td >
-                                <td className="px-6 py-4">
+                                <td className="px-4 py-4">
                                     <label htmlFor="product-view-modal"> <i onClick={() => setProductModal(product)} className="cursor-pointer fa-solid fa-eye"></i></label>
 
                                 </td >
-                                <td className="px-6 py-4">
-                                    <div className='flex justify-between'>
+                                <td className="px-4 py-4">
+                                    <div className='flex justify-between gap-x-4'>
                                         <label htmlFor="product-edit-modal"> <i onClick={() => setProductModal(product)} className=" cursor-pointer fa-solid fa-pen-to-square"></i></label>
 
                                         <label htmlFor="product-delete-modal">   <i onClick={() => setProductModal(product)} className="cursor-pointer fa-solid fa-trash-can"></i></label>

@@ -99,7 +99,7 @@ const CategorySelection = ({ data, setSelected, selected, setSelectedCate, selec
             </div>
 
             <div className='mt-2'>
-                <h1 className='label-text font-semibold mb-2'>Sub Category *</h1>
+                <h1 className='label-text font-semibold mb-2'>Sub Category </h1>
                 {/* <pre>{JSON.stringify(selected)}</pre> */}
                 <MultiSelect
                     className="select-primary border-primary border-[1px] rounded-lg w-full"
