@@ -87,7 +87,7 @@ const CategoryEditModal = ({ subCategory: categoryModal, setCategoryModal, refet
                                 <button type='submit' className="btn bg-orange-500">Update Category</button>
                             </div>
                             <div className="modal-action">
-                                <button type='reset' onClick={() => setCategoryModal(null)} className="btn">Cencle</button>
+                                <button type='reset' onClick={() => setCategoryModal(null)} className="btn">Cancle</button>
                             </div>
                         </div>
 
